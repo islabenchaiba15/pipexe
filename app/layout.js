@@ -1,6 +1,11 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-
+import Nav from "@/components/Nav";
+import LeftSideBar from "@/components/shared/LeftSideBar";
+import {NextUIProvider} from "@nextui-org/react";
+import * as React from "react";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
+import RightSideBar from "@/components/shared/RightSideBar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -10,8 +15,18 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+      <html lang="en">
+        <body className={`${inter.className} mx-auto max-w-[2440px] hide-scrollbar overflow-x-hidden overflow-y-hidden` }>
+          <Nav/>
+          <div className="flex flex-row">
+            <LeftSideBar/>
+            <div className="w-full ">
+                {children}
+            </div>
+            <RightSideBar/>
+          </div>
+          <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+        </body>
+      </html>
   );
 }
