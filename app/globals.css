@@ -4,6 +4,30 @@
 @layer components {
 
 }
-    /* main */
-    
+.draggable-modal {
+  position: fixed; /* or absolute */
+  top: 50%; /* Adjust as needed */
+  left: 50%; /* Adjust as needed */
+  transform: translate(-50%, -50%);
+}
+/* Customize the EditControl buttons */
+.leaflet-draw-edit-edit {
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text */
+  border-radius: 4px; /* Rounded corners */
+  padding: 6px 12px; /* Padding for better spacing */
+}
+
+.leaflet-draw-edit-remove {
+  background-color: #f44336; /* Red background */
+  color: white;
+  border-radius: 4px;
+  padding: 6px 12px;
+}
+
+  .account-form_input {
+    @apply border text-black font-semibold text-lg placeholder-gray-400 !important;
+  }
+
+ 
   

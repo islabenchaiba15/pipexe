@@ -10,9 +10,7 @@ function page() {
     const dataa=data.features.geometry
   return (
     <div className="">
-        {dataa.map((i)=>{
-            <p className="text-black ">{i.coordinates}</p>
-        })}
+       
     </div>
   )
 }
