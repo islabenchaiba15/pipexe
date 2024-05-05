@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react';
+import React, {   useContext, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, LayersControl,FeatureGroup} from 'react-leaflet';
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import {EditControl} from 'react-leaflet-draw'
@@ -12,95 +12,124 @@ import L, {  Icon } from 'leaflet';
 import { puits } from '../constants/achraf';
 import Image from 'next/image';
 import Control from "react-leaflet-custom-control";
-import RightSideBar from './shared/RightSideBar';
+import SegmentModal from './SegmentModal';
+import CoordContext from '../context/CoordContext';
 
 
+export function splitCoordinatesByDistance(coordinates, distances) {
+  const result = [];
+  let totalDistance = 0;
+  let currentIndex = 0;
+  const totalDistanceOfCoordinates = parseFloat(coordinates[0].newTotalDistance);
+  let startCoordinate = coordinates[0].latlngs[0][0];
 
-function splitCoordinatesByDistance(coordinates, distances) {
-  try {
-    const totalDistance = parseFloat(coordinates[0].newTotalDistance);
+  for (const distance of distances) {
+    const polyline = [startCoordinate]; // Start coordinate of the segment
+    const targetDistance = totalDistance + distance;
 
-    // Ensure desired distances are valid
-    const validDistances = distances.map((d) => Math.min(d, totalDistance));
-    const hasInvalidDistance = validDistances.some((d) => d === 0);
+    while (currentIndex < coordinates[0].latlngs[0].length) {
+      const currentCoordinate = coordinates[0].latlngs[0][currentIndex];
+      const nextCoordinate =
+        currentIndex === coordinates[0].latlngs[0].length - 1
+          ? null
+          : coordinates[0].latlngs[0][currentIndex + 1];
 
-    if (hasInvalidDistance) {
-      console.warn('One or more desired distances exceed the total distance.');
-      return []; // Handle invalid distances gracefully
-    }
+      if (nextCoordinate) {
+        const distanceBetweenCoordinates = getDistanceBetweenCoordinates(
+          currentCoordinate,
+          nextCoordinate
+        );
 
-    const polylineLengths = validDistances;
-    const totalDesiredDistance = validDistances.reduce((acc, d) => acc + d, 0);
-
-    let currentPolyline = []; // Initialize as an empty array
-    let currentDistance = 0;
-    const splitPolylines = [];
-
-    const calculateDistance = (point1, point2) => {
-      // Replace with your preferred distance calculation function (e.g., Haversine formula)
-      const lat1 = point1.lat;
-      const lng1 = point1.lng;
-      const lat2 = point2.lat;
-      const lng2 = point2.lng;
-      return Math.sqrt((lat2 - lat1) ** 2 + (lng2 - lng1) ** 2);
-    };
-
-    for (const point of coordinates[0].latlngs[0]) {
-      let distanceToNextPoint; // Define distanceToNextPoint variable here
-      if (currentPolyline.length) {
-        distanceToNextPoint = calculateDistance(currentPolyline[currentPolyline.length - 1], point);
-        // ... rest of your logic
+        if (totalDistance + distanceBetweenCoordinates <= targetDistance) {
+          totalDistance += distanceBetweenCoordinates;
+          currentIndex++;
+        } else {
+          const ratio =
+            (targetDistance - totalDistance) / distanceBetweenCoordinates;
+          const interpolatedCoordinate = {
+            lat:
+              currentCoordinate.lat +
+              ratio * (nextCoordinate.lat - currentCoordinate.lat),
+            lng:
+              currentCoordinate.lng +
+              ratio * (nextCoordinate.lng - currentCoordinate.lng),
+          };
+          polyline.push(interpolatedCoordinate); // End coordinate of the segment
+          startCoordinate = interpolatedCoordinate; // Update the start coordinate for the next segment
+          break;
+        }
       } else {
-        currentPolyline.push(point);
-        continue;
-      }
-
-      // Check if distance exceeds current polyline length and remaining distance
-      if (currentDistance + distanceToNextPoint > polylineLengths[0] &&
-          currentDistance + distanceToNextPoint > totalDesiredDistance) {
-        splitPolylines.push(currentPolyline);
-        currentPolyline = [point];
-        currentDistance = distanceToNextPoint;
-        polylineLengths.shift(); // Move to the next desired distance
-      } else {
-        currentPolyline.push(point);
-        currentDistance += distanceToNextPoint;
+        polyline.push(currentCoordinate); // End coordinate of the segment (last coordinate)
+        break;
       }
     }
 
-    // Handle remaining distance if polyline is longer than desired distances
-    if (currentPolyline.length) {
-      splitPolylines.push(currentPolyline);
-    }
-
-    return splitPolylines;
-  } catch (error) {
-    console.error('Error splitting coordinates:', error);
-    return []; // Handle errors gracefully
+    result.push(polyline);
   }
+
+  // Add the remaining coordinates as the last polyline
+  if (totalDistance < totalDistanceOfCoordinates) {
+    const remainingPolyline = [
+      startCoordinate,
+      ...coordinates[0].latlngs[0].slice(currentIndex + 1),
+    ];
+    result.push(remainingPolyline);
+  }
+
+  return result;
 }
 
 
+function getDistanceBetweenCoordinates(coord1, coord2) {
+  const R = 6371e3; // Earth's radius in meters
+  const phi1 = (coord1.lat * Math.PI) / 180;
+  const phi2 = (coord2.lat * Math.PI) / 180;
+  const deltaPhi = ((coord2.lat - coord1.lat) * Math.PI) / 180;
+  const deltaLambda = ((coord2.lng - coord1.lng) * Math.PI) / 180;
 
+  const a =
+    Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
+    Math.cos(phi1) *
+      Math.cos(phi2) *
+      Math.sin(deltaLambda / 2) *
+      Math.sin(deltaLambda / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
+  return R * c; // Distance in meters
+}
 
-
-
-const Map = ({ locations,colors,setTotalDistance }) => {
+const Map = ({ locations,setTotalDistance }) => {
   const coordinates = [
     {
       id: 544,
       latlngs: [
         [
-          { lat: 31.839066018972925, lng: 5.064565146929577 },
-          { lat: 31.76086695137955, lng: 5.280161613407317 },
-          { lat: 31.855397761567097, lng: 5.527342275611132 },
+          {
+            "lat": 31.594913125427418,
+            "lng": 5.188155478031465
+          },
+          {
+            "lat": 31.62181309470655,
+            "lng": 5.368048071079792
+          },
+          {
+            "lat": 31.66039512307388,
+            "lng": 5.499877757588468
+          },
+          {
+            "lat": 31.631167783684706,
+            "lng": 5.608362603777933
+          },
+          {
+            "lat": 31.560984698031774,
+            "lng": 5.747058419792284
+          }
         ],
       ],
       newTotalDistance: "47766.20",
     },
   ];
-  const distances = [300, 400, 500];
+  const distances = [];
   const [active,setActive]=useState(false)
   const center = [31.68121343655558,6.141072936328754]; 
   const editRef = useRef(null);
@@ -115,11 +144,13 @@ const Map = ({ locations,colors,setTotalDistance }) => {
   console.log(data.features[0])
   const [selectedLayer, setSelectedLayer] = useState('OpenStreetMap');
   const mapboxAccessToken="pk.eyJ1IjoiaXNsYW1iZW5jaGFpYmEiLCJhIjoiY2x0bDhlcjVlMGplMDJqbXl4ZzFvbGllYyJ9.PYMskRvnsmAOm7N97ndC4g"
-  
+  const colors = ['white', 'red', 'white', 'red'];
+  const {maplayers,polylines, setMapLayers, setPolylines } = useContext(CoordContext);
+
+
   const handleLayerChange = (layer) => {
     setSelectedLayer(layer);
   };
-  const [maplayers,setMapLayers]=useState([])
   const switchToLayer = (layerName) => {
     setSelectedLayer(layerName);
   };
@@ -152,16 +183,14 @@ const Map = ({ locations,colors,setTotalDistance }) => {
         // style: customPolylineStyle,
         }
       ])
-      const polylines = splitCoordinatesByDistance(coordinates, distances);
-
-      console.log("polyyyyyy",polylines);
-      polylines.forEach((segment, segmentIndex) => {
-        console.log(`Segment ${segmentIndex + 1}:`);
-        segment.forEach((coordinate, coordinateIndex) => {
-          console.log(`Coordinate ${coordinateIndex + 1}:`);
-          console.log(`Latitude: ${coordinate.lat}, Longitude: ${coordinate.lng}`);
-        });
-      });
+      // console.log("polyyyyyy",polylines);
+      // polylines.forEach((segment, segmentIndex) => {
+      //   console.log(`Segment ${segmentIndex + 1}:`);
+      //   segment.forEach((coordinate, coordinateIndex) => {
+      //     console.log(`Coordinate ${coordinateIndex + 1}:`);
+      //     console.log(`Latitude: ${coordinate.lat}, Longitude: ${coordinate.lng}`);
+      //   });
+      // });
     }
   }
   const _onEdited = (e) => {
@@ -196,7 +225,19 @@ const Map = ({ locations,colors,setTotalDistance }) => {
     }
   };
 
-
+  const islam=[
+    [31.594913125427418,5.188155478031465],
+    [31.595068649984288,5.189195543004308],
+  ]
+  const islam1=[
+    [31.596312846439236,5.197516062787052],
+    [31.62181309470655,5.368048071079792],
+[31.66039512307388,5.499877757588468],
+[31.631167783684706,5.608362603777933],
+[31.560984698031774,5.747058419792284]
+  ]
+  // setPolylines(splitCoordinatesByDistance(coordinates, distances));
+  // const polylines = splitCoordinatesByDistance(coordinates, distances);
 
   return (
     <>
@@ -226,7 +267,7 @@ const Map = ({ locations,colors,setTotalDistance }) => {
       </LayersControl>
       <Control prepend position='topright'>
       </Control>
-      {
+      {/* {
         active ? 
         dataa.map((feature,index)=>(
           <Polyline key={index} positions={feature.geometry.coordinates} color= {"white"} icon={healthIcon} weight={5}>
@@ -247,6 +288,19 @@ const Map = ({ locations,colors,setTotalDistance }) => {
         }}
          key={index} position={p.geometry.coordinates} icon={healthIcon}>
         </Marker>
+      ))} */}
+
+    {polylines.map((segment, index) => (
+        <Polyline
+          key={index}
+          positions={segment}
+          color={colors[index % colors.length]}
+        >
+          <Popup>
+            <SegmentModal/>
+          </Popup>
+          </Polyline>
+
       ))}
     </MapContainer>
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} className="z-50 ">
