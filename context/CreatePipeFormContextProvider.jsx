@@ -1,3 +1,4 @@
+'use client'
 import React,{useState} from 'react'
 import CreatePipeFormContext from './CreatePipeFormContext'
 const CreatePipeFormContextProvider=({children})=>{
@@ -21,8 +22,10 @@ const CreatePipeFormContextProvider=({children})=>{
   };
 
   const value = {
+
     step,
     formData,
+    setFormData,
     handleNextStep,
     handlePrevStep,
     handleFormSubmit,

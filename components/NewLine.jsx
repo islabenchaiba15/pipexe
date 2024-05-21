@@ -61,25 +61,22 @@ export function NewLine({onNext,totalDistance}) {
       }
 
   return (
-    <Draggable className="z-50">
-        <div className="z-50 fixed flex items-center justify-center mr-[50%] "> 
-            <div className="bg-white rounded shadow-xl p-6">
-                <p className='font-bold text-black text-xl mb-3'>Nouvelle ligne </p>
+            <div className="bg-white p-6 2xl:mx-10 mx-2">
                 <Form {...form} >
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2 ">
-                        <div className="mb-4 flex items-center gap-5"> 
-                            <Label htmlFor="longeur" className="text-lg">Longeur</Label>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-10 justify-between">
+                        <div className=" flex items-center gap-5 mt-4"> 
+                            <Label htmlFor="longeur" className="text-lg font-bold">Longeur</Label>
                             <h3 className='text-semibold text-xl'>{totalDistance}</h3>
                         </div> 
                         <FormField
                         control={form.control}
                         name="largeur"
                         render={({ field }) => (
-                            <FormItem className="flex flex-col items-start">
-                                <div className="flex items-center gap-5">
-                                    <FormLabel className="text-lg">largeur</FormLabel>
+                            <FormItem className="flex flex-col items-start ">
+                                <div className="flex items-center gap-5 w-full">
+                                    <FormLabel className="text-lg font-bold ">largeur</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="shadcn" {...field} type="number"/>
+                                        <Input placeholder="shadcn" {...field} type="number" className="w-full "/>
                                     </FormControl>
                                 </div>
                                 <FormMessage />
@@ -92,11 +89,11 @@ export function NewLine({onNext,totalDistance}) {
                         name="type"
                         render={({ field }) => (
                             <FormItem className="flex flex-col items-start">
-                                <div className="flex items-center gap-5">
-                                    <FormLabel className="text-lg">type</FormLabel>
+                                <div className="flex items-center gap-10 w-full">
+                                    <FormLabel className="text-lg font-bold">type</FormLabel>
                                     <FormControl>
-                                    <Select onValueChange={field.onChange} >
-                                        <SelectTrigger className="w-[180px]">
+                                    <Select onValueChange={field.onChange} className="">
+                                        <SelectTrigger className="">
                                             <SelectValue placeholder="type of pipe" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -117,11 +114,11 @@ export function NewLine({onNext,totalDistance}) {
                         name="nature"
                         render={({ field }) => (
                             <FormItem className="flex flex-col items-start ">
-                                <div className="flex items-center gap-5">
-                                    <FormLabel className="text-lg">Nature</FormLabel>
+                                <div className="flex items-center gap-5 w-full">
+                                    <FormLabel className="text-lg font-bold">Nature</FormLabel>
                                     <FormControl>
                                     <Select onValueChange={field.onChange} >
-                                            <SelectTrigger className="w-[180px]">
+                                            <SelectTrigger className="">
                                                         <SelectValue placeholder="nature of pipe" />
                                                     </SelectTrigger>
                                                     <SelectContent>
@@ -140,11 +137,11 @@ export function NewLine({onNext,totalDistance}) {
                         name="from"
                         render={({ field }) => (
                             <FormItem className="flex flex-col items-start ">
-                                <div className="flex items-center gap-5">
-                                    <FormLabel className="text-lg">from</FormLabel>
+                                <div className="flex items-center gap-10 w-full">
+                                    <FormLabel className="text-lg font-bold">from</FormLabel>
                                     <FormControl>
                                     <Select onValueChange={field.onChange} >
-                                            <SelectTrigger className="w-[180px]">
+                                            <SelectTrigger className="">
                                                         <SelectValue placeholder="the start of pipe" />
                                                     </SelectTrigger>
                                                     <SelectContent>
@@ -179,11 +176,11 @@ export function NewLine({onNext,totalDistance}) {
                         name="to"
                         render={({ field }) => (
                             <FormItem className="mb-4 flex items-start ">
-                                <div className="flex items-center gap-5">
-                                    <FormLabel className="text-lg">to</FormLabel>
+                                <div className="flex items-center gap-14 w-full">
+                                    <FormLabel className="text-lg font-bold">to</FormLabel>
                                     <FormControl>
                                     <Select onValueChange={field.onChange} >
-                                            <SelectTrigger className="w-[180px]">
+                                            <SelectTrigger className="">
                                                 <SelectValue placeholder="end of pipe" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -200,12 +197,10 @@ export function NewLine({onNext,totalDistance}) {
                         />
                         <div className="flex justify-end mt-4"> 
                             <Button variant="outline" className="">annuler</Button>
-                            <Button variant="default" className="" type="submit">continue</Button>
+                            <Button variant="default" className="" type="submit" disabled={totalDistance <= 0}>continue</Button>
                         </div> 
                     </form>
                 </Form>
             </div>
-        </div>
-    </Draggable>
   )
 }

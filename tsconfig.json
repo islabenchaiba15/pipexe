@@ -5,6 +5,9 @@
       "dom.iterable",
       "esnext"
     ],
+    "paths": {
+      "@/*": ["./*"]
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -25,9 +28,12 @@
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
+    ".next/types/**/*.js",
     "**/*.ts",
-    "**/*.tsx"
-  ],
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "app/(root)/(screens)/pipe/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]

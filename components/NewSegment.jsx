@@ -54,7 +54,6 @@ export function NewSegment({ onSubmitForm, onPrev,totalDistance }) {
       length: [],
       thinkness:[],
       year: [],
-
     },
   });
 
@@ -73,10 +72,12 @@ export function NewSegment({ onSubmitForm, onPrev,totalDistance }) {
     name: 'thikness',
   });
 
+  const [remainingDistance, setRemainingDistance] = useState(totalDistance);
+
   const onSubmit = (data) => {
     onSubmitForm(data);
     console.log(data);
-    console.log('leeeeeeeeeeeeeeeength',form.getValues('length'))
+    // console.log('leeeeeeeeeeeeeeeength',form.getValues('length'))
   };
   const calculateTotalLength = () => {
     const lengthValues = form.getValues('length');
@@ -84,6 +85,8 @@ export function NewSegment({ onSubmitForm, onPrev,totalDistance }) {
     const remainingDistance = totalDistance - totalLength;
     return remainingDistance;
   };
+
+
   const handleAddInput = () => {
     append(0);
     yearAppend(0);
@@ -92,10 +95,7 @@ export function NewSegment({ onSubmitForm, onPrev,totalDistance }) {
   };
 
   return (
-    <Draggable className="z-50">
-      <div className="z-50 fixed flex items-center justify-center mr-[50%]">
-        <div className="bg-white rounded shadow-xl p-6">
-          <p className="font-bold text-black text-xl mb-3">Nouvelle Segment</p>
+        <div className="bg-white p-6 2xl:mx-6 mx-2">
           <div className='flex justify-between items-center gap-24'>
             <p className="font-bold text-lg ml-6">length</p>
             <p className="font-bold text-lg mr-10">thikness</p>
@@ -113,9 +113,8 @@ export function NewSegment({ onSubmitForm, onPrev,totalDistance }) {
                         <FormItem>
                         <FormControl>
                             <Input
-                            type="number"
                             {...form.register(`length.${index}`)}
-                            className="w-[180px]"
+                            className=""
                             />
                         </FormControl>
                         <FormMessage />
@@ -131,7 +130,7 @@ export function NewSegment({ onSubmitForm, onPrev,totalDistance }) {
                             <Input
                             type="number"
                             {...form.register(`thikness.${index}`)}
-                            className="w-[180px]"
+                            className=""
                             />
                         </FormControl>
                         <FormMessage />
@@ -147,7 +146,7 @@ export function NewSegment({ onSubmitForm, onPrev,totalDistance }) {
                             <Input
                              {...form.register(`year.${index}`)}
                             type="number"
-                            className="w-[180px]"
+                            className=""
                             />
                         </FormControl>
                         <FormMessage />
@@ -176,20 +175,18 @@ export function NewSegment({ onSubmitForm, onPrev,totalDistance }) {
                 Add Input
                 </Button>
                 <div className="mb-4 flex items-center gap-5">
-                    <h3 className="text-semibold text-xl">il vous reste {calculateTotalLength()} m</h3>
+                    <h3 className="text-semibold text-xl">il vous reste {calculateTotalLength()}  m</h3>
                     </div>
                     <div className="flex justify-end">
                     <Button variant="outline" onClick={onPrev}>
                         annuler
                     </Button>
-                    <Button variant="default" type="submit">
+                    <Button variant="default" type="submit" disabled={calculateTotalLength() > 0 || calculateTotalLength() < 0 }>
                         continue
                     </Button>
                 </div>
             </form>
           </Form>
         </div>
-      </div>
-    </Draggable>
   );
 }

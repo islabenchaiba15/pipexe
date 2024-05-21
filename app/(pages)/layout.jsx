@@ -11,9 +11,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <div className="w-full ">
-        <Nav/>
+    <html lang="en">
+      <body className={`${inter.className} mx-auto max-w-[24400px] hide-scrollbar overflow-x-hidden overflow-y-hidden`}>
+        <Nav />
         {children}
-     </div>
+      </body>
+    </html>
   );
 }

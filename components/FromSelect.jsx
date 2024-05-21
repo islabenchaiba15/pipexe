@@ -17,84 +17,60 @@ import {
   PopoverTrigger,
 } from "../components/ui/popover"
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-]
 
-export function FromSelect() {
+export function FromSelect({filters,title,selectedValues,onSelect}) {
   const [open, setOpen] = React.useState(false)
-  const [selectedValues, setSelectedValues] = React.useState([])
 
   const toggleValue = (value) => {
     if (selectedValues.includes(value)) {
-      setSelectedValues(selectedValues.filter((v) => v !== value))
+      onSelect(selectedValues.filter((v) => v !== value))
     } else {
-      setSelectedValues([...selectedValues, value])
+      onSelect([...selectedValues, value])
     }
   }
 
   return (
     <div className="">
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
+      <Popover open={open} onOpenChange={setOpen} >
+        <PopoverTrigger asChild className="bg-gray-100">
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-[120px] md:w-[200px] justify-between"
           >
             
                 {selectedValues.length < 0
                     ? ''
-                    : "Select framework..."}
+                    : title}
             
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0">
+        <PopoverContent className="w-[120px] md:w-[200px] p-0 ">
           <Command>
-            <CommandInput placeholder="Search framework..." />
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
-            {frameworks.map((framework) => (
+            {filters.map((filter) => (
                 <CommandItem
-                    key={framework.value}
-                    value={framework.value}
-                    onSelect={() => toggleValue(framework.value)}
+                    key={filter.value}
+                    value={filter.value}
+                    onSelect={() => toggleValue(filter.value)}
                 >
                     <Check
                     className={cn(
                         "mr-2 h-4 w-4",
-                        selectedValues.includes(framework.value) ? "opacity-100" : "opacity-0"
+                        selectedValues.includes(filter.value) ? "opacity-100" : "opacity-0"
                     )}
                     />
-                    {framework.label}
+                    {filter.label}
                 </CommandItem>
                 ))}
             </CommandGroup>
           </Command>
         </PopoverContent>
       </Popover>
-      <div className="p-2 flex flex-wrap w-[200px]">
+      {/* <div className="p-2 flex flex-wrap w-[200px]">
         {selectedValues.length > 0
               ? selectedValues.map((value) => (
                   <div key={value} className="flex items-center mr-1 p-2 rounded-2xl bg-gray-200 my-1">
@@ -111,7 +87,7 @@ export function FromSelect() {
                   </div>
                 ))
               : ""}
-      </div>
+      </div> */}
     </div>
   )
 }

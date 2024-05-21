@@ -11,23 +11,32 @@
   transform: translate(-50%, -50%);
 }
 /* Customize the EditControl buttons */
-.leaflet-draw-edit-edit {
-  background-color: #4caf50; /* Green background */
-  color: white; /* White text */
-  border-radius: 4px; /* Rounded corners */
-  padding: 6px 12px; /* Padding for better spacing */
-}
 
-.leaflet-draw-edit-remove {
-  background-color: #f44336; /* Red background */
-  color: white;
-  border-radius: 4px;
-  padding: 6px 12px;
-}
 
   .account-form_input {
     @apply border text-black font-semibold text-lg placeholder-gray-400 !important;
   }
 
+  .no-focus {
+    @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+  }
+
+  
+  @layer utilities {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+   /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+  }
+
+  .chart-container {
+    width: 100%;
+    height: 100%;
+  }
+}
  
   
