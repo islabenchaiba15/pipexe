@@ -1,9 +1,13 @@
-'use client'
+"use client";
 import React, { useContext, useEffect, useState } from "react";
 import CoordContext from "../context/CoordContext";
 import { splitCoordinatesByDistance } from "./Map";
 import axios from "axios";
 import fetchElevation from "@/lib/functions";
+import { Button } from "@/components/ui/button"
+import { Divider } from "@nextui-org/react";
+import { convertData, createSegments } from "@/app/Fucntions/function";
+import { axiosInstance } from "@/Api/Index";
 
 const FormComplete = ({ formData }) => {
   const distances = formData.length;
@@ -35,17 +39,41 @@ const FormComplete = ({ formData }) => {
 
     fetchAllElevations();
   }, [maplayers]);
-  console.log(formData);
-  console.log(maplayers);
-  console.log(polylines);
-  cons.log(elevations);
+
+  const segments = createSegments(polylines, formData);
+  const result = convertData(maplayers, formData);
+
+
+  const onsubmit =async()=>{
+    console.log('seeeeeeeeeeeeeeed')
+    const { data } = await axiosInstance.post("/pipe/create-pipe", [result, segments]);
+
+  }
   return (
     <div className=" p-6">
       <h2>Form Complete</h2>
-      <pre>islammmmmm{JSON.stringify(elevations, null, 2)}</pre>
+      <pre>{JSON.stringify(result, null, 2)}</pre>
+
+      <Divider className="my-4" />
+      <Divider className="my-4" />
+
+      <pre>{JSON.stringify(segments, null, 2)}</pre>
+      <Divider className="my-4" />
       <pre>{JSON.stringify(formData, null, 2)}</pre>
+      <Divider className="my-4" />
+      <Divider className="my-4" />
+
       <pre>{JSON.stringify(maplayers, 0, 2)}</pre>
+      <Divider className="my-4" />
+      <Divider className="my-4" />
+
       <pre>{JSON.stringify(polylines, 0, 2)}</pre>
+
+      <Divider className="my-4" />
+      <Divider className="my-4" />
+
+      <Button variant="outline" onClick={onsubmit}>Button</Button>
+
     </div>
   );
 };

@@ -1,5 +1,5 @@
-import Nav from "../../components/Nav";
-import "../globals.css";
+import Nav from "@/components/Nav";
+import "../../globals.css";
 import { Inter } from "next/font/google";
 import * as React from "react";
 const inter = Inter({ subsets: ["latin"] });
@@ -11,10 +11,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} mx-auto max-w-[24400px] hide-scrollbar overflow-x-hidden overflow-y-hidden`}>
-        {children}
-      </body>
-    </html>
+    <>
+      {children}
+    </>
   );
 }

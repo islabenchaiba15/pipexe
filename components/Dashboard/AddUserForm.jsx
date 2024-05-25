@@ -1,23 +1,8 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { Check, ChevronsUpDown } from "lucide-react";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import { cn } from "@/lib/utils";
-
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -25,17 +10,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+
 import {
   Form,
   FormControl,
@@ -49,6 +27,10 @@ import { Input } from "@/components/ui/input";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import React, { useState } from "react";
+import { Api } from "@mui/icons-material";
+import axios from "axios";
+import { ToastAction } from "../ui/toast";
+import { axiosInstance } from "@/Api/Index";
 
 const FormSchema = z.object({
   nom: z.string().min(2, {
@@ -58,14 +40,21 @@ const FormSchema = z.object({
     message: "Username must be at least 2 characters.",
   }),
   email: z.string().email("This is not a valid email.").trim().toLowerCase(),
-  position: z.string(),
+  position: z.string({
+    required_error: "Please select a language.",
+  }),
+  departement: z.string({
+    required_error: "Please select a language.",
+  }),
   password: z
     .string()
     .min(5, "Password must be at least 8 characters long")
     .max(30, "Password must not exceed 100 characters"),
+  role: z.string({
+    required_error: "Please select a language.",
+  }),
 });
-
-const AddUserForm = ({ onClose,closeButton }) => {
+const AddUserForm = ({ onClose, closeButton }) => {
   const [showPassword, setShowPassword] = useState(false);
   const form = useForm({
     resolver: zodResolver(FormSchema),
@@ -75,14 +64,57 @@ const AddUserForm = ({ onClose,closeButton }) => {
       email: "",
       password: "",
       position: "",
+      departement: "",
+      role: "",
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    onClose(); // Close the modal after form submission
+  const [errors, setErrors] = useState({});
+  const showSuccessToast = () => {
+    toast({
+      title: "User Created Successfully",
+      description:
+        "The user has been created and is now registered in the system.",
+      action: <ToastAction altText="Try again">continue</ToastAction>,
+    });
   };
+  const showfailedToast = () => {
+    toast({
+      variant: "destructive",
+      title: "User already exist ",
+      description:
+        "the email you give is already used in the system",
+      action: <ToastAction altText="Try again">Try again</ToastAction>,
+    });
+  };
+  const { toast } = useToast();
 
+  const onSubmit = async (dataa) => {
+    console.log("Form Data:", dataa);
+    try {
+      const { data } = await axiosInstance.post("/auth/users/signup", dataa);
+      console.log("islaaaaaaaaaaam", data);
+      showSuccessToast(); // S
+      form.reset();
+    } catch (error) {
+      if (error.response) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: error.response.data.message,
+        }));
+        showfailedToast()
+        console.log("Error Response:ssssssssssssss", errors);
+      } else if (error.request) {
+        console.log("Error Request:", error.request);
+        alert("No response from the server. Please try again later.");
+      } else {
+        console.log("Error", error.message);
+        alert(`Error: ${error.message}`);
+      }
+    } finally {
+      onClose(); // Close the modal after form submission
+    }
+  };
   const languages = [
     { label: "English", value: "en" },
     { label: "French", value: "fr" },
@@ -94,7 +126,6 @@ const AddUserForm = ({ onClose,closeButton }) => {
     { label: "Korean", value: "ko" },
     { label: "Chinese", value: "zh" },
   ];
-
   return (
     <Form {...form}>
       <form
@@ -131,7 +162,11 @@ const AddUserForm = ({ onClose,closeButton }) => {
                   <FormDescription>
                     This is your public display name.
                   </FormDescription>
-                  <FormMessage />
+                  <FormMessage>
+                    {errors.email && (
+                      <span className="text-red-500">{errors.email}</span>
+                    )}
+                  </FormMessage>
                 </FormItem>
               )}
             />
@@ -140,18 +175,45 @@ const AddUserForm = ({ onClose,closeButton }) => {
               name="position"
               render={({ field }) => (
                 <FormItem className="">
-                    <FormLabel className="font-bold ">position</FormLabel>
-                    <FormControl>
-                      <Select onValueChange={field.onChange}>
-                        <SelectTrigger className="">
-                          <SelectValue placeholder="position" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="position1">position1</SelectItem>
-                          <SelectItem value="position2">position2</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
+                  <FormLabel className="font-bold ">position</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="">
+                        <SelectValue placeholder="position" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="position1">position1</SelectItem>
+                        <SelectItem value="position2">position2</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormDescription>
+                    This is your public display name.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem className="">
+                  <FormLabel className="font-bold ">role</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="">
+                        <SelectValue placeholder="position" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="position1">admin</SelectItem>
+                        <SelectItem value="position2">position2</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormDescription>
+                    This is your public display name.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -212,18 +274,22 @@ const AddUserForm = ({ onClose,closeButton }) => {
               name="departement"
               render={({ field }) => (
                 <FormItem className="">
-                    <FormLabel className="font-bold ">departement</FormLabel>
-                    <FormControl>
-                      <Select onValueChange={field.onChange}>
-                        <SelectTrigger className="">
-                          <SelectValue placeholder="departement" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="departement1">departement1</SelectItem>
-                          <SelectItem value="departement2">departement2</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
+                  <FormLabel className="font-bold ">departement</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="">
+                        <SelectValue placeholder="departement" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="departement1">
+                          departement1
+                        </SelectItem>
+                        <SelectItem value="departement2">
+                          departement2
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

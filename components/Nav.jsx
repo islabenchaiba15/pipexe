@@ -5,9 +5,9 @@ import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, User} fro
 function Nav() {
   return (
     <div className='bg-blue-950 p-3 items-center justify-between flex '>
-        <Image  src={'/pipexe1.png'}  width={120} height={60} />
+        <Image  src={'/pipexe1.png'} alt="logo" width={120} height={60} />
         <div className='bg-white py-2 px-1 flex flex-row items-center rounded-md gap-2'>
-          <Image  src={'/search.png'}  width={20} height={20} />
+          <Image  src={'/search.png'} alt="search"  width={20} height={20} />
           <input type="search" placeholder="Recherche generale" className='outline-none ' />
         </div>
         <div className='flex flex-row items-center gap-2 '>

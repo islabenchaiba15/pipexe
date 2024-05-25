@@ -151,7 +151,7 @@ const Map = ({ setTotalDistance }) => {
   const editRef = useRef(null);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const healthIcon = L.icon({
-    iconUrl: "islam.png",
+    iconUrl: "../islam.png",
     iconSize: [35, 35], // size of the icon
   });
   const pui = puits.features;
@@ -239,12 +239,6 @@ const Map = ({ setTotalDistance }) => {
   };
 
   console.log(JSON.stringify(maplayers, 0, 2));
-  const handleEdit = () => {
-    if (editRef.current) {
-      const { edit } = editRef.current.leafletDraw._handlers;
-      edit.enable(); // Enable editing mode
-    }
-  };
 
   const islam = [
     [31.783049527817784, 5.536281317011623],
@@ -410,7 +404,7 @@ const Map = ({ setTotalDistance }) => {
           )}
         </ModalContent>
       </Modal>
-      <div class="custom-layer-control">
+      {/* <div className="custom-layer-control">
         <div
           class="layer-icon"
           id="openStreetMapIcon"
@@ -435,7 +429,7 @@ const Map = ({ setTotalDistance }) => {
             alt="Stamen Terrain Icon"
           />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

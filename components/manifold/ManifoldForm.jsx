@@ -25,6 +25,7 @@ import { Input } from "../../components/ui/input"
 import { useContext, useEffect, useState } from "react"
 import CreatePipeFormContext from "../../context/CreatePipeFormContext"
 import WellContext from "../../context/WellContext"
+import { axiosInstance } from "@/Api/Index"
 const latitudeSchema = z.preprocess((arg) => {
     if (typeof arg === 'string') {
       return arg ? parseFloat(arg) : undefined;
@@ -67,7 +68,9 @@ const formSchema = z.object({
     zone:z.string({
         required_error: 'zone is required',
     }),
-
+    name:z.string({
+        required_error: 'zone is required',
+    }),
   })
 const ManifoldForm=()=> {
     const {
@@ -84,11 +87,16 @@ const ManifoldForm=()=> {
         defaultValues:{
             longitude:'',
             latitude:'',
+            centre:'',
+            region:'',
+            wilaya:'',
+            zone:'',
+            name:''
         }
       })
      
       // 2. Define a submit handler.
-      function onSubmit(values) {
+      const onSubmit=async(values) =>{
         console.log('vvvvvvvv',values)
         const latitude = ischecked ? marker?.lat : values.latitude;
         const longitude = ischecked ? marker?.lng : values.longitude;
@@ -96,16 +104,20 @@ const ManifoldForm=()=> {
         const region =values.region
         const wilaya =values.wilaya
         const zone =values.zone
+        const name=values.name
         const updatedData = {
             ...formData,
             latitude: latitude,
             longitude: longitude,
+            name:name,
             centre:centre,
             region:region,
             wilaya:wilaya,
             zone:zone,
           };
         setFormData(updatedData)
+        const { data } = await axiosInstance.post("/auth/users/signup", formData);
+        console.log('youuuuuuuuuuu',formData)
       }
       
       useEffect(() => {
@@ -127,7 +139,7 @@ const ManifoldForm=()=> {
                 <h1 className="text-black text-xl font-medium" >marquer le manifold sur le map</h1>
                 <Switch isChecked={ischecked} onCheckedChange={handleCheck}/>
             </div>
-            <div className="flex gap-2 items-center mb-2 mt-2 gap-4">
+            <div className="flex items-center mb-2 mt-2 gap-4">
                 <FormField
                 control={form.control}
                 name="latitude"
@@ -168,7 +180,23 @@ const ManifoldForm=()=> {
                 )}
                 />
             </div>
-
+            <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                    <FormItem className="flex flex-col items-start w-1/2">
+                        <div className="flex items-center gap-8 w-full">
+                            <FormLabel className="text-lg">name</FormLabel>
+                            <FormControl>
+                                <Input placeholder='name of manifold' 
+                                {...field} className="w-full" 
+                                />
+                            </FormControl>
+                        </div>
+                        <FormMessage />
+                    </FormItem>
+                )}
+                />
             <h1 className="text-black text-2xl font-bold">addresse</h1>
             <div className="flex items-center gap-2">
                 <FormField

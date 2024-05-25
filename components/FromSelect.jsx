@@ -70,24 +70,6 @@ export function FromSelect({filters,title,selectedValues,onSelect}) {
           </Command>
         </PopoverContent>
       </Popover>
-      {/* <div className="p-2 flex flex-wrap w-[200px]">
-        {selectedValues.length > 0
-              ? selectedValues.map((value) => (
-                  <div key={value} className="flex items-center mr-1 p-2 rounded-2xl bg-gray-200 my-1">
-                    <span>{frameworks.find((f) => f.value === value).label}</span>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        toggleValue(value)
-                      }}
-                      className="ml-1"
-                    >
-                      <X className="h-3 w-3 text-black hover:text-black cursor-pointer" />
-                    </button>
-                  </div>
-                ))
-              : ""}
-      </div> */}
     </div>
   )
 }

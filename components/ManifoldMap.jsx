@@ -8,19 +8,18 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import { EditControl } from 'react-leaflet-draw';
 import WellContext from '../context/WellContext';
 import L from 'leaflet';
-const MapComponent = ({icon}) => {
+const ManifoldMap = ({icon}) => {
   const userIcon = L.icon({
-    iconUrl: icon,
+    iconUrl: "",
     iconSize: [35, 35], // size of the icon
 
   });
 
   const WellIcon = L.icon({
-    iconUrl: icon,
+    iconUrl: "../islam.png",
     iconSize: [35, 35], // size of the icon
   });
 
-  L.Draw.Marker.prototype.options.icon = WellIcon;
   
     const {
     marker,
@@ -48,7 +47,6 @@ const MapComponent = ({icon}) => {
     const _onEdited = (e) => {
       const { layers } = e;
       const {_layers} =layers
-      const {_latlng}=_layers
       const xx= Object.values(_layers)[0]._latlng
       setMarker(xx)
       console.log('ooooo',xx)
@@ -113,4 +111,4 @@ const MapComponent = ({icon}) => {
   );
 };
 
-export default MapComponent;
+export default ManifoldMap;

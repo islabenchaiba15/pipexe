@@ -35,6 +35,7 @@ const address=[
 ]
 
 function page() {
+const icon="../islam.png"
   return (
     <CreatePipeFormContextProvider>
       <WellContextProvider>
@@ -70,8 +71,8 @@ function page() {
                   <p className="p-4 font-semibold">Overview</p>
                   <Chart/>
                 </div>
-                <div className={" flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow "}>
-                  <MapComponent />
+                <div className={" flex flex-col w-full h-[400px] lg:h-full justify-between gap-3 rounded-xl border p-5 shadow "}>
+                  <MapComponent icon={icon}/>
                 </div>
             </section>
             <div className={" flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow pb-24"}>

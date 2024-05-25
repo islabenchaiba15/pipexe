@@ -49,10 +49,7 @@ const positions = [
     label: "production",
   },
 ];
-
 function Page() {
-  const [size, setSize] = React.useState("3xl");
-  const sizes = ["3xl"];
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleReset = () => {
@@ -135,6 +132,7 @@ function Page() {
         selectedPositions={selectedPositions}
         searchTerm={searchTerm}
       />
+
       {/* <Modal
         size={size}
         isOpen={isOpen}

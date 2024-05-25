@@ -7,15 +7,16 @@ import CreatePipeFormContextProvider from '../../../../context/CreatePipeFormCon
 import WellContextProvider from '../../../../context/WellContextProvider';
 
 const Page = () => {
+  const icon="islam.png"
   return (
     <WellContextProvider>
       <CreatePipeFormContextProvider>
         <div className='flex h-screen w-full'>
           <div className="w-1/2 ">
-            <MapComponent />
+            <MapComponent icon={icon}/>
           </div>
           <div className="w-1/2 h-screen bg-white overflow-y-auto pb-16">
-            <WellForm/>
+            <WellForm />
           </div>
         </div>
       </CreatePipeFormContextProvider>
