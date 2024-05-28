@@ -12,6 +12,7 @@ const Home = () => {
   const [color, setColor] = useState('black'); 
   const [totalDistance, setTotalDistance] = useState(0);
   return (
+    
     <CoordContextProvider>
     <CreatePipeFormContextProvider>
       <div className={`mx-auto max-w-[24400px] hide-scrollbar overflow-x-hidden overflow-y-hidden` }>

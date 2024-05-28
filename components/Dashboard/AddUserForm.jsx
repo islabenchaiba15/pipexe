@@ -27,8 +27,6 @@ import { Input } from "@/components/ui/input";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import React, { useState } from "react";
-import { Api } from "@mui/icons-material";
-import axios from "axios";
 import { ToastAction } from "../ui/toast";
 import { axiosInstance } from "@/Api/Index";
 
@@ -108,8 +106,8 @@ const AddUserForm = ({ onClose, closeButton }) => {
         console.log("Error Request:", error.request);
         alert("No response from the server. Please try again later.");
       } else {
-        console.log("Error", error.message);
-        alert(`Error: ${error.message}`);
+        console.log("Error lassssssst", error.message);
+        alert(`Error lssssssssssssst: ${error.message}`);
       }
     } finally {
       onClose(); // Close the modal after form submission

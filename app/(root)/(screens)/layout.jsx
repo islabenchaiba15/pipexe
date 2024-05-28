@@ -4,6 +4,7 @@ import * as React from "react";
 import Nav from "../../../components/Nav";
 import WellContextProvider from "../../../context/WellContextProvider";
 import CreatePipeFormContextProvider from "../../../context/CreatePipeFormContextProvider";
+import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

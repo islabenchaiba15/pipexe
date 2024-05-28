@@ -57,7 +57,7 @@ function page() {
                   <Chart/>
                 </div>
                 <div className={" flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow "}>
-                  <MapComponent />
+                  <MapComponent icon={"../islam.png"}/>
                 </div>
             </section>
             <div className={" flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow pb-24"}>

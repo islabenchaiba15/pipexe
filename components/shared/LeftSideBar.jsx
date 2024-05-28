@@ -24,6 +24,7 @@ function LeftSideBar() {
           <div className="flex border-black flex-row items-center justify-between gap-2 p-3">
             <img
               src={"/search.png"}
+              alt="search"
               width={"auto"}
               height={"auto"}
               className="w-8 h-8 "

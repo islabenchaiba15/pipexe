@@ -15,10 +15,10 @@ const Page = () => {
       <WellContextProvider>
         <CreatePipeFormContextProvider>
           <div className="flex h-screen w-full">
-            <div className="w-2/3 ">
+            <div className="w-1/2 ">
               <Map setTotalDistance={setTotalDistance} />
             </div>
-            <div className="w-1/3 h-screen bg-white overflow-y-auto pb-16">
+            <div className="w-1/2 h-screen bg-white overflow-y-auto pb-16">
               <DragModal totalDistance={totalDistance} />
             </div>
           </div>

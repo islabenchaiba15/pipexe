@@ -17,7 +17,6 @@ export default function RootLayout({ children }) {
           <body className={`${inter.className} mx-auto max-w-[24400px] hide-scrollbar overflow-x-hidden overflow-y-hidden` }>
               {children}
               <Toaster />
-
           </body>
       </html>
   );

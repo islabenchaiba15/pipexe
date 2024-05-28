@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState ,  forwardRef } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -30,6 +30,9 @@ import Image from "next/image";
 import Control from "react-leaflet-custom-control";
 import SegmentModal from "./SegmentModal";
 import CoordContext from "../context/CoordContext";
+import { axiosInstance } from "@/Api/Index";
+import { useRouter } from "next/navigation";
+
 
 export function splitCoordinatesByDistance(coordinates, distances) {
   const result = [];
@@ -115,6 +118,7 @@ function getDistanceBetweenCoordinates(coord1, coord2) {
 }
 
 const Map = ({ setTotalDistance }) => {
+  const router =useRouter()
   const coordinates = [
     {
       id: 544,
@@ -146,18 +150,24 @@ const Map = ({ setTotalDistance }) => {
     },
   ];
   const distances = [];
+  const [edited, setEdited] = useState(false);
   const [active, setActive] = useState(false);
+
+  const [editedLayer, setEditedLayer] = useState(false);
+
   const center = [31.68121343655558, 6.141072936328754];
   const editRef = useRef(null);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const healthIcon = L.icon({
-    iconUrl: "../islam.png",
+    iconUrl: "../puit.svg",
     iconSize: [35, 35], // size of the icon
   });
-  const pui = puits.features;
-  const dataa = data.features;
-  // const coordinates = data.features[0].geometry.coordinates;
-  console.log(data.features[0]);
+
+  const manifoldIcon = L.icon({
+    iconUrl: "../manifold.svg",
+    iconSize: [35, 35], // size of the icon
+  });
+
   const [selectedLayer, setSelectedLayer] = useState("OpenStreetMap");
   const mapboxAccessToken =
     "pk.eyJ1IjoiaXNsYW1iZW5jaGFpYmEiLCJhIjoiY2x0bDhlcjVlMGplMDJqbXl4ZzFvbGllYyJ9.PYMskRvnsmAOm7N97ndC4g";
@@ -202,30 +212,30 @@ const Map = ({ setTotalDistance }) => {
         },
       ]);
       setActive(!active);
-      // console.log("polyyyyyy",polylines);
-      // polys.forEach((segment, segmentIndex) => {
-      //   console.log(`Segment ${segmentIndex + 1}:`);
-      //   segment.forEach((coordinate, coordinateIndex) => {
-      //     console.log(`Coordinate ${coordinateIndex + 1}:`);
-      //     console.log(`Latitude: ${coordinate.lat}, Longitude: ${coordinate.lng}`);
-      //   });
-      // });
     }
   };
   const _onEdited = (e) => {
     console.log(e);
     const {
-      layers: { _layers },
+      layers: { layerType, _layers },
     } = e;
-    Object.values(_layers).map(({ _leaflet_id, editing }) => {
-      setMapLayers((layers) =>
-        layers.map((l, index) =>
-          l.id === _leaflet_id
-            ? { ...l, latlngs: { ...editing.latlngs[0] } }
-            : l
-        )
-      );
-    });
+    console.log("poooooooooooooooooo", maplayers);
+
+    const editedLayers = Object.values(_layers).map(
+      ({ _leaflet_id, editing }) => {
+        return {
+          id: _leaflet_id,
+          latlngs: editing.latlngs[0],
+        };
+      }
+    );
+
+    setEditedLayer(editedLayers);
+    setEdited(!edited);
+
+    console.log("ediiiiiiiiiiiiiiiiiiiiited", editedLayers);
+
+    console.log("mmmmmmmm", maplayers);
   };
 
   const _onDeleted = (e) => {
@@ -233,9 +243,14 @@ const Map = ({ setTotalDistance }) => {
     const {
       layers: { _layers },
     } = e;
-    Object.values(_layers).map((_leaflet_id) => {
-      setMapLayers((layers) => layers.filter((l) => l.id !== _leaflet_id));
-    });
+
+    const deletedLayerIds = Object.values(_layers).map(
+      ({ _leaflet_id }) => _leaflet_id
+    );
+    console.log("ooonnnnnnnnnnnnn", deletedLayerIds);
+    setMapLayers((layers) =>
+      layers.filter((layer) => !deletedLayerIds.includes(layer.id))
+    );
   };
 
   console.log(JSON.stringify(maplayers, 0, 2));
@@ -255,13 +270,35 @@ const Map = ({ setTotalDistance }) => {
   ];
   // setPolylines(splitCoordinatesByDistance(coordinates, distances));
   // const polys = splitCoordinatesByDistance(coordinates, distances);
+  const [wells, setWells] = useState([]);
+  const [manifolds, setManifolds] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
 
+  useEffect(() => {
+    const fetchWells = async () => {
+      try {
+        const response = await axiosInstance.get("/well/get-wells");
+        const dataa = await axiosInstance.get("/manifold/getAll");
+        setWells(response.data);
+        setManifolds(dataa.data);
+        console.log("raniaaaaaaaaaaaa", response.data);
+        console.log("islammmmmmmmmmmvvvvvvv", wells);
+        setLoading(false);
+        console.log(loading, "looooooooooooooding");
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+    fetchWells();
+  }, []);
+  useEffect(() => {
+    console.log("Updated wells state:", wells);
+  }, [wells]);
   return (
     <>
       <MapContainer center={center} zoom={10} className="w-full h-screen z-10">
         <FeatureGroup>
           <EditControl
-            ref={editRef}
             position="topleft"
             onCreated={(e) => _onCreate(e, colors)}
             onEdited={_onEdited}
@@ -302,9 +339,7 @@ const Map = ({ setTotalDistance }) => {
             color={"black"}
             icon={healthIcon}
             weight={5}
-          >
-            <Popup>{}</Popup>
-          </Polyline>
+          ></Polyline>
         )}
 
         <Polyline
@@ -340,17 +375,30 @@ const Map = ({ setTotalDistance }) => {
       //     </Polyline>
       //   ))    
       // } */}
+        {!loading &&
+          wells.map((well, index) => (
+            <Marker
+              eventHandlers={{
+                click: () => router.push(`create-well/${well._id}`),
+              }}
+              position={[well.coords.latitude, well.coords.longitude]}
+              icon={healthIcon}
+              key={index}
+            >
 
-        {pui.map((p, index) => (
-          <Marker
-            eventHandlers={{
-              click: () => onOpen(),
-            }}
-            key={index}
-            position={p.geometry.coordinates}
-            icon={healthIcon}
-          ></Marker>
-        ))}
+            </Marker>
+          ))}
+        {!loading &&
+          manifolds.map((manifold, index) => (
+            <Marker
+              eventHandlers={{
+                click: () => router.push(`manifold/${manifold._id}`),
+              }}
+              position={[manifold.coords.latitude, manifold.coords.longitude]}
+              icon={manifoldIcon}
+              key={index}
+            ></Marker>
+          ))}
 
         {/* {polys.map((segment, index) => (
         <Polyline
@@ -404,32 +452,6 @@ const Map = ({ setTotalDistance }) => {
           )}
         </ModalContent>
       </Modal>
-      {/* <div className="custom-layer-control">
-        <div
-          class="layer-icon"
-          id="openStreetMapIcon"
-          onClick={() => setSelectedLayer("OpenStreetMap")}
-        >
-          <Image
-            width={100}
-            height={100}
-            src="eye.svg"
-            alt="OpenStreetMap Icon"
-          />
-        </div>
-        <div
-          class="layer-icon"
-          id="stamenTerrainIcon"
-          onClick={() => setSelectedLayer("Stamen Terrain")}
-        >
-          <Image
-            width={100}
-            height={100}
-            src="fire.svg"
-            alt="Stamen Terrain Icon"
-          />
-        </div>
-      </div> */}
     </>
   );
 };

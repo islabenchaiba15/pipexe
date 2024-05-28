@@ -25,7 +25,7 @@ function LeftBarDropDown({totalDistance,icon,affichage,title}) {
         <Dropdown placement='left-start '>
             <DropdownTrigger className='bg-slate-400 border'>
                 <div className='bg-gradient-to-r from-gray-100 to-gray-300 border p-4 '>
-                    <Image src={icon} width={50} height={50} />
+                    <Image src={icon} alt='icon' width={50} height={50} />
                 </div>
             </DropdownTrigger>
             <DropdownMenu aria-label="Static Actions" className=''>
