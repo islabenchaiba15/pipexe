@@ -3,12 +3,12 @@ import React,{useState,useEffect} from "react";
 import Card from "../../../../../components/pipe/Card";
 import AddressCard from "../../../../../components/well/AddressCard";
 import Chart from "../../../../../components/pipe/Chart";
-import TableDemo from "../../../../../components/manifold/Table";
 import PressureCard from "../../../../../components/manifold/PressureCard";
 import MapComponent from "../../../../../components/MapComponent";
 import CreatePipeFormContextProvider from "../../../../../context/CreatePipeFormContextProvider";
 import WellContextProvider from "../../../../../context/WellContextProvider";
 import { axiosInstance } from "@/Api/Index";
+import TableDemo from "@/components/Junction/TableDemo";
 const cardData = [
   {
     label: "Nom",
@@ -41,55 +41,45 @@ const RealData = [
 function page({params}) {
   console.log('paraaaams',params);
   const icon = "../manifold.svg";
-  const [manifold, setManifold] = useState([]);
+  const [junction, setJunction] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const fetchManifolds = async () => {
+    const fetchJunctions = async () => {
       try {
-        const response = await axiosInstance.get(`/manifold/${params.id}`);
-        setManifold(response.data);
+        const response = await axiosInstance.get(`/junction/${params.id}`);
+        setJunction(response.data);
         setLoading(false);
         console.log(loading, "looooooooooooooding");
       } catch (error) {
-        console.error("Error fetching manifolds", error);
+        console.error("Error fetching junctions", error);
       }
     };
-    fetchManifolds();
+    fetchJunctions();
   }, []);
   useEffect(() => {
-    console.log("Updated wells state:", manifold);
-  }, [manifold]);
+    console.log("Updated wells state:", junction);
+  }, [junction]);
   return (
-    !loading && (
+   !loading && (
     <CreatePipeFormContextProvider>
       <WellContextProvider>
         <div className="flex flex-col gap-5 mx-10 my-4 overflow-x-auto overflow-y-auto no-scrollbar h-screen ">
-          <h1 className="text-3xl font-bold text black">Manifold details</h1>
-          <section className="grid w-full grid-cols-1 gap-4  transition-all sm:grid-cols-2 xl:grid-cols-3 ">
+          <h1 className="text-3xl font-bold text black">Junction details</h1>
+          <section className="grid w-full grid-cols-1 gap-4  transition-all sm:grid-cols-2 xl:grid-cols-2 ">
               <Card
                 amount={"Nom"}
                 icon={"/fire.svg"}
-                discription={`drilled ${manifold.formattedDate}`}
-                label={manifold.name}
+                discription={`created ${junction.date}`}
+                label={junction.name}
               />
               <AddressCard
                 address={"address"}
-                wilaya={manifold.address.wilaya}
-                zone={manifold.address.zone}
-                region={manifold.address.region}
-                centre={manifold.address.centre}
+                wilaya={junction.address.wilaya}
+                zone={junction.address.zone}
+                region={junction.address.region}
+                centre={junction.address.centre}
                 icon={"/fire.svg"}
               />
-            {RealData.map((add, index) => (
-              <PressureCard
-                key={index}
-                Temperature={add.Temperature}
-                amount={add.amount}
-                pressure={add.pressure}
-                number={add.number}
-                icon={add.icon}
-              />
-            ))}
           </section>
           <section className="flex flex-col lg:flex-row lg:items-center gap-4 transition-all ">
             <div className="lg:w-1/2 w-full gap-3 rounded-xl border p-5 shadow">
@@ -97,7 +87,7 @@ function page({params}) {
               <Chart />
             </div>
             <div className="lg:w-1/2 w-full h-[400px] lg:h-full gap-3 rounded-xl border p-5 shadow ">
-              <MapComponent icon={icon} coords={manifold.coords} page={"manifold"}/>
+              <MapComponent icon={icon} page={"junction"} coords={junction.coords}/>
             </div>
           </section>
           <div
@@ -106,7 +96,7 @@ function page({params}) {
             }
           >
             <p className="p-4 font-semibold">Overview</p>
-            <TableDemo manifoldDetails={manifold}/>
+            <TableDemo junctionDetails={junction}/>
           </div>
           {/* <div className={" flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow "}>
               <TableDemo/>
@@ -117,8 +107,8 @@ function page({params}) {
         </div>
       </WellContextProvider>
     </CreatePipeFormContextProvider>
-    )
-  );
+  )
+)
 }
 
 export default page;

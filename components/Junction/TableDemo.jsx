@@ -8,6 +8,7 @@ import {
     TableHeader,
     TableRow,
   } from "../../components/ui/table"
+import ActionDropdown from "../ActionDropdown"
    
   const invoices = [
     {
@@ -22,33 +23,30 @@ import {
     },
   ]
    
-const TableDemo=({wellDetails})=> {
+const TableDemo=({junctionDetails})=> {
     return (
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px] font-bold">nom </TableHead>
+            <TableHead className=" font-bold">nom </TableHead>
             <TableHead className="font-bold">latitude</TableHead>
             <TableHead className="font-bold">longitude</TableHead>
             <TableHead className="font-bold">elevation</TableHead>
             <TableHead className="font-bold">date de pose</TableHead>
-            <TableHead className="font-bold">type</TableHead>
-            <TableHead className="font-bold">type date</TableHead>
             <TableHead className="font-bold">actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-
             <TableRow >
-              <TableCell className="font-medium">{wellDetails.name}</TableCell>
-              <TableCell>{wellDetails.coords.latitude}</TableCell>
-              <TableCell>{wellDetails.coords.longitude}</TableCell>
-              <TableCell className="">{wellDetails.elevation}</TableCell>
-              <TableCell>{wellDetails.formattedDate}</TableCell>
-              <TableCell>{wellDetails.wellType.type}</TableCell>
-              <TableCell>{wellDetails.formattedDate}</TableCell>
-              <TableCell>delete</TableCell>
+              <TableCell className="font-medium">{junctionDetails.name}</TableCell>
+              <TableCell>{junctionDetails.coords.latitude}</TableCell>
+              <TableCell>{junctionDetails.coords.longitude}</TableCell>
+              <TableCell className="">{junctionDetails.elevation} m</TableCell>
+              <TableCell>{junctionDetails.formattedDate}</TableCell>
+              <TableCell className="flex items-center ml-4">
+                <ActionDropdown/>
+              </TableCell>
             </TableRow>
         </TableBody>
         {/* <TableFooter>

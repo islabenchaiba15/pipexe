@@ -14,7 +14,7 @@ const Page = () => {
       <CreatePipeFormContextProvider>
         <div className='flex h-screen w-full'>
           <div className="w-1/2 ">
-            <MapComponent icon={icon}/>
+            <MapComponent icon={icon} page=""/>
           </div>
           <div className="w-1/2 h-screen bg-white overflow-y-auto pb-16">
             <ManifoldForm/>

@@ -8,6 +8,7 @@ import {
     TableHeader,
     TableRow,
   } from "../../components/ui/table"
+import ActionDropdown from "../ActionDropdown"
    
   const invoices = [
     {
@@ -22,13 +23,13 @@ import {
     },
   ]
    
-const TableDemo=()=> {
+const TableDemo=({manifoldDetails})=> {
     return (
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px] font-bold">nom </TableHead>
+            <TableHead className=" font-bold">nom </TableHead>
             <TableHead className="font-bold">latitude</TableHead>
             <TableHead className="font-bold">longitude</TableHead>
             <TableHead className="font-bold">elevation</TableHead>
@@ -37,16 +38,16 @@ const TableDemo=()=> {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.nom}</TableCell>
-              <TableCell>{invoice.latitude}</TableCell>
-              <TableCell>{invoice.longitude}</TableCell>
-              <TableCell className="">{invoice.elevation}</TableCell>
-              <TableCell>{invoice.date_de_pose}</TableCell>
-              <TableCell>{invoice.actions}</TableCell>
+            <TableRow >
+              <TableCell className="font-medium">{manifoldDetails.name}</TableCell>
+              <TableCell>{manifoldDetails.coords.latitude}</TableCell>
+              <TableCell>{manifoldDetails.coords.longitude}</TableCell>
+              <TableCell className="">{manifoldDetails.elevation} m</TableCell>
+              <TableCell>{manifoldDetails.formattedDate}</TableCell>
+              <TableCell className="flex items-center ml-4">
+                <ActionDropdown/>
+              </TableCell>
             </TableRow>
-          ))}
         </TableBody>
         {/* <TableFooter>
           <TableRow>

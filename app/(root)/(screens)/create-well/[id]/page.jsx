@@ -37,7 +37,7 @@ const address = [
 
 function page({ params }) {
   console.log(params);
-  const icon = "../islam.png";
+  const icon = "../puit.svg";
   const [well, setWell] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -67,13 +67,13 @@ function page({ params }) {
               <Card
                 amount={"Nom"}
                 icon={"/fire.svg"}
-                discription={`drilled `}
+                discription={`drilled ${well.formattedDate}`}
                 label={well.name}
               />
               <Card
                 amount={"erruptif"}
                 icon={"/fire.svg"}
-                discription={`depuis`}
+                discription={`depuis ${well.formattedDate}`}
                 label={"Type"}
               />
 
@@ -100,7 +100,7 @@ function page({ params }) {
                   " flex flex-col w-full h-[400px] lg:h-full justify-between gap-3 rounded-xl border p-5 shadow "
                 }
               >
-                <MapComponent icon={icon} />
+                <MapComponent icon={icon} coords={well.coords} />
               </div>
             </section>
             <div
@@ -109,7 +109,7 @@ function page({ params }) {
               }
             >
               <p className="p-4 font-semibold">Overview</p>
-              <TableDemo />
+              <TableDemo wellDetails={well} />
             </div>
             {/* <div className={" flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow "}>
               <TableDemo/>

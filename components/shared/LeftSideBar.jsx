@@ -38,7 +38,7 @@ function LeftSideBar() {
             <Drop />
           </div>
           <div className="w-full ">
-            <Tree />
+            {/* <Tree /> */}
           </div>
         </TabsContent>
         <TabsContent value="password"></TabsContent>

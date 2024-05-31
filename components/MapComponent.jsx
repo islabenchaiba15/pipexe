@@ -8,7 +8,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import { EditControl } from 'react-leaflet-draw';
 import WellContext from '../context/WellContext';
 import L from 'leaflet';
-const MapComponent = ({icon}) => {
+const MapComponent = ({icon,coords,page}) => {
   const userIcon = L.icon({
     iconUrl: icon,
     iconSize: [35, 35], // size of the icon
@@ -97,9 +97,12 @@ const MapComponent = ({icon}) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
-      <Marker position={center} icon={WellIcon}>
+      {
+        page==="manifold" && 
+        <Marker position={[coords.latitude,coords.longitude]} icon={WellIcon}>
         <Popup>This is a marker</Popup>
       </Marker>
+      }
       <Polyline positions={islam} color= {"black"}  weight={5}>
             <Popup>{}</Popup>
         </Polyline>

@@ -21,6 +21,9 @@ import {
 } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
 import { Button } from "../../components/ui/button";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { CalendarIcon } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -31,13 +34,12 @@ import {
   FormDescription,
 } from "../../components/ui/form";
 import { Input } from "../../components/ui/input";
-import React,{ useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import WellContext from "../../context/WellContext";
 import { axiosInstance } from "@/Api/Index";
 import fetchElevation from "@/lib/functions";
 import { useToast } from "../ui/use-toast";
 import { ToastAction } from "../ui/toast";
-
 
 const latitudeSchema = z.preprocess((arg) => {
   if (typeof arg === "string") {
@@ -63,16 +65,16 @@ const formSchema1 = z.object({
   }),
 });
 const formSchema = z.object({
-    latitude: z.string().min(1, { message: "Latitude is required" }),
-    longitude: z.string().min(1, { message: "Longitude is required" }),
-    centre: z.string().min(1, { message: "Centre is required" }),
-    region: z.string().min(1, { message: "Region is required" }),
-    wilaya: z.string().min(1, { message: "Wilaya is required" }),
-    zone: z.string().min(1, { message: "Zone is required" }),
-    name: z.string().min(1, { message: "Name is required" }),
+  latitude: z.string().min(1, { message: "Latitude is required" }),
+  longitude: z.string().min(1, { message: "Longitude is required" }),
+  centre: z.string().min(1, { message: "Centre is required" }),
+  region: z.string().min(1, { message: "Region is required" }),
+  wilaya: z.string().min(1, { message: "Wilaya is required" }),
+  zone: z.string().min(1, { message: "Zone is required" }),
+  name: z.string().min(1, { message: "Name is required" }),
+  date: z.date({ message: "Name is required" }),
+
 });
-
-
 
 const ManifoldForm = () => {
   const {
@@ -95,6 +97,7 @@ const ManifoldForm = () => {
       wilaya: "",
       zone: "",
       name: "",
+      date:""
     },
   });
   const showSuccessToast = () => {
@@ -109,8 +112,7 @@ const ManifoldForm = () => {
     toast({
       variant: "destructive",
       title: "failed to create toast ",
-      description:
-        "failed to create toast,please try again",
+      description: "failed to create toast,please try again",
       action: <ToastAction altText="Try again">Try again</ToastAction>,
     });
   };
@@ -126,6 +128,7 @@ const ManifoldForm = () => {
     const wilaya = values.wilaya;
     const zone = values.zone;
     const name = values.name;
+    const date = values.date.toISOString();
     const elevation = await fetchElevation(latitude, longitude);
     const updatedData = {
       ...formData,
@@ -138,6 +141,7 @@ const ManifoldForm = () => {
       zone: zone,
       elevation: elevation,
       attributes: [],
+      date:date
     };
     setFormData(updatedData);
     try {
@@ -145,27 +149,26 @@ const ManifoldForm = () => {
         "/manifold/create-manifold",
         updatedData
       );
-      console.log('receeeeeeeeeeeive',data)
+      console.log("receeeeeeeeeeeive", data);
       showSuccessToast();
       form.reset(form.defaultValues);
-      form.setValue('latitude', '');
-
+      form.setValue("latitude", "");
     } catch (error) {
-        if (error.response) {
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            email: error.response.data.message,
-          }));
-          showfailedToast()
-          console.log("Error Response:ssssssssssssss", errors);
-        } else if (error.request) {
-          console.log("Error Request:", error.request);
-          alert("No response from the server. Please try again later.");
-        } else {
-          console.log("Error", error.message);
-          alert(`Error: ${error.message}`);
-        }
+      if (error.response) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: error.response.data.message,
+        }));
+        showfailedToast();
+        console.log("Error Response:ssssssssssssss", errors);
+      } else if (error.request) {
+        console.log("Error Request:", error.request);
+        alert("No response from the server. Please try again later.");
+      } else {
+        console.log("Error", error.message);
+        alert(`Error: ${error.message}`);
       }
+    }
   };
   const languages = [
     { label: "English", value: "en" },
@@ -207,21 +210,22 @@ const ManifoldForm = () => {
               name="latitude"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <div className="flex items-center gap-5 w-full">
-                    <FormLabel className="text-lg">latitude</FormLabel>
-                    <FormControl>
-                      <Input
-                        readOnly={ischecked}
-                        placeholder={
-                          ischecked ? "Latitude (read-only)" : "Latitude"
-                        }
-                        {...field}
-                        className="w-full"
-                        type="number"
-                        value={ischecked ? marker?.lat : field.value}
-                      />
-                    </FormControl>
-                  </div>
+                  <FormLabel className="text-md font-bold">latitude</FormLabel>
+                  <FormControl>
+                    <Input
+                      readOnly={ischecked}
+                      placeholder={
+                        ischecked ? "Latitude (read-only)" : "Latitude"
+                      }
+                      {...field}
+                      className="w-full"
+                      type="number"
+                      value={ischecked ? marker?.lat : field.value}
+                    />
+                  </FormControl>
+                  <FormDescription className="text-xs">
+                    This is the language that will be used in the dashboard.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -231,33 +235,34 @@ const ManifoldForm = () => {
               name="longitude"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <div className="flex items-center gap-5 w-full">
-                    <FormLabel className="text-lg">longitude</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder={
-                          ischecked ? "longitude (read-only)" : "longitude"
-                        }
-                        type="number"
-                        readOnly={ischecked}
-                        {...field}
-                        className="w-full"
-                        value={ischecked ? marker?.lng : field.value}
-                      />
-                    </FormControl>
-                  </div>
+                  <FormLabel className="text-md font-bold">longitude</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={
+                        ischecked ? "longitude (read-only)" : "longitude"
+                      }
+                      type="number"
+                      readOnly={ischecked}
+                      {...field}
+                      className="w-full"
+                      value={ischecked ? marker?.lng : field.value}
+                    />
+                  </FormControl>
+                  <FormDescription className="text-xs">
+                    This is the language that will be used in the dashboard.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem className="flex flex-col items-start w-1/2">
-                <div className="flex items-center gap-8 w-full">
-                  <FormLabel className="text-lg">name</FormLabel>
+          <div className="flex items-center gap-2">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-start w-1/2">
+                  <FormLabel className="text-md font-bold">name</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="name of manifold"
@@ -265,11 +270,58 @@ const ManifoldForm = () => {
                       className="w-full"
                     />
                   </FormControl>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  <FormDescription className="text-xs">
+                    This is the language that will be used in the dashboard.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-start w-1/2">
+                  <FormLabel className="text-md font-bold ">date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-full pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription className="text-xs">
+                    Your date of birth is used to calculate your age.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <h1 className="text-black text-2xl font-bold">addresse</h1>
           <div className="flex items-center gap-2">
             <FormField
@@ -277,58 +329,56 @@ const ManifoldForm = () => {
               name="centre"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <div className="flex items-center gap-5 w-full">
-                    <FormLabel className="text-lg font-bold">centre</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              "w-full justify-between mr-4",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value
-                              ? languages.find(
-                                  (language) => language.value === field.value
-                                )?.label
-                              : "Select language"}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className=" p-0">
-                        <Command>
-                          <CommandInput placeholder="Search language..." />
-                          <CommandEmpty>No language found.</CommandEmpty>
-                          <CommandGroup>
-                            {languages.map((language) => (
-                              <CommandItem
-                                value={language.label}
-                                key={language.value}
-                                onSelect={() => {
-                                  form.setValue("centre", language.value);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    language.value === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {language.label}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                  <FormDescription>
+                  <FormLabel className="text-md font-bold">centre</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between mr-4",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? languages.find(
+                                (language) => language.value === field.value
+                              )?.label
+                            : "Select language"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className=" p-0">
+                      <Command>
+                        <CommandInput placeholder="Search language..." />
+                        <CommandEmpty>No language found.</CommandEmpty>
+                        <CommandGroup>
+                          {languages.map((language) => (
+                            <CommandItem
+                              value={language.label}
+                              key={language.value}
+                              onSelect={() => {
+                                form.setValue("centre", language.value);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  language.value === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {language.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription className="text-xs">
                     This is the language that will be used in the dashboard.
                   </FormDescription>
                   <FormMessage />
@@ -340,58 +390,56 @@ const ManifoldForm = () => {
               name="region"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <div className="flex items-center gap-5 w-full">
-                    <FormLabel className="text-lg font-bold">region</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              "w-full justify-between mr-4",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value
-                              ? languages.find(
-                                  (language) => language.value === field.value
-                                )?.label
-                              : "Select language"}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className=" p-0">
-                        <Command>
-                          <CommandInput placeholder="Search language..." />
-                          <CommandEmpty>No language found.</CommandEmpty>
-                          <CommandGroup>
-                            {languages.map((language) => (
-                              <CommandItem
-                                value={language.label}
-                                key={language.value}
-                                onSelect={() => {
-                                  form.setValue("region", language.value);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    language.value === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {language.label}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                  <FormDescription>
+                  <FormLabel className="text-md font-bold">region</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between mr-4",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? languages.find(
+                                (language) => language.value === field.value
+                              )?.label
+                            : "Select language"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className=" p-0">
+                      <Command>
+                        <CommandInput placeholder="Search language..." />
+                        <CommandEmpty>No language found.</CommandEmpty>
+                        <CommandGroup>
+                          {languages.map((language) => (
+                            <CommandItem
+                              value={language.label}
+                              key={language.value}
+                              onSelect={() => {
+                                form.setValue("region", language.value);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  language.value === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {language.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription className="text-xs">
                     This is the language that will be used in the dashboard.
                   </FormDescription>
                   <FormMessage />
@@ -405,58 +453,56 @@ const ManifoldForm = () => {
               name="zone"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <div className="flex items-center gap-5 w-full">
-                    <FormLabel className="text-lg font-bold">zone</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              "w-full justify-between mr-4",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value
-                              ? languages.find(
-                                  (language) => language.value === field.value
-                                )?.label
-                              : "Select language"}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className=" p-0">
-                        <Command>
-                          <CommandInput placeholder="Search language..." />
-                          <CommandEmpty>No language found.</CommandEmpty>
-                          <CommandGroup>
-                            {languages.map((language) => (
-                              <CommandItem
-                                value={language.label}
-                                key={language.value}
-                                onSelect={() => {
-                                  form.setValue("zone", language.value);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    language.value === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {language.label}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                  <FormDescription>
+                  <FormLabel className="text-md font-bold">zone</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between mr-4",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? languages.find(
+                                (language) => language.value === field.value
+                              )?.label
+                            : "Select language"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className=" p-0">
+                      <Command>
+                        <CommandInput placeholder="Search language..." />
+                        <CommandEmpty>No language found.</CommandEmpty>
+                        <CommandGroup>
+                          {languages.map((language) => (
+                            <CommandItem
+                              value={language.label}
+                              key={language.value}
+                              onSelect={() => {
+                                form.setValue("zone", language.value);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  language.value === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {language.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription className="text-xs">
                     This is the language that will be used in the dashboard.
                   </FormDescription>
                   <FormMessage />
@@ -468,58 +514,56 @@ const ManifoldForm = () => {
               name="wilaya"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <div className="flex items-center gap-5 w-full">
-                    <FormLabel className="text-lg font-bold">wilaya</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              "w-full justify-between mr-4",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value
-                              ? languages.find(
-                                  (language) => language.value === field.value
-                                )?.label
-                              : "Select language"}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className=" p-0">
-                        <Command>
-                          <CommandInput placeholder="Search language..." />
-                          <CommandEmpty>No language found.</CommandEmpty>
-                          <CommandGroup>
-                            {languages.map((language) => (
-                              <CommandItem
-                                value={language.label}
-                                key={language.value}
-                                onSelect={() => {
-                                  form.setValue("wilaya", language.value);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    language.value === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {language.label}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                  <FormDescription>
+                  <FormLabel className="text-md font-bold">wilaya</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between mr-4",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? languages.find(
+                                (language) => language.value === field.value
+                              )?.label
+                            : "Select language"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className=" p-0">
+                      <Command>
+                        <CommandInput placeholder="Search language..." />
+                        <CommandEmpty>No language found.</CommandEmpty>
+                        <CommandGroup>
+                          {languages.map((language) => (
+                            <CommandItem
+                              value={language.label}
+                              key={language.value}
+                              onSelect={() => {
+                                form.setValue("wilaya", language.value);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  language.value === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {language.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription className="text-xs">
                     This is the language that will be used in the dashboard.
                   </FormDescription>
                   <FormMessage />

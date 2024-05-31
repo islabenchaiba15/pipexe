@@ -25,11 +25,12 @@ const ActionDropdown=()=> {
           <DropdownMenuGroup>
             <DropdownMenuItem className="cursor-pointer">
               <DeleteIcon className="mr-3 h-4 w-4" />
-              <span>edit</span>
+              <span>delete</span>
+
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
               <EditIcon className="mr-3 h-4 w-4" />
-              <span>delete</span>
+              <span>edit</span>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />

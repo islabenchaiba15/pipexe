@@ -1,5 +1,11 @@
 "use client";
-import React, { useContext, useEffect, useRef, useState ,  forwardRef } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  forwardRef,
+} from "react";
 import {
   MapContainer,
   TileLayer,
@@ -23,7 +29,6 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import { data } from "../constants/data";
 import L, { Icon } from "leaflet";
 import { puits } from "../constants/achraf";
 import Image from "next/image";
@@ -32,7 +37,7 @@ import SegmentModal from "./SegmentModal";
 import CoordContext from "../context/CoordContext";
 import { axiosInstance } from "@/Api/Index";
 import { useRouter } from "next/navigation";
-
+import { data } from "@/constants/data";
 
 export function splitCoordinatesByDistance(coordinates, distances) {
   const result = [];
@@ -118,7 +123,7 @@ function getDistanceBetweenCoordinates(coord1, coord2) {
 }
 
 const Map = ({ setTotalDistance }) => {
-  const router =useRouter()
+  const router = useRouter();
   const coordinates = [
     {
       id: 544,
@@ -168,6 +173,10 @@ const Map = ({ setTotalDistance }) => {
     iconSize: [35, 35], // size of the icon
   });
 
+  const junctionIcon = L.icon({
+    iconUrl: "../islam.png",
+    iconSize: [35, 35], // size of the icon
+  });
   const [selectedLayer, setSelectedLayer] = useState("OpenStreetMap");
   const mapboxAccessToken =
     "pk.eyJ1IjoiaXNsYW1iZW5jaGFpYmEiLCJhIjoiY2x0bDhlcjVlMGplMDJqbXl4ZzFvbGllYyJ9.PYMskRvnsmAOm7N97ndC4g";
@@ -272,6 +281,7 @@ const Map = ({ setTotalDistance }) => {
   // const polys = splitCoordinatesByDistance(coordinates, distances);
   const [wells, setWells] = useState([]);
   const [manifolds, setManifolds] = useState([]);
+  const [junctions, setJunction] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
@@ -279,8 +289,11 @@ const Map = ({ setTotalDistance }) => {
       try {
         const response = await axiosInstance.get("/well/get-wells");
         const dataa = await axiosInstance.get("/manifold/getAll");
+        const junction = await axiosInstance.get("/junction/getAll");
+
         setWells(response.data);
         setManifolds(dataa.data);
+        setJunction(junction.data);
         console.log("raniaaaaaaaaaaaa", response.data);
         console.log("islammmmmmmmmmmvvvvvvv", wells);
         setLoading(false);
@@ -293,7 +306,8 @@ const Map = ({ setTotalDistance }) => {
   }, []);
   useEffect(() => {
     console.log("Updated wells state:", wells);
-  }, [wells]);
+    console.log("Updated junctions state:", junctions);
+  }, [wells, junctions]);
   return (
     <>
       <MapContainer center={center} zoom={10} className="w-full h-screen z-10">
@@ -361,20 +375,17 @@ const Map = ({ setTotalDistance }) => {
         >
           <Popup>{}</Popup>
         </Polyline>
-        {/* {
-        active ? 
-        dataa.map((feature,index)=>(
+
+        {data.map((feature,index)=>(
           <Polyline key={index} positions={feature.geometry.coordinates} color= {"white"} icon={healthIcon} weight={5}>
             <Popup>{}</Popup>
-          </Polyline>
-        ))     
-        :
-      //   coordinates.map((feature, index) => (
-      //     <Polyline key={index} positions={feature.latlngs[0].map(coord => [coord.lat, coord.lng])} color={"white"} weight={5}>
-      //       <Popup>ID: {feature.id}</Popup>
-      //     </Polyline>
-      //   ))    
-      // } */}
+          </Polyline>))}
+
+         {/* {data.map((feature, index) => (
+           <Polyline key={index} positions={feature.latlngs[0].map(coord => [coord.lat, coord.lng])} color={"white"} weight={5}>
+             <Popup>ID: {feature.id}</Popup>
+           </Polyline>
+         ))} */}
         {!loading &&
           wells.map((well, index) => (
             <Marker
@@ -384,9 +395,7 @@ const Map = ({ setTotalDistance }) => {
               position={[well.coords.latitude, well.coords.longitude]}
               icon={healthIcon}
               key={index}
-            >
-
-            </Marker>
+            ></Marker>
           ))}
         {!loading &&
           manifolds.map((manifold, index) => (
@@ -396,6 +405,18 @@ const Map = ({ setTotalDistance }) => {
               }}
               position={[manifold.coords.latitude, manifold.coords.longitude]}
               icon={manifoldIcon}
+              key={index}
+            ></Marker>
+          ))}
+
+        {!loading &&
+          junctions.map((junction, index) => (
+            <Marker
+              eventHandlers={{
+                click: () => router.push(`jonction/${junction._id}`),
+              }}
+              position={[junction.coords.latitude, junction.coords.longitude]}
+              icon={junctionIcon}
               key={index}
             ></Marker>
           ))}
