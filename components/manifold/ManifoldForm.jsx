@@ -40,7 +40,13 @@ import { axiosInstance } from "@/Api/Index";
 import fetchElevation from "@/lib/functions";
 import { useToast } from "../ui/use-toast";
 import { ToastAction } from "../ui/toast";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 const latitudeSchema = z.preprocess((arg) => {
   if (typeof arg === "string") {
     return arg ? parseFloat(arg) : undefined;
@@ -73,6 +79,12 @@ const formSchema = z.object({
   zone: z.string().min(1, { message: "Zone is required" }),
   name: z.string().min(1, { message: "Name is required" }),
   date: z.date({ message: "Name is required" }),
+  file: z.instanceof(FileList).optional(),
+  planFile: z.instanceof(FileList).optional(),
+  n_elelements: z.string().min(1, { message: "Latitude is required" }),
+  n_transverselle: z.string().min(1, { message: "Latitude is required" }),
+  n_depart: z.string().min(1, { message: "Latitude is required" }),
+  niance: z.string({message: "Latitude is required"})
 
 });
 
@@ -97,7 +109,13 @@ const ManifoldForm = () => {
       wilaya: "",
       zone: "",
       name: "",
-      date:""
+      date: "",
+      file: "",
+      n_elelements: "",
+      n_transverselle: "",
+      n_depart: "",
+      niance: "",
+      planFile:""
     },
   });
   const showSuccessToast = () => {
@@ -118,6 +136,10 @@ const ManifoldForm = () => {
   };
   const [errors, setErrors] = useState({});
   const { toast } = useToast();
+  const fileRef = form.register("file");
+  
+  const fileRefe = form.register("planFile");
+
   // 2. Define a submit handler.
   const onSubmit = async (values) => {
     console.log("vvvvvvvv", values);
@@ -129,6 +151,13 @@ const ManifoldForm = () => {
     const zone = values.zone;
     const name = values.name;
     const date = values.date.toISOString();
+    const n_elelements = values.n_elelements;
+    const n_transverselle = values.n_transverselle;
+    const n_depart = values.n_depart;
+    const niance = values.niance;
+    const file = values.file[0]; 
+    const planFile = values.planFile[0]; // Access the first file in the FileList
+    // Access the first file in the FileList
     const elevation = await fetchElevation(latitude, longitude);
     const updatedData = {
       ...formData,
@@ -141,13 +170,24 @@ const ManifoldForm = () => {
       zone: zone,
       elevation: elevation,
       attributes: [],
-      date:date
+      date: date,
+      file: file,
+
+      n_elements: n_elelements,
+      n_transverselle: n_transverselle,
+      n_depart: n_depart,
+      niance: niance,
+      planFile:planFile
     };
     setFormData(updatedData);
     try {
       const { data } = await axiosInstance.post(
         "/manifold/create-manifold",
-        updatedData
+        updatedData,{
+          headers: {
+             'Content-Type': 'multipart/form-data',
+           },
+        }
       );
       console.log("receeeeeeeeeeeive", data);
       showSuccessToast();
@@ -571,66 +611,157 @@ const ManifoldForm = () => {
               )}
             />
           </div>
-          {/* <h1 className="text-black text-2xl font-bold">Production</h1>
-            <div className="flex flex-wrap gap-4 items-center mb-2 mt-2 ">
-                <FormField
-                control={form.control}
-                name="gas"
-                render={({ field }) => (
-                    <FormItem className="flex flex-col items-start ">
-                        <div className="flex items-center gap-5 w-full">
-                            <FormLabel className="text-lg">gas</FormLabel>
-                            <FormControl>
-                                <Input 
-                                 type="number"
-                                 placeholder={"gas"} 
-                                {...field} className="w-full" 
-                                />
-                            </FormControl>
-                        </div>
-                        <FormMessage />
-                    </FormItem>
-                )}
-                />
-                <FormField
-                control={form.control}
-                name="oil"
-                render={({ field }) => (
-                    <FormItem className="flex flex-col items-start">
-                        <div className="flex items-center gap-5 w-full">
-                            <FormLabel className="text-lg">oil</FormLabel>
-                            <FormControl>
-                                <Input 
-                                 type="number"
-                                placeholder={'oil'}
-                                {...field} className="w-full" 
-                                />
-                            </FormControl>
-                        </div>
-                        <FormMessage />
-                    </FormItem>
-                )}
-                />
-                <FormField
-                control={form.control}
-                name="go"
-                render={({ field }) => (
-                    <FormItem className="flex flex-col items-start">
-                        <div className="flex items-center gap-5 w-full">
-                            <FormLabel className="text-lg">G/O</FormLabel>
-                            <FormControl>
-                                <Input 
-                                type="number"
-                                placeholder={'oil'}
-                                {...field} className="w-full" 
-                                />
-                            </FormControl>
-                        </div>
-                        <FormMessage />
-                    </FormItem>
-                )}
-                />
-            </div> */}
+          <h1 className="text-black text-2xl font-bold">Technique</h1>
+          <div className="flex items-center mb-2 mt-2 gap-4">
+            <FormField
+              control={form.control}
+              name="n_elelements"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-start w-1/2">
+                  <FormLabel className="text-md font-bold">N°element</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={"N°element"}
+                      {...field}
+                      className="w-full"
+                      type="number"
+                    />
+                  </FormControl>
+                  <FormDescription className="text-xs">
+                    This is the language that will be used in the dashboard.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="n_transverselle"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-start w-1/2">
+                  <FormLabel className="text-md font-bold">
+                    N°transverselle
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={"N°transverselle"}
+                      type="number"
+                      {...field}
+                      className="w-full"
+                    />
+                  </FormControl>
+                  <FormDescription className="text-xs">
+                    This is the language that will be used in the dashboard.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="flex items-center mb-2 mt-2 gap-4">
+            <FormField
+              control={form.control}
+              name="n_depart"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-start w-1/2">
+                  <FormLabel className="text-md font-bold">N° depart</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={"N°depart"}
+                      {...field}
+                      className="w-full"
+                      type="number"
+                    />
+                  </FormControl>
+                  <FormDescription className="text-xs">
+                    This is the language that will be used in the dashboard.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="niance"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-start w-1/2 ">
+                  <FormLabel className="text-lg">Niance</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} className="">
+                      <SelectTrigger>
+                        <SelectValue placeholder="type of pipe" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="fue">fue</SelectItem>
+                        <SelectItem value="silver">silver</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormDescription className="text-xs">
+                    This is the language that will be used in the dashboard.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <h1 className="text-black text-2xl font-bold">fichier</h1>
+          <div className="flex items-center mb-2 mt-2 gap-4">
+            <FormField
+              control={form.control}
+              name="planFile"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-start w-1/2">
+                  <FormLabel className="text-md font-bold">
+                    fiche technique
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={"fiche technique"}
+                      onChange={(event) => {
+                        field.onChange(event.target?.files?.[0] ?? undefined);
+                      }}
+                      className="w-full"
+                      {...fileRefe}
+                      type="file"
+                    />
+                  </FormControl>
+                  <FormDescription className="text-xs">
+                    This is the language that will be used in the dashboard.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="file"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-start w-1/2">
+                  <FormLabel className="text-md font-bold">
+                    fiche technique
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={"fiche technique"}
+                      onChange={(event) => {
+                        field.onChange(event.target?.files?.[0] ?? undefined);
+                      }}
+                      className="w-full"
+                      {...fileRef}
+                      type="file"
+                    />
+                  </FormControl>
+                  <FormDescription className="text-xs">
+                    This is the language that will be used in the dashboard.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
           <div className="flex justify-end mt-4">
             <Button variant="outline" className="">
               annuler

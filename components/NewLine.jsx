@@ -7,11 +7,6 @@ import { z } from "zod";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -30,10 +25,26 @@ import {
   FormLabel,
   FormMessage,
 } from "../components/ui/form";
+import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import { Input } from "../components/ui/input";
 import Draggable from "react-draggable";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import CreatePipeFormContext from "../context/CreatePipeFormContext";
+import { axiosInstance } from "@/Api/Index";
+import DataContext from "@/context/DataContext";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "name is required" }),
@@ -53,15 +64,30 @@ export function NewLine({ onNext, totalDistance }) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      largeur: "",
+      diametre: "",
       type: "",
       nature: "",
       from: "",
       to: "",
+      connection: "",
       date: "",
     },
   });
+  const { wells, setWells, manifolds, setManifolds, junctions, setJunctions } =
+    useContext(DataContext);
 
+  const [infrastructures, setInfrastructures] = useState([]);
+  const [infrastructures2, setInfrastructures2] = useState([]);
+
+  useEffect(() => {
+    console.log("weeeeeells", wells);
+    console.log("manifoldsssssss", manifolds);
+    console.log("juuunctions", junctions);
+    const merged = [...wells, ...manifolds];
+    setInfrastructures(merged);
+    const merg = [...junctions, ...manifolds];
+    setInfrastructures2(merg);
+  }, [wells, junctions, manifolds]);
   // 2. Define a submit handler.
   function onSubmit(values) {
     onNext(values);
@@ -79,7 +105,7 @@ export function NewLine({ onNext, totalDistance }) {
             <Label htmlFor="longeur" className="text-lg font-bold">
               Longeur
             </Label>
-            <h3 className="text-semibold text-xl">{totalDistance}</h3>
+            <h3 className="text-semibold text-xl">{totalDistance} m</h3>
           </div>
           <div className="flex items-center mb-1  gap-4">
             <FormField
@@ -103,7 +129,7 @@ export function NewLine({ onNext, totalDistance }) {
               name="largeur"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">largeur</FormLabel>
+                  <FormLabel className="text-md font-bold">eppiseur</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} className="w-full" />
                   </FormControl>
@@ -125,11 +151,12 @@ export function NewLine({ onNext, totalDistance }) {
                   <FormControl>
                     <Select onValueChange={field.onChange}>
                       <SelectTrigger className="">
-                        <SelectValue placeholder="the nature" />
+                        <SelectValue placeholder="choose nature" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="type1">nature</SelectItem>
-                        <SelectItem value="type2">nature2</SelectItem>
+                        <SelectItem value="gas">gas</SelectItem>
+                        <SelectItem value="oil">oil</SelectItem>
+                        <SelectItem value="eau">eau</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -149,11 +176,11 @@ export function NewLine({ onNext, totalDistance }) {
                   <FormControl>
                     <Select onValueChange={field.onChange}>
                       <SelectTrigger className="">
-                        <SelectValue placeholder="the type " />
+                        <SelectValue placeholder="choose type " />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="type1">type1</SelectItem>
-                        <SelectItem value="type2">type2</SelectItem>
+                        <SelectItem value="collect">collect</SelectItem>
+                        <SelectItem value="collector">collector</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -171,15 +198,102 @@ export function NewLine({ onNext, totalDistance }) {
               name="from"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">from</FormLabel>
+                  <FormLabel className="text-md font-bold">depart</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between mr-4",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? infrastructures.find(
+                                (infrastructure) =>
+                                  infrastructure.ID === field.value
+                              )?.name
+                            : "Select depart"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className=" p-0">
+                      <Command>
+                        <CommandInput placeholder="Search language..." />
+                        <CommandEmpty>No language found.</CommandEmpty>
+                        <CommandGroup>
+                          <h1 className="font-bold text-md mx-8 my-1">wells</h1>
+                          {wells.map((well) => (
+                            <CommandItem
+                              value={well.name}
+                              key={well.ID}
+                              onSelect={() => {
+                                form.setValue("from", well.ID);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  well.ID === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {well.name}
+                            </CommandItem>
+                          ))}
+                          <h1 className="font-bold text-md mx-8 my-3">
+                            manifolds
+                          </h1>
+                          {manifolds.map((manifold) => (
+                            <CommandItem
+                              value={manifold.name}
+                              key={manifold.ID}
+                              onSelect={() => {
+                                form.setValue("from", manifold.ID);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  manifold.ID === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {manifold.name}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription className="text-xs">
+                    This is the language that will be used in the dashboard.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="connection"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-start w-1/2">
+                  <FormLabel className="text-md font-bold">
+                    connection
+                  </FormLabel>
                   <FormControl>
-                    <Select onValueChange={field.onChange}>
+                    <Select onValueChange={field.onChange} className="w-full">
                       <SelectTrigger className="">
-                        <SelectValue placeholder="the start of pipe" />
+                        <SelectValue placeholder="the end of pipe" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="from1">from</SelectItem>
-                        <SelectItem value="from2">from2</SelectItem>
+                        <SelectItem value="pipe">pipe</SelectItem>
+                        <SelectItem value="manifold">manifold</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -190,64 +304,93 @@ export function NewLine({ onNext, totalDistance }) {
                 </FormItem>
               )}
             />
-            <div className="flex items-center w-1/2 gap-0">
-              <div className="w-1/3">
-                <FormField
-                  control={form.control}
-                  name="to"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col items-start ">
-                      <FormLabel className="text-md font-bold">to</FormLabel>
-                      <FormControl>
-                        <Select
-                          onValueChange={field.onChange}
-                          className="w-full"
-                        >
-                          <SelectTrigger className="">
-                            <SelectValue placeholder="the end of pipe" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="to">to</SelectItem>
-                            <SelectItem value="to2">to2</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="w-2/3">
-                <FormField
-                  control={form.control}
-                  name="to"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col items-start ">
-                      <FormLabel className="text-md font-bold">to</FormLabel>
-                      <FormControl>
-                        <Select
-                          onValueChange={field.onChange}
-                          className="w-full"
-                        >
-                          <SelectTrigger className="">
-                            <SelectValue placeholder="the end of pipe" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="to">to</SelectItem>
-                            <SelectItem value="to2">to2</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
           </div>
-          <div className="flex items-center mb-1 gap-4">
+          <div className="flex items-center mb-1 gap-4 ">
+            <FormField
+              control={form.control}
+              name="to"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-start w-1/2">
+                  <FormLabel className="text-md font-bold">destination</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between mr-4",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? infrastructures2.find(
+                                (infrastructure2) =>
+                                  infrastructure2.ID === field.value
+                              )?.name
+                            : "Select depart"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className=" p-0">
+                      <Command>
+                        <CommandInput placeholder="Search language..." />
+                        <CommandEmpty>No language found.</CommandEmpty>
+                        <CommandGroup>
+                          <h1 className="font-bold text-md mx-8 my-1">wells</h1>
+                          {junctions.map((junction) => (
+                            <CommandItem
+                              value={junction.name}
+                              key={junction.ID}
+                              onSelect={() => {
+                                form.setValue("to", junction.ID);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  junction.ID === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {junction.name}
+                            </CommandItem>
+                          ))}
+                          <h1 className="font-bold text-md mx-8 my-3">
+                            manifolds
+                          </h1>
+                          {manifolds.map((manifold) => (
+                            <CommandItem
+                              value={manifold.name}
+                              key={manifold.ID}
+                              onSelect={() => {
+                                form.setValue("to", manifold.ID);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  manifold.ID === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {manifold.name}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription className="text-xs">
+                    This is the language that will be used in the dashboard.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="date"
@@ -293,125 +436,8 @@ export function NewLine({ onNext, totalDistance }) {
               )}
             />
           </div>
+          <div className="flex items-center mb-1 gap-4"></div>
 
-          {/* 
-          <FormField
-            control={form.control}
-            name="largeur"
-            render={({ field }) => (
-              <FormItem className="flex flex-col items-start ">
-                <div className="flex items-center gap-5 w-full">
-                  <FormLabel className="text-lg font-bold ">largeur</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="shadcn"
-                      {...field}
-                      type="number"
-                      className="w-full "
-                    />
-                  </FormControl>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
-
-          {/* <FormField
-            control={form.control}
-            name="type"
-            render={({ field }) => (
-              <FormItem className="flex flex-col items-start">
-                <div className="flex items-center gap-10 w-full">
-                  <FormLabel className="text-lg font-bold">type</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} className="">
-                      <SelectTrigger className="">
-                        <SelectValue placeholder="type of pipe" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="gaz">gaz</SelectItem>
-                        <SelectItem value="petrol">petrol</SelectItem>
-                        <SelectItem value="eau">eau</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="nature"
-            render={({ field }) => (
-              <FormItem className="flex flex-col items-start ">
-                <div className="flex items-center gap-5 w-full">
-                  <FormLabel className="text-lg font-bold">Nature</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange}>
-                      <SelectTrigger className="">
-                        <SelectValue placeholder="nature of pipe" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="collecteur">collecteur</SelectItem>
-                        <SelectItem value="collect">collect</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="from"
-            render={({ field }) => (
-              <FormItem className="flex flex-col items-start ">
-                <div className="flex items-center gap-10 w-full">
-                  <FormLabel className="text-lg font-bold">from</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange}>
-                      <SelectTrigger className="">
-                        <SelectValue placeholder="the start of pipe" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="md1">md1</SelectItem>
-                        <SelectItem value="md2">md2</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="to"
-            render={({ field }) => (
-              <FormItem className="mb-4 flex items-start ">
-                <div className="flex items-center gap-14 w-full">
-                  <FormLabel className="text-lg font-bold">to</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange}>
-                      <SelectTrigger className="">
-                        <SelectValue placeholder="end of pipe" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="mn1">mn1</SelectItem>
-                        <SelectItem value="mn2">mn2</SelectItem>
-                        <SelectItem value="mn3">mn3</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
           <div className="flex justify-end mt-4">
             <Button variant="outline" className="">
               annuler

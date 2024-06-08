@@ -9,7 +9,7 @@ export function createSegments(coordsArray, attributesObject) {
       }));
   
       return {
-        coords: [coords],
+        coords: coords,
         attributes: [
           { name: "length", value: length[0].toString() },
           { name: "thikness", value: thikness[0] },
@@ -23,7 +23,7 @@ export function createSegments(coordsArray, attributesObject) {
 
   export function convertData(inputData, additionalData) {
     const { id, latlngs, newTotalDistance } = inputData[0];
-    const { largeur, type, nature, from, to, length, thikness, year } = additionalData;
+    const { largeur, type, nature, from, to, length } = additionalData;
   
     const formattedCoords = latlngs[0].map(({ lat, lng }) => ({
       latitude: lat,
@@ -33,7 +33,6 @@ export function createSegments(coordsArray, attributesObject) {
     const output = {
       from_id: from,
       to_id: to,
-      length: length[0] + length[1],
       coords: formattedCoords,
       connectionType: "direct",
       type,

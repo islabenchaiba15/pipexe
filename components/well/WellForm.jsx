@@ -52,8 +52,8 @@ const longitudeSchema = z.preprocess((arg) => {
 }, z.number());
 
 const formSchema1 = z.object({
-  latitude: z.string().min(1, { message: "Latitude is required" }),
-  longitude: z.string().min(1, { message: "Longitude is required" }),
+  latitude: z.string().optional(),
+  longitude: z.string().optional(),
   centre: z.string().min(1, { message: "Centre is required" }),
   region: z.string().min(1, { message: "Region is required" }),
   wilaya: z.string().min(1, { message: "Wilaya is required" }),
@@ -88,7 +88,7 @@ const WellForm = () => {
       name: "",
       centre: "",
       region: "",
-      wilaya: "",
+      wilaya: "ouargla",
       zone: "",
       gas: "",
       oil: "",
@@ -154,7 +154,12 @@ const WellForm = () => {
     try {
       const { data } = await axiosInstance.post(
         "/well/create-well",
-        updatedData
+        updatedData,
+        {
+          headers: {
+            "Content-Type": "application/json", // Change to application/json
+          },
+        }
       );
       console.log("receeeeeeeeeeeive", data);
       showSuccessToast();
@@ -272,7 +277,6 @@ const WellForm = () => {
                         placeholder="name"
                         {...field}
                         className="w-full"
-                        type="number"
                       />
                     </FormControl>
                     <FormDescription>
@@ -291,11 +295,11 @@ const WellForm = () => {
                     <FormControl>
                       <Select onValueChange={field.onChange}>
                         <SelectTrigger className="">
-                          <SelectValue placeholder="the type of manifold" />
+                          <SelectValue placeholder="the type of puit" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="type1">type1</SelectItem>
-                          <SelectItem value="type2">type2</SelectItem>
+                          <SelectItem value="Producteur">Producteur</SelectItem>
+                          <SelectItem value="Gaslift">Gaslift</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -327,7 +331,7 @@ const WellForm = () => {
                             {field.value ? (
                               format(field.value, "PPP")
                             ) : (
-                              <span>Pick a date</span>
+                              <span>date of drill</span>
                             )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -365,11 +369,11 @@ const WellForm = () => {
                     <FormControl>
                       <Select onValueChange={field.onChange}>
                         <SelectTrigger className="">
-                          <SelectValue placeholder="the start of pipe" />
+                          <SelectValue placeholder="enterer nom de centre" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="md1">md1</SelectItem>
-                          <SelectItem value="md2">md2</SelectItem>
+                          <SelectItem value="nord">Nord</SelectItem>
+                          <SelectItem value="sud">sud</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -389,12 +393,10 @@ const WellForm = () => {
                     <FormControl>
                       <Select onValueChange={field.onChange}>
                         <SelectTrigger className="">
-                          <SelectValue placeholder="end of pipe" />
+                          <SelectValue placeholder="enterer nom de region" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="mn1">mn1</SelectItem>
-                          <SelectItem value="mn2">mn2</SelectItem>
-                          <SelectItem value="mn3">mn3</SelectItem>
+                          <SelectItem value="hmd">hmd</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -416,12 +418,11 @@ const WellForm = () => {
                     <FormControl>
                       <Select onValueChange={field.onChange}>
                         <SelectTrigger className="">
-                          <SelectValue placeholder="end of pipe" />
+                          <SelectValue placeholder="enterer nom de zone" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="mn1">mn1</SelectItem>
-                          <SelectItem value="mn2">mn2</SelectItem>
-                          <SelectItem value="mn3">mn3</SelectItem>
+                          <SelectItem value="E2A">E2A</SelectItem>
+                          <SelectItem value="E3A">E3A</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -432,30 +433,7 @@ const WellForm = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="wilaya"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col items-start w-1/2">
-                    <FormLabel className="text-md font-bold">Wilaya</FormLabel>
-                    <FormControl>
-                      <Select onValueChange={field.onChange}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="nature of pipe" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="collecteur">collecteur</SelectItem>
-                          <SelectItem value="collect">collect</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormDescription>
-                      Your date of birth is used to calculate your age.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              
             </div>
             <h1 className="text-black text-2xl font-bold my-2">Production</h1>
             <div className="flex items-center gap-2 my-2 ">

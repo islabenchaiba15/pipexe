@@ -14,6 +14,8 @@ import {
   Polyline,
   LayersControl,
   FeatureGroup,
+  Tooltip,
+  LayerCanvas
 } from "react-leaflet";
 import {
   Modal,
@@ -38,6 +40,7 @@ import CoordContext from "../context/CoordContext";
 import { axiosInstance } from "@/Api/Index";
 import { useRouter } from "next/navigation";
 import { data } from "@/constants/data";
+import DataContext from "@/context/DataContext";
 
 export function splitCoordinatesByDistance(coordinates, distances) {
   const result = [];
@@ -265,7 +268,7 @@ const Map = ({ setTotalDistance }) => {
   console.log(JSON.stringify(maplayers, 0, 2));
 
   const islam = [
-    [31.783049527817784, 5.536281317011623],
+    [31.944087207818132, 6.116638183593751],
     [31.782539219684633, 5.64146099789712],
   ];
   const islam1 = [
@@ -277,13 +280,10 @@ const Map = ({ setTotalDistance }) => {
     [31.78888616378847, 5.684603354801907],
     [31.784216884487385, 5.7148171032406925],
   ];
-  // setPolylines(splitCoordinatesByDistance(coordinates, distances));
-  // const polys = splitCoordinatesByDistance(coordinates, distances);
-  const [wells, setWells] = useState([]);
-  const [manifolds, setManifolds] = useState([]);
-  const [junctions, setJunction] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
 
+  const [loading, setLoading] = useState(true); // Add loading state
+  const { wells, setWells, manifolds, setManifolds, junctions, setJunctions } =
+    useContext(DataContext);
   useEffect(() => {
     const fetchWells = async () => {
       try {
@@ -293,7 +293,7 @@ const Map = ({ setTotalDistance }) => {
 
         setWells(response.data);
         setManifolds(dataa.data);
-        setJunction(junction.data);
+        setJunctions(junction.data);
         console.log("raniaaaaaaaaaaaa", response.data);
         console.log("islammmmmmmmmmmvvvvvvv", wells);
         setLoading(false);
@@ -308,9 +308,17 @@ const Map = ({ setTotalDistance }) => {
     console.log("Updated wells state:", wells);
     console.log("Updated junctions state:", junctions);
   }, [wells, junctions]);
+
+  const polylineOptions = {
+    color: "white",
+    weight: 3,
+    dashArray: "10 5",
+    // [dashLength, gapLength]
+  };
+
   return (
     <>
-      <MapContainer center={center} zoom={10} className="w-full h-screen z-10">
+      <MapContainer  center={center} zoom={10} className="w-full h-screen z-10 ">
         <FeatureGroup>
           <EditControl
             position="topleft"
@@ -342,6 +350,15 @@ const Map = ({ setTotalDistance }) => {
           >
             <TileLayer url="https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg" />
           </LayersControl.BaseLayer>
+          <LayersControl.BaseLayer
+            checked={selectedLayer === "islam"}
+            name="islam"
+          >
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            />
+          </LayersControl.BaseLayer>
         </LayersControl>
         <Control prepend position="topright"></Control>
         {active && (
@@ -364,7 +381,7 @@ const Map = ({ setTotalDistance }) => {
         >
           <Popup>{}</Popup>
         </Polyline>
-        <Polyline positions={islam1} color={"red"} icon={healthIcon} weight={5}>
+        <Polyline positions={islam1} pathOptions={polylineOptions}>
           <Popup>{}</Popup>
         </Polyline>
         <Polyline
@@ -376,16 +393,29 @@ const Map = ({ setTotalDistance }) => {
           <Popup>{}</Popup>
         </Polyline>
 
-        {data.map((feature,index)=>(
-          <Polyline key={index} positions={feature.geometry.coordinates} color= {"white"} icon={healthIcon} weight={5}>
-            <Popup>{}</Popup>
-          </Polyline>))}
+        {data.features.map((feature, index) => (
+          <Polyline
+            key={index}
+            positions={feature.geometry.coordinates}
+            pathOptions={polylineOptions}
+            color={"white"}
+          >
+            <Popup>{feature.properties.Name}</Popup>
+          </Polyline>
+        ))}
 
-         {/* {data.map((feature, index) => (
-           <Polyline key={index} positions={feature.latlngs[0].map(coord => [coord.lat, coord.lng])} color={"white"} weight={5}>
-             <Popup>ID: {feature.id}</Popup>
-           </Polyline>
-         ))} */}
+        {/* {coordinates.map((feature, index) => (
+          <Polyline
+            key={index}
+            positions={feature.latlngs[0].map((coord) => [
+              coord.lat,
+              coord.lng,
+            ])}
+            pathOptions={polylineOptions}
+          >
+            <Popup>ID: {feature.id}</Popup>
+          </Polyline>
+        ))} */}
         {!loading &&
           wells.map((well, index) => (
             <Marker
@@ -395,7 +425,17 @@ const Map = ({ setTotalDistance }) => {
               position={[well.coords.latitude, well.coords.longitude]}
               icon={healthIcon}
               key={index}
-            ></Marker>
+            >
+              {/* <Tooltip
+                direction="right"
+                offset={[0, 0]}
+                opacity={1}
+                permanent
+                className="custom-tooltip"
+              >
+                md1
+              </Tooltip> */}
+            </Marker>
           ))}
         {!loading &&
           manifolds.map((manifold, index) => (

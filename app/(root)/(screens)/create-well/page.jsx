@@ -5,10 +5,12 @@ import MapComponent from '../../../../components/MapComponent';
 import WellForm from '../../../../components/well/WellForm';
 import CreatePipeFormContextProvider from '../../../../context/CreatePipeFormContextProvider';
 import WellContextProvider from '../../../../context/WellContextProvider';
+import DataContextProvider from '@/context/DataContextProvider';
 
 const Page = () => {
   const icon="islam.png"
   return (
+    <DataContextProvider>
     <WellContextProvider>
       <CreatePipeFormContextProvider>
         <div className='flex h-screen w-full'>
@@ -21,6 +23,7 @@ const Page = () => {
         </div>
       </CreatePipeFormContextProvider>
     </WellContextProvider>
+    </DataContextProvider>
 
   );
 };
