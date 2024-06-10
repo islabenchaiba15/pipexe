@@ -67,10 +67,10 @@ function page({params}) {
           <h1 className="text-3xl font-bold text black">Manifold details</h1>
           <section className="grid w-full grid-cols-1 gap-4  transition-all sm:grid-cols-2 xl:grid-cols-3 ">
               <Card
-                amount={"Nom"}
+                label={"Nom"}
                 icon={"/fire.svg"}
                 discription={`drilled ${manifold.formattedDate}`}
-                label={manifold.name}
+                amount={manifold.name}
               />
               <AddressCard
                 address={"address"}
@@ -94,7 +94,7 @@ function page({params}) {
           <section className="flex flex-col lg:flex-row lg:items-center gap-4 transition-all ">
             <div className="lg:w-1/2 w-full gap-3 rounded-xl border p-5 shadow">
               <p className="p-4 font-semibold">Overview</p>
-              <Chart />
+              {/* <Chart /> */}
             </div>
             <div className="lg:w-1/2 w-full h-[400px] lg:h-full gap-3 rounded-xl border p-5 shadow ">
               <MapComponent icon={icon} coords={manifold.coords} page={"manifold"}/>

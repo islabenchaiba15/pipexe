@@ -19,9 +19,9 @@ export default function Card({
         <Image src={icon} alt="yy" width={50} height={50} />
       </section>
       <section className="flex flex-col gap-2">
-        <p className="text-md">{label}</p>
-        <h2 className="text-2xl font-semibold">{amount}</h2>
-        <p className="text-lg text-gray-500">{discription}</p>
+        <p className="text-md text-gray-500 font-bold">{label}</p>
+        <h2 className="text-xl font-semibold">{amount}</h2>
+        <p className="text-md text-gray-500">{discription}</p>
       </section>
     </div>
   );

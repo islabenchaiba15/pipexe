@@ -20,10 +20,10 @@ export default function PressureCard({
         <Image src={icon} alt="yy" width={50} height={50} />
       </section>
       <section className="flex flex-col gap-2">
-        <p className="text-lg text-gray-500 font-bold">{Temperature}</p>
-        <h2 className="text-2xl font-semibold">{amount}°</h2>
-        <p className="text-lg text-gray-500 font-bold">{pressure} </p>
-        <p className="text-xl font-semibold">{number} Bar</p>
+        <p className="text-md text-gray-500 font-bold">{Temperature}</p>
+        <h2 className="text-lg font-semibold">{amount}°</h2>
+        <p className="text-md text-gray-500 font-bold">{pressure} </p>
+        <p className="text-lg font-semibold">{number} Bar</p>
       </section>
     </div>
   );

@@ -16,9 +16,9 @@ function AddressCard({
             <Image src={icon} alt="yy" width={50} height={50} />
         </section>
         <section className="flex flex-col gap-2">
-            <p className="text-xl text-md">{address}</p>
-            <h2 className="text-xl font-semibold">{zone}, {centre}</h2>
-            <span> <p className="text-xl font-semibold ">{region} , {wilaya}</p></span>
+            <p className="text-md text-gray-500 font-bold">{address}</p>
+            <h2 className="text-lg font-semibold">{zone}, {centre}</h2>
+            <span> <p className="text-lg font-semibold ">{region} , {wilaya}</p></span>
         </section>
     </div>
   )

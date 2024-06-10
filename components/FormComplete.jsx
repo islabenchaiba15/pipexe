@@ -16,22 +16,6 @@ const FormComplete = ({ formData }) => {
   let result, segments, polylines;
 
   const distances = formData && formData.length ? formData.length : 0;
-
-  if (distances === 0) {
-    distancesWithoutLastValue = [];
-    result = convertData(maplayers, formData);
-  } else {
-    distancesWithoutLastValue = formData.length.slice(0, -1);
-    polylines = splitCoordinatesByDistance(
-      maplayers,
-      distancesWithoutLastValue
-    );
-    segments = createSegments(polylines, formData);
-    result = convertData(maplayers, formData);
-  }
-
-  console.log("isaaaaaaaaaaaaaaaaaaaaal", distancesWithoutLastValue);
-
   useEffect(() => {
     const fetchAllElevations = async () => {
       const elevationsData = {};
@@ -52,9 +36,29 @@ const FormComplete = ({ formData }) => {
 
     fetchAllElevations();
   }, [maplayers]);
+
+
+  if (distances === 0) {
+    distancesWithoutLastValue = [];
+    result = convertData(maplayers, formData);
+  } else {
+    distancesWithoutLastValue = formData.length.slice(0, -1);
+    polylines = splitCoordinatesByDistance(
+      maplayers,
+      distancesWithoutLastValue
+    );
+    segments = createSegments(polylines, formData,elevations);
+    result = convertData(maplayers, formData);
+  }
+  console.log('loooooooooooooooooooooooooooog',formData)
+  console.log("isaaaaaaaaaaaaaaaaaaaaal", segments);
+
+  
+
   const dataa = {
     result,
     segments,
+    elevations
   };
   const onsubmit = async () => {
     console.log("seeeeeeeeeeeeeeed");
@@ -72,7 +76,7 @@ const FormComplete = ({ formData }) => {
   return (
     <div className=" p-6">
       <h2>Form Complete</h2>
-      <pre>{JSON.stringify(result, null, 2)}</pre>
+      <pre>{JSON.stringify(elevations, null, 2)}</pre>
 
       <Divider className="my-4" />
       <Divider className="my-4" />

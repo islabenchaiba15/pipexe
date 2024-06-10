@@ -15,7 +15,7 @@ import {
   LayersControl,
   FeatureGroup,
   Tooltip,
-  LayerCanvas
+  LayerCanvas,
 } from "react-leaflet";
 import {
   Modal,
@@ -282,15 +282,24 @@ const Map = ({ setTotalDistance }) => {
   ];
 
   const [loading, setLoading] = useState(true); // Add loading state
-  const { wells, setWells, manifolds, setManifolds, junctions, setJunctions } =
-    useContext(DataContext);
+  const {
+    wells,
+    setWells,
+    manifolds,
+    setManifolds,
+    junctions,
+    setJunctions,
+    pipes,
+    setPipes,
+  } = useContext(DataContext);
   useEffect(() => {
     const fetchWells = async () => {
       try {
         const response = await axiosInstance.get("/well/get-wells");
         const dataa = await axiosInstance.get("/manifold/getAll");
         const junction = await axiosInstance.get("/junction/getAll");
-
+        const pipes = await axiosInstance.get("/pipe/getAll");
+        setPipes(pipes.data);
         setWells(response.data);
         setManifolds(dataa.data);
         setJunctions(junction.data);
@@ -305,9 +314,8 @@ const Map = ({ setTotalDistance }) => {
     fetchWells();
   }, []);
   useEffect(() => {
-    console.log("Updated wells state:", wells);
-    console.log("Updated junctions state:", junctions);
-  }, [wells, junctions]);
+    console.log("Updated pipppes state:", pipes);
+  }, [wells, junctions, pipes]);
 
   const polylineOptions = {
     color: "white",
@@ -318,7 +326,7 @@ const Map = ({ setTotalDistance }) => {
 
   return (
     <>
-      <MapContainer  center={center} zoom={10} className="w-full h-screen z-10 ">
+      <MapContainer center={center} zoom={10} className="w-full h-screen z-10 ">
         <FeatureGroup>
           <EditControl
             position="topleft"
@@ -372,26 +380,18 @@ const Map = ({ setTotalDistance }) => {
             weight={5}
           ></Polyline>
         )}
-
-        <Polyline
-          positions={islam}
-          color={"black"}
-          icon={healthIcon}
-          weight={5}
-        >
-          <Popup>{}</Popup>
-        </Polyline>
-        <Polyline positions={islam1} pathOptions={polylineOptions}>
-          <Popup>{}</Popup>
-        </Polyline>
-        <Polyline
-          positions={islam2}
-          color={"white"}
-          icon={healthIcon}
-          weight={5}
-        >
-          <Popup>{}</Popup>
-        </Polyline>
+        {!loading &&
+          pipes.map((pipe, index) => (
+            <Polyline
+              key={index}
+              eventHandlers={{
+                click: () => router.push(`pipe/${pipe._id}`),
+              }}
+              positions={pipe.coords}
+              pathOptions={polylineOptions}
+            >
+            </Polyline>
+          ))}
 
         {data.features.map((feature, index) => (
           <Polyline

@@ -8,6 +8,7 @@ import {
     TableHeader,
     TableRow,
   } from "../../components/ui/table"
+import ActionDropdown from "../ActionDropdown"
    
   const invoices = [
     {
@@ -56,35 +57,36 @@ import {
     },
   ]
    
-const TableDemo=()=> {
+const TableDemo=({segments,pipe})=> {
+  console.log('seeeeeeeeeeeeeeeeeegmennnnnnnnt',segments)
     return (
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
+            <TableHead className=" font-bold">Segment </TableHead>
             <TableHead className="w-[100px] font-bold">Source </TableHead>
             <TableHead className="font-bold">destination</TableHead>
-            <TableHead className="font-bold">diametre.("")</TableHead>
-            <TableHead className="font-bold">Longeur.("m")</TableHead>
-            <TableHead className="font-bold">Année de pose</TableHead>
-            <TableHead className="font-bold">N°entrée</TableHead>
+            <TableHead className="font-bold flex items-center justify-center">length.("m")</TableHead>
+            <TableHead className="font-bold ">thikness.("")</TableHead>
+            <TableHead className="font-bold flex items-center justify-center">Année de pose</TableHead>
             <TableHead className="font-bold">obseravation</TableHead>
-            <TableHead className="font-bold">date de maj</TableHead>
             <TableHead className="font-bold">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.source}</TableCell>
-              <TableCell>{invoice.destination}</TableCell>
-              <TableCell>{invoice.diametre}</TableCell>
-              <TableCell className="">{invoice.longeur}</TableCell>
-              <TableCell>{invoice.année_de_pose}</TableCell>
-              <TableCell>{invoice.entrée}</TableCell>
-              <TableCell>{invoice.obseravation}</TableCell>
-              <TableCell>{invoice.date_de_maj}</TableCell>
-              <TableCell>{invoice.actions}</TableCell>
+          {segments.map((segment,index) => (
+            <TableRow key={index}>
+              <TableCell>{index}</TableCell>
+              <TableCell className="font-medium">{pipe.fromDetails.name}</TableCell>
+              <TableCell>{pipe.toDetails.name}</TableCell>
+              <TableCell className="flex items-center justify-center">{segment.attributes[0].value}<span className="font-bold"> m</span></TableCell>
+              <TableCell className="font-bold">{segment.attributes[1].value}</TableCell>
+              <TableCell className="font-bold flex items-center justify-center">{segment.attributes[2].value}</TableCell>
+              <TableCell>{segment.obseravation}</TableCell>
+              <TableCell className="flex items-center ml-4">
+                <ActionDropdown />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

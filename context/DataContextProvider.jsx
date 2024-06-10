@@ -5,6 +5,8 @@ const DataContextProvider = ({ children }) => {
   const [wells, setWells] = useState([]);
   const [manifolds, setManifolds] = useState([]);
   const [junctions, setJunctions] = useState([]);
+  const [pipes, setPipes] = useState([]);
+
   const values = {
     wells,
     setWells,
@@ -12,6 +14,7 @@ const DataContextProvider = ({ children }) => {
     setManifolds,
     junctions,
     setJunctions,
+    pipes, setPipes
   };
   return <DataContext.Provider value={values}>{children}</DataContext.Provider>;
 };

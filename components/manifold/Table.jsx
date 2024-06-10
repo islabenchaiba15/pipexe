@@ -33,6 +33,9 @@ const TableDemo=({manifoldDetails})=> {
             <TableHead className="font-bold">latitude</TableHead>
             <TableHead className="font-bold">longitude</TableHead>
             <TableHead className="font-bold">elevation</TableHead>
+            <TableHead className="font-bold">fiche Technique</TableHead>
+            <TableHead className="font-bold">plan technique</TableHead>
+
             <TableHead className="font-bold">date de pose</TableHead>
             <TableHead className="font-bold">actions</TableHead>
           </TableRow>
@@ -44,6 +47,9 @@ const TableDemo=({manifoldDetails})=> {
               <TableCell>{manifoldDetails.coords.longitude}</TableCell>
               <TableCell className="">{manifoldDetails.elevation} m</TableCell>
               <TableCell>{manifoldDetails.formattedDate}</TableCell>
+              <TableCell>pdf</TableCell>
+              <TableCell>pdf</TableCell>
+
               <TableCell className="flex items-center ml-4">
                 <ActionDropdown/>
               </TableCell>

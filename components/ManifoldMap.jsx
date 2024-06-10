@@ -8,7 +8,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import { EditControl } from 'react-leaflet-draw';
 import WellContext from '../context/WellContext';
 import L from 'leaflet';
-const ManifoldMap = ({icon}) => {
+const ManifoldMap = ({icon,data}) => {
   const userIcon = L.icon({
     iconUrl: "",
     iconSize: [35, 35], // size of the icon
@@ -98,15 +98,19 @@ const ManifoldMap = ({icon}) => {
       <Marker position={center} icon={WellIcon}>
         <Popup>This is a marker</Popup>
       </Marker>
-      <Polyline positions={islam} color= {"black"}  weight={5}>
-            <Popup>{}</Popup>
-        </Polyline>
-        <Polyline  positions={islam1} color= {"red"}  weight={5}>
+
+
+      
+       
+      
+
+
+        {/* <Polyline  positions={islam1} color= {"red"}  weight={5}>
             <Popup>{}</Popup>
         </Polyline>
         <Polyline  positions={islam2} color= {"white"}  weight={5}>
             <Popup>{}</Popup>
-        </Polyline>
+        </Polyline> */}
     </MapContainer>
   );
 };

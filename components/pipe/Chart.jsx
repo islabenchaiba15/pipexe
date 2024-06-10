@@ -44,11 +44,19 @@ const data = [
       amt: 2100,
     },
   ];
-function Chart() {
+function Chart({pipe}) {
+  const elevations=pipe.elevations
+  console.log('eleeeeeeeeeeeeeeeeeeeeeeeeevation',elevations)
+  const elevationsWithNames = elevations.map((elevation, index) => {
+    const pointName = `point${index + 1}`;
+    return { elevation, name: pointName };
+  });
+  
+  console.log(elevationsWithNames);
   return (
     <ResponsiveContainer width="100%" height={350}>
         <AreaChart
-            data={data}
+            data={elevationsWithNames}
             width={500}
             height={400}
             margin={{
@@ -58,11 +66,11 @@ function Chart() {
                 bottom: 0,
             }}
             >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="amt" />
+            <CartesianGrid strokeDasharray="1 1" />
+            <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
-            <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+            <Area type="monotone" dataKey="elevation" stroke="#8884d8" fill="#8884d8" />
     </AreaChart>
     </ResponsiveContainer>
 
