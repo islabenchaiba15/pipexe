@@ -13,11 +13,11 @@ import {
 function LeftSideBar() {
   return (
     <div className="sticky w-[450px] overflow-x-hidden bg-white flex flex-col gap-4 justify-start items-center overflow-auto mx-1 ">
-      <Tabs defaultValue="account" className="mt-10 w-full mx-4">
-        <p className="text-gray-400 text-lg font-semibold mb-2">Analytics</p>
+      <Tabs defaultValue="account" className="mt-5 w-full mx-4">
+        <p className="text-gray-400 text-lg font-semibold mb-2">Overview</p>
         <TabsList className="grid w-full grid-cols-2 ">
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
+          <TabsTrigger value="account">Map</TabsTrigger>
+          <TabsTrigger value="password">dashboard</TabsTrigger>
         </TabsList>
         <TabsContent value="account">
           <p className="text-gray-400 text-lg font-semibold mt-2">Recherche</p>

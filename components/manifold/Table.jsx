@@ -1,3 +1,4 @@
+import { axiosInstance } from "@/Api/Index";
 import {
     Table,
     TableBody,
@@ -9,7 +10,7 @@ import {
     TableRow,
   } from "../../components/ui/table"
 import ActionDropdown from "../ActionDropdown"
-   
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
   const invoices = [
     {
       nom: "INV001",
@@ -24,6 +25,29 @@ import ActionDropdown from "../ActionDropdown"
   ]
    
 const TableDemo=({manifoldDetails})=> {
+  const donwloadFiles = async (fileType) => {
+    try {
+      const response = await axiosInstance.get(`/manifold/download/${manifoldDetails._id}`, {
+        responseType: 'blob',
+        params: { fileType } // Important to handle binary data
+      });
+
+      const blob = new Blob([response.data], { type: response.headers['content-type'] });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'file.pdf'; // You can set the desired file name here
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading file:", error.message);
+    }
+  };
+  const download=()=>{
+
+  }
     return (
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
@@ -33,10 +57,10 @@ const TableDemo=({manifoldDetails})=> {
             <TableHead className="font-bold">latitude</TableHead>
             <TableHead className="font-bold">longitude</TableHead>
             <TableHead className="font-bold">elevation</TableHead>
-            <TableHead className="font-bold">fiche Technique</TableHead>
-            <TableHead className="font-bold">plan technique</TableHead>
-
             <TableHead className="font-bold">date de pose</TableHead>
+            <TableHead className="font-bold  ">plan technique</TableHead>
+
+            <TableHead className="font-bold ">fiche technique</TableHead>
             <TableHead className="font-bold">actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -47,9 +71,12 @@ const TableDemo=({manifoldDetails})=> {
               <TableCell>{manifoldDetails.coords.longitude}</TableCell>
               <TableCell className="">{manifoldDetails.elevation} m</TableCell>
               <TableCell>{manifoldDetails.formattedDate}</TableCell>
-              <TableCell>pdf</TableCell>
-              <TableCell>pdf</TableCell>
-
+              <TableCell onClick={() => donwloadFiles('file')} className="cursor-pointer ">
+                <div className="flex items-center ml-8"><CloudDownloadIcon /></div>
+              </TableCell>
+              <TableCell onClick={() => donwloadFiles('filePlan')} className="cursor-pointer ">
+                <div className="flex items-center ml-8"><CloudDownloadIcon /></div>
+              </TableCell>
               <TableCell className="flex items-center ml-4">
                 <ActionDropdown/>
               </TableCell>

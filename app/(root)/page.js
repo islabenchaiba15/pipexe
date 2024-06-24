@@ -12,14 +12,10 @@ import DataContextProvider from "@/context/DataContextProvider";
 const Home = () => {
   const [color, setColor] = useState("black");
   const [totalDistance, setTotalDistance] = useState(0);
-  const Map = useMemo(
-    () =>
-      dynamic(() => import("@/components/Map"), {
-        loading: () => <p>A map is loading</p>,
-        ssr: false,
-      }),
-    []
-  );
+  const Map = dynamic(() => import("@/components/Map"), {
+    loading: () => <p>A map is loading</p>,
+    ssr: false,
+  });
   return (
     <DataContextProvider>
       <CoordContextProvider>

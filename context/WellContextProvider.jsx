@@ -6,6 +6,7 @@ const WellContextProvider=({children})=> {
     const [activeCoordinates,setActiveCoordinates] = useState(false)
     const [ischecked, setChecked] = useState(false)
     const [formData, setFormData] = useState({});
+ 
     const values={
         marker,
         setMarker,
@@ -14,7 +15,7 @@ const WellContextProvider=({children})=> {
         ischecked,
         setChecked,
         formData,
-        setFormData
+        setFormData,
     }
   return (
     <WellContext.Provider value={values}>

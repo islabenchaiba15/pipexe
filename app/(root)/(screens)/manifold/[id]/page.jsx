@@ -1,14 +1,15 @@
 "use client";
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect, useContext} from "react";
 import Card from "../../../../../components/pipe/Card";
 import AddressCard from "../../../../../components/well/AddressCard";
-import Chart from "../../../../../components/pipe/Chart";
 import TableDemo from "../../../../../components/manifold/Table";
 import PressureCard from "../../../../../components/manifold/PressureCard";
 import MapComponent from "../../../../../components/MapComponent";
 import CreatePipeFormContextProvider from "../../../../../context/CreatePipeFormContextProvider";
 import WellContextProvider from "../../../../../context/WellContextProvider";
 import { axiosInstance } from "@/Api/Index";
+import Chart from "@/components/manifold/Chart";
+import WellContext from "@/context/WellContext";
 const cardData = [
   {
     label: "Nom",
@@ -43,6 +44,9 @@ function page({params}) {
   const icon = "../manifold.svg";
   const [manifold, setManifold] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [pressure,setPressure]=useState(0)
+  const [temperature,setTemperature]=useState(0)
+
   useEffect(() => {
     const fetchManifolds = async () => {
       try {
@@ -56,9 +60,9 @@ function page({params}) {
     };
     fetchManifolds();
   }, []);
-  useEffect(() => {
-    console.log("Updated wells state:", manifold);
-  }, [manifold]);
+  useEffect(()=>{
+    console.log("opppppppppppppp",pressure)
+  },[pressure])
   return (
     !loading && (
     <CreatePipeFormContextProvider>
@@ -84,9 +88,9 @@ function page({params}) {
               <PressureCard
                 key={index}
                 Temperature={add.Temperature}
-                amount={add.amount}
+                amount={temperature}
                 pressure={add.pressure}
-                number={add.number}
+                number={pressure}
                 icon={add.icon}
               />
             ))}
@@ -94,7 +98,7 @@ function page({params}) {
           <section className="flex flex-col lg:flex-row lg:items-center gap-4 transition-all ">
             <div className="lg:w-1/2 w-full gap-3 rounded-xl border p-5 shadow">
               <p className="p-4 font-semibold">Overview</p>
-              {/* <Chart /> */}
+              <Chart setPressure={setPressure} setTemperature={setTemperature} />
             </div>
             <div className="lg:w-1/2 w-full h-[400px] lg:h-full gap-3 rounded-xl border p-5 shadow ">
               <MapComponent icon={icon} coords={manifold.coords} page={"manifold"}/>

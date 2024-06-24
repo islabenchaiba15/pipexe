@@ -46,7 +46,7 @@ function page() {
             <section className="grid grid-cols-1  gap-4 transition-all lg:grid-cols-2">
                <div className={" flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow"}>
                   <p className="p-4 font-semibold">Overview</p>
-                  <Chart/>
+                  {/* <Chart/> */}
                 </div>
                 {/* <div className={" flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow "}>
                   <MapComponent />

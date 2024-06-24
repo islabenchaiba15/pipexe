@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 const Circle = dynamic(() => import("../shared/Circle"), {
   ssr: false,
 });
-export default function DashboardCard({
+export default function InspectionCard({
     label,
     icon,
     amount,
@@ -25,9 +25,8 @@ export default function DashboardCard({
       </div>
       <section className="flex flex-col w-1/2 gap-2">
         <Image src={icon} alt="yy" width={20} height={20} />
-        <p className="text-lg font-medium">{label}</p>
+        <p className="text-lg font-semibold">{label}</p>
         <h2 className="text-3xl font-bold">{amount}</h2>
-        <p className="text-lg text-gray-500">{unit}</p>
       </section>
     </div>
   );

@@ -76,7 +76,7 @@ const ManifoldMap = ({icon,data}) => {
       ref={mapRef}
       center={center}
       zoom={10}
-      className='h-full w-full z-10'
+      className='h-[80%] w-full z-10'
     >
     {ischecked &&  <FeatureGroup >
           <EditControl 
