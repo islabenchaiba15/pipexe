@@ -38,6 +38,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
+import { axiosInstance } from "@/Api/Index";
+import { useAuth } from "@/context/AuthContext";
 
 const formSchema = z.object({
   message: z
@@ -48,9 +50,14 @@ const formSchema = z.object({
     .max(160, {
       message: "message must not be longer than 30 characters.",
     }),
-  pv_file: z.instanceof(FileList, {
-    message: "Please select a file for upload",
-  }).optional(),
+    rapport_file: z
+    .instanceof(FileList, {
+      message: "Please select a file for uploaddddd",
+    })
+    .optional(),
+  type: z.string().min(1, {
+    message: "type is requited",
+  }),
 });
 const languages = [
   { label: "English", value: "en" },
@@ -63,26 +70,54 @@ const languages = [
   { label: "Korean", value: "ko" },
   { label: "Chinese", value: "zh" },
 ];
-export function InspectionDepForm() {
+export function InspectionDepForm({inspectionID}) {
   const [formData, setFormData] = useState({});
+  const { user } = useAuth();
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       message: "",
       type: "",
-      pv_file: "",
+      rapport_file: "",
     },
   });
   const fileRefe = form.register("rapport_file");
+  const [errors, setErrors] = useState({});
   // 2. Define a submit handler.
-  function onSubmit(values) {
+  const onSubmit=async(values)=> {
+    console.log("onSubmit",values)
     const data = {
       message: values.message,
       type: values.type,
       pv_file: values.rapport_file[0],
+      InspectionID: inspectionID,
+      user:user._id
     };
     setFormData(data);
     console.log("submitted data", data);
+    try {
+      const { data } = await axiosInstance.post("/inpectionReport/create", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',// Change to application/json
+        },
+      });
+      console.log("receeeeeeeeeeeive", data);
+      form.reset(form.defaultValues);
+    } catch (error) {
+      if (error.response) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: error.response.data.message,
+        }));
+        console.log("Error Response:ssssssssssssss", errors);
+      } else if (error.request) {
+        console.log("Error Request:", error.request);
+        alert("No response from the server. Please try again later.");
+      } else {
+        console.log("Error", error.message);
+      }
+    }
   }
   return (
     <Form {...form}>
@@ -122,8 +157,12 @@ export function InspectionDepForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="signe">version valideé et signé</SelectItem>
-                  <SelectItem value="non_signe">version valideé et non signé</SelectItem>
+                  <SelectItem value="signe">
+                    version valideé et signé
+                  </SelectItem>
+                  <SelectItem value="non_signe">
+                    version valideé et non signé
+                  </SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription>
@@ -138,7 +177,9 @@ export function InspectionDepForm() {
           name="rapport_file"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-md font-bold">inspection report file</FormLabel>
+              <FormLabel className="text-md font-bold">
+                inspection report file
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder="shadcn"

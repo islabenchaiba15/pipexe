@@ -93,7 +93,7 @@ export function NewLine({ onNext, totalDistance }) {
     onNext(values);
     console.log(values);
   }
-
+  
   return (
     <div className="bg-white p-6 2xl:mx-5 mx-2">
       <Form {...form}>

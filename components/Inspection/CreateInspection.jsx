@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CreateInspectionForm } from "./CreateInspectionForm";
 
-export function CreateInspection() {
+export function CreateInspection({wells,pipes,manifolds}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -29,7 +29,7 @@ export function CreateInspection() {
             Make changes to your profile here. Click save when you're done.
           </DialogDescription> */}
         </DialogHeader>
-        <CreateInspectionForm/>
+        <CreateInspectionForm wells={wells} pipes={pipes} manifolds={manifolds}/>
       </DialogContent>
     </Dialog>
   );

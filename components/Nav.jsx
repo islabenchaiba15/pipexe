@@ -2,7 +2,10 @@
 import Image from 'next/image'
 import React from 'react'
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, User} from "@nextui-org/react";
+import { useAuth } from '@/context/AuthContext';
 function Nav() {
+  const { user } = useAuth();
+  
   return (
     <div className='bg-blue-950 p-3 items-center justify-between flex '>
         <Image  src={'/pipexe1.png'} alt="logo" width={120} height={60} />
@@ -11,7 +14,7 @@ function Nav() {
           <input type="search" placeholder="Recherche generale" className='outline-none ' />
         </div>
         <div className='flex flex-row items-center gap-2 '>
-          <Dropdown placement="bottom-end">
+          {/* <Dropdown placement="bottom-end">
             <DropdownTrigger>
               <Avatar
                 isBordered
@@ -39,9 +42,9 @@ function Nav() {
                 Log Out
               </DropdownItem>
             </DropdownMenu>
-          </Dropdown>
+          </Dropdown> */}
           <div className='md:flex md:flex-col md:justify-center gap-2 hidden'>
-              <h1 className='text-white font-bold text-sm '>undefined undefined</h1>
+              <h1 className='text-white font-bold text-sm '>{user ? user.nom :'undefineddd'}</h1>
               <h1 className='text-white font-semibold text-xs '>anes13</h1>
             </div>
         </div>

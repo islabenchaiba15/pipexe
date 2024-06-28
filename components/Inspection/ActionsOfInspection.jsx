@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -17,17 +17,28 @@ import { CreateInspection } from "./CreateInspection";
 import { InspectionDepartementRapport } from "./InspectionDepartementRapport";
 import { EpEvaluation } from "./EpEvaluation";
 import { ConstructionRaport } from "./ConstructionReport";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UpdateAndTerminate } from "./UpdateAndTerminate";
+import { useAuth } from "@/context/AuthContext";
+import { ConstructionRaportStatus } from "./ConstructionRaportStatus";
 
-const ActionOfInspection = () => {
+const ActionOfInspection = ({ inspection, inspectionID }) => {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
+  const { user } = useAuth();
+  useEffect(() => {
+    if (user !== undefined) {
+      setUserData(user);
+      setLoading(false);
+    }
+  }, [user]);
 
   const handleItemClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setOpen(false);
-  }
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="cursor-pointer">
@@ -36,23 +47,65 @@ const ActionOfInspection = () => {
       <DropdownMenuContent className="w-48">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem onSelect={handleItemClick} className="cursor-pointer">
-            <CreateInspection />
-          </DropdownMenuItem>
-          <DropdownMenuItem onSelect={handleItemClick} className="cursor-pointer">
-            <InspectionDepartementRapport />
-          </DropdownMenuItem>
-          <DropdownMenuItem onSelect={handleItemClick} className="cursor-pointer">
-            <EpEvaluation />
-          </DropdownMenuItem>
-          <DropdownMenuItem onSelect={handleItemClick} className="cursor-pointer">
-            <ConstructionRaport />
-          </DropdownMenuItem>
-          <DropdownMenuItem onSelect={handleItemClick} className="cursor-pointer">
-            <UpdateAndTerminate />
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
+        {!loading && (
+          <DropdownMenuGroup>
+            {!inspection.Ins_reportID && userData.role === "inspection" && (
+              <DropdownMenuItem
+                onSelect={handleItemClick}
+                className="cursor-pointer"
+              >
+                <InspectionDepartementRapport inspectionID={inspectionID} />
+              </DropdownMenuItem>
+            )}
+            {!inspection.evaluationID &&
+              inspection.Ins_reportID &&
+              userData.role === "ep" && (
+                <DropdownMenuItem
+                  onSelect={handleItemClick}
+                  className="cursor-pointer"
+                >
+                  <EpEvaluation inspectionID={inspectionID} />
+                </DropdownMenuItem>
+              )}
+
+            {!inspection.constructionID &&
+              inspection.evaluationID &&
+              inspection.Ins_reportID &&
+              userData.role === "construction" && (
+                <DropdownMenuItem
+                  onSelect={handleItemClick}
+                  className="cursor-pointer"
+                >
+                  <ConstructionRaport inspectionID={inspectionID} />
+                </DropdownMenuItem>
+              )}
+
+            {!inspection.constructionID &&
+              inspection.evaluationID &&
+              inspection.Ins_reportID &&
+              userData.role === "construction" && (
+                <DropdownMenuItem
+                  onSelect={handleItemClick}
+                  className="cursor-pointer"
+                >
+                  <ConstructionRaportStatus inspectionID={inspectionID} />
+                </DropdownMenuItem>
+              )}
+
+            {inspection.constructionID &&
+              inspection.evaluationID &&
+              inspection.Ins_reportID &&
+              userData.role === "ep" && (
+                <DropdownMenuItem
+                  onSelect={handleItemClick}
+                  className="cursor-pointer"
+                >
+                  <UpdateAndTerminate inspectionID={inspectionID} />
+                </DropdownMenuItem>
+              )}
+          </DropdownMenuGroup>
+        )}
+
         <DropdownMenuSeparator />
         <DropdownMenuSeparator />
         <DropdownMenuSeparator />

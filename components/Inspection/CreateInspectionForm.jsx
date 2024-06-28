@@ -37,7 +37,11 @@ import {
 } from "@/components/ui/command";
 import { Input } from "@/components/ui/input";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { axiosInstance } from "@/Api/Index";
+import DataContext from "@/context/DataContext";
+import DataContextProvider from "@/context/DataContextProvider";
+import { useAuth } from "@/context/AuthContext";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -49,17 +53,19 @@ const formSchema = z.object({
     .max(160, {
       message: "message must not be longer than 30 characters.",
     }),
-  ouvrage: z.string({
-    message: "ouvrage must be at least 2 characters.",
-  }).min(1, {
-    message: "ouvrage is resqired",
-  }),
+  ouvrage: z
+    .string({
+      message: "ouvrage must be at least 2 characters.",
+    })
+    .min(1, {
+      message: "ouvrage is resqired",
+    }),
   type: z.string({
     message: "type is required",
   }),
-  pv_file: z.instanceof(FileList,{
-    message: "Please select a file for upload"
-  })
+  pv_file: z.instanceof(FileList, {
+    message: "Please select a file for upload",
+  }),
 });
 const languages = [
   { label: "English", value: "en" },
@@ -72,8 +78,21 @@ const languages = [
   { label: "Korean", value: "ko" },
   { label: "Chinese", value: "zh" },
 ];
-export function CreateInspectionForm() {
-    const [formData,setFormData]=useState({})
+
+export function CreateInspectionForm({wells,pipes,manifolds}) {
+  const getInfrastructures = (type) => {
+    switch (type) {
+      case "Ids":
+        return wells;
+      case "manifold":
+        return manifolds;
+      case "pipeline":
+        return pipes;
+      default:
+        return [];
+    }
+  };
+  const [formData, setFormData] = useState({});
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -81,22 +100,49 @@ export function CreateInspectionForm() {
       message: "",
       type: "",
       ouvrage: "",
-      pv_file:""
+      pv_file: "",
     },
   });
   const fileRefe = form.register("pv_file");
-  // 2. Define a submit handler.
-  function onSubmit(values) {
-    const data={
-        email:values.email,
-        message:values.message,
-        type:values.type,
-        ouvrage:values.ouvrage,
-        pv_file:values.pv_file[0]
+  const [errors, setErrors] = useState({});
+  const watchType = form.watch("type");
+  const infrastructures = useMemo(() => getInfrastructures(watchType), [watchType]);
+  const { user } = useAuth();
+
+  const onSubmit = async (values) => {
+    const data = {
+      email: values.email,
+      message: values.message,
+      type: values.type,
+      ouvrage: values.ouvrage,
+      pv_file: values.pv_file[0],
+      user:user._id
+    };
+    setFormData(data);
+    console.log("submitted data", data);
+    try {
+      const { data } = await axiosInstance.post("/epnote/create", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',// Change to application/json
+        },
+      });
+      console.log("receeeeeeeeeeeive", data);
+      form.reset(form.defaultValues);
+    } catch (error) {
+      if (error.response) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: error.response.data.message,
+        }));
+        console.log("Error Response:ssssssssssssss", errors);
+      } else if (error.request) {
+        console.log("Error Request:", error.request);
+        alert("No response from the server. Please try again later.");
+      } else {
+        console.log("Error", error.message);
+      }
     }
-    setFormData(data)
-    console.log('submitted data',data);
-  }
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 ">
@@ -165,7 +211,7 @@ export function CreateInspectionForm() {
               </FormItem>
             )}
           />
-          <FormField
+         {watchType && ( <FormField
             control={form.control}
             name="ouvrage"
             render={({ field }) => (
@@ -183,9 +229,10 @@ export function CreateInspectionForm() {
                         )}
                       >
                         {field.value
-                          ? languages.find(
-                              (language) => language.value === field.value
-                            )?.label
+                          ? infrastructures.find(
+                              (infrastructure) =>
+                                infrastructure._id === field.value
+                            )?.name
                           : "Select infrastructure "}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
@@ -193,26 +240,26 @@ export function CreateInspectionForm() {
                   </PopoverTrigger>
                   <PopoverContent className=" p-0">
                     <Command>
-                      <CommandInput placeholder="Search language..." />
-                      <CommandEmpty>No language found.</CommandEmpty>
+                      <CommandInput placeholder="Search infrastructure..." />
+                      <CommandEmpty>No infrastructure found.</CommandEmpty>
                       <CommandGroup>
-                        {languages.map((language) => (
+                        {infrastructures.map((infrastructure) => (
                           <CommandItem
-                            value={language.label}
-                            key={language.value}
+                            value={infrastructure.name}
+                            key={infrastructure._id}
                             onSelect={() => {
-                              form.setValue("ouvrage", language.value);
+                              form.setValue("ouvrage", infrastructure._id);
                             }}
                           >
                             <Check
                               className={cn(
                                 "mr-2 h-4 w-4",
-                                language.value === field.value
+                                infrastructure._id === field.value
                                   ? "opacity-100"
                                   : "opacity-0"
                               )}
                             />
-                            {language.label}
+                            {infrastructure.name}
                           </CommandItem>
                         ))}
                       </CommandGroup>
@@ -220,13 +267,15 @@ export function CreateInspectionForm() {
                   </PopoverContent>
                 </Popover>
                 <FormDescription className="">
-                  This is the language that will be used in the dashboard.
+                  Select the specific infrastructure for inspection.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> )}
         </div>
+        {
+          watchType && (
         <FormField
           control={form.control}
           name="pv_file"
@@ -250,6 +299,7 @@ export function CreateInspectionForm() {
             </FormItem>
           )}
         />
+      )}
         <div className="flex justify-end">
           <Button type="submit">Submit</Button>
         </div>

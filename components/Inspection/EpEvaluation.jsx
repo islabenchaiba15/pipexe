@@ -11,7 +11,7 @@ import {
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { EpEvaluationForm } from "./EpEvaluationForm";
 
-export function EpEvaluation() {
+export function EpEvaluation({inspectionID}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -29,7 +29,7 @@ export function EpEvaluation() {
             Make changes to your profile here. Click save when you're done.
           </DialogDescription> */}
         </DialogHeader>
-        <EpEvaluationForm />
+        <EpEvaluationForm inspectionID={inspectionID}/>
       </DialogContent>
     </Dialog>
   );

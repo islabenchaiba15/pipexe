@@ -79,7 +79,7 @@ function Page() {
               />
             </div>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="sm:max-w-[725px]">
             <DialogHeader>
               <DialogTitle>Add an user </DialogTitle>
               <DialogDescription>

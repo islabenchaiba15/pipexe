@@ -8,7 +8,7 @@ import DataContextProvider from "@/context/DataContextProvider";
 import ManifoldMap from "@/components/ManifoldMap";
 import UpdateAndTerminateForm from "./UpdateAndTerminateForm";
 
-const UpdatePage = () => {
+const UpdatePage = ({inspectionID}) => {
   const [totalDistance, setTotalDistance] = useState(0);
   return (
     <DataContextProvider>

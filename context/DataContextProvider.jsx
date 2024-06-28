@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import DataContext from "./DataContext";
 const DataContextProvider = ({ children }) => {
   const [wells, setWells] = useState([]);
@@ -7,16 +7,17 @@ const DataContextProvider = ({ children }) => {
   const [junctions, setJunctions] = useState([]);
   const [pipes, setPipes] = useState([]);
 
-  const values = {
+  const contextValue = useMemo(() => ({
     wells,
     setWells,
     manifolds,
     setManifolds,
     junctions,
     setJunctions,
-    pipes, setPipes
-  };
-  return <DataContext.Provider value={values}>{children}</DataContext.Provider>;
+    pipes,
+    setPipes,
+  }), [wells, manifolds, junctions, pipes]);
+  return <DataContext.Provider value={contextValue}>{children}</DataContext.Provider>;
 };
 
 export default DataContextProvider;

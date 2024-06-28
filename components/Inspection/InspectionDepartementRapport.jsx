@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { CreateInspectionForm } from "./CreateInspectionForm";
 import { InspectionDepForm } from "./InspectionDepForm";
 
-export function InspectionDepartementRapport() {
+export function InspectionDepartementRapport({inspectionID}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -30,7 +30,7 @@ export function InspectionDepartementRapport() {
             Make changes to your profile here. Click save when you're done.
           </DialogDescription> */}
         </DialogHeader>
-        <InspectionDepForm/>
+        <InspectionDepForm inspectionID={inspectionID}/>
       </DialogContent>
     </Dialog>
   );

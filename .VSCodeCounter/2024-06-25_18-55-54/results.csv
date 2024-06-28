@@ -1,0 +1,154 @@
+"filename", "language", "Markdown", "XML", "JavaScript", "JSON with Comments", "JSON", "JavaScript JSX", "CSS", "comment", "blank", "total"
+"c:\Users\21365\Desktop\op\gis\Api\Index.js", "JavaScript", 0, 0, 8, 0, 0, 0, 0, 3, 2, 13
+"c:\Users\21365\Desktop\op\gis\README.md", "Markdown", 23, 0, 0, 0, 0, 0, 0, 0, 14, 37
+"c:\Users\21365\Desktop\op\gis\app\(pages)\Sign\Layout.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Users\21365\Desktop\op\gis\app\(pages)\Sign\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 39, 0, 3, 6, 48
+"c:\Users\21365\Desktop\op\gis\app\(pages)\layout.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 18, 0, 0, 3, 21
+"c:\Users\21365\Desktop\op\gis\app\(pages)\login\layout.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 16, 0, 0, 3, 19
+"c:\Users\21365\Desktop\op\gis\app\(pages)\login\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 146, 0, 1, 5, 152
+"c:\Users\21365\Desktop\op\gis\app\(pages)\profile\[id]\edit\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 17, 0, 0, 2, 19
+"c:\Users\21365\Desktop\op\gis\app\(pages)\profile\[id]\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 57, 0, 0, 2, 59
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\Admin\dashboard\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 46, 0, 0, 3, 49
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\Admin\users\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 133, 0, 16, 8, 157
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\create-well\[id]\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 116, 0, 6, 6, 128
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\create-well\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 4, 31
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\createpipe\dessiner\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 31, 0, 0, 4, 35
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\createpipe\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 24, 0, 0, 5, 29
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\inspection\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 76, 0, 0, 3, 79
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\jonction\[id]\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 105, 0, 6, 4, 115
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\jonction\create\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 24, 0, 0, 5, 29
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\layout.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 23, 0, 0, 3, 26
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\manifold\[id]\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 118, 0, 6, 5, 129
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\manifold\create-manifold\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 25, 0, 0, 4, 29
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\pipe\[id]\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 121, 0, 6, 5, 132
+"c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\pipe\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 20, 0, 0, 3, 23
+"c:\Users\21365\Desktop\op\gis\app\(root)\layout.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 19, 0, 0, 5, 24
+"c:\Users\21365\Desktop\op\gis\app\(root)\page.js", "JavaScript", 0, 0, 40, 0, 0, 0, 0, 0, 2, 42
+"c:\Users\21365\Desktop\op\gis\app\Fucntions\function.js", "JavaScript", 0, 0, 41, 0, 0, 0, 0, 0, 8, 49
+"c:\Users\21365\Desktop\op\gis\app\Landing\layout.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 16, 0, 0, 3, 19
+"c:\Users\21365\Desktop\op\gis\app\Landing\page.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 10, 0, 0, 2, 12
+"c:\Users\21365\Desktop\op\gis\app\globals.css", "CSS", 0, 0, 0, 0, 0, 0, 30, 3, 11, 44
+"c:\Users\21365\Desktop\op\gis\app\page.module.css", "CSS", 0, 0, 0, 0, 0, 0, 30, 1, 2, 33
+"c:\Users\21365\Desktop\op\gis\components.json", "JSON", 0, 0, 0, 0, 17, 0, 0, 0, 0, 17
+"c:\Users\21365\Desktop\op\gis\components\ActionDropdown.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 2, 43
+"c:\Users\21365\Desktop\op\gis\components\CreateForm.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 89, 0, 3, 6, 98
+"c:\Users\21365\Desktop\op\gis\components\Dashboard\AddUserForm.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 302, 0, 0, 7, 309
+"c:\Users\21365\Desktop\op\gis\components\Dashboard\DahboardCard.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 28, 0, 4, 3, 35
+"c:\Users\21365\Desktop\op\gis\components\Dashboard\LignesDashboard.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 58, 0, 4, 1, 63
+"c:\Users\21365\Desktop\op\gis\components\Dashboard\Table.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 106, 0, 6, 3, 115
+"c:\Users\21365\Desktop\op\gis\components\Dashboard\TableUsers.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 174, 0, 0, 5, 179
+"c:\Users\21365\Desktop\op\gis\components\Dashboard\WellDashboard.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 58, 0, 4, 1, 63
+"c:\Users\21365\Desktop\op\gis\components\DragModal.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 48, 0, 0, 4, 52
+"c:\Users\21365\Desktop\op\gis\components\Drop.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 39, 0, 0, 3, 42
+"c:\Users\21365\Desktop\op\gis\components\Form.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 119, 0, 3, 6, 128
+"c:\Users\21365\Desktop\op\gis\components\FormComplete.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 86, 0, 1, 20, 107
+"c:\Users\21365\Desktop\op\gis\components\FromSelect.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 68, 0, 0, 7, 75
+"c:\Users\21365\Desktop\op\gis\components\Inspection\ActionsOfInspection.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 61, 0, 0, 3, 64
+"c:\Users\21365\Desktop\op\gis\components\Inspection\ConstructionRaportForm.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 134, 0, 1, 3, 138
+"c:\Users\21365\Desktop\op\gis\components\Inspection\ConstructionReport.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 32, 0, 3, 2, 37
+"c:\Users\21365\Desktop\op\gis\components\Inspection\CreateInspection.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 32, 0, 3, 2, 37
+"c:\Users\21365\Desktop\op\gis\components\Inspection\CreateInspectionForm.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 302, 0, 0, 3, 305
+"c:\Users\21365\Desktop\op\gis\components\Inspection\Demande.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 61, 0, 0, 1, 62
+"c:\Users\21365\Desktop\op\gis\components\Inspection\EpEvaluation.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 32, 0, 3, 2, 37
+"c:\Users\21365\Desktop\op\gis\components\Inspection\EpEvaluationForm.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 187, 0, 1, 4, 192
+"c:\Users\21365\Desktop\op\gis\components\Inspection\InspectionCard.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 27, 0, 4, 3, 34
+"c:\Users\21365\Desktop\op\gis\components\Inspection\InspectionDepForm.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 163, 0, 1, 3, 167
+"c:\Users\21365\Desktop\op\gis\components\Inspection\InspectionDepartementRapport.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 33, 0, 3, 2, 38
+"c:\Users\21365\Desktop\op\gis\components\Inspection\ShowConstructionRapport.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 108, 0, 0, 1, 109
+"c:\Users\21365\Desktop\op\gis\components\Inspection\ShowEpNote.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 63, 0, 3, 2, 68
+"c:\Users\21365\Desktop\op\gis\components\Inspection\ShowEvaluation.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 70, 0, 3, 2, 75
+"c:\Users\21365\Desktop\op\gis\components\Inspection\ShowInspectionDepRapport.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 70, 0, 3, 2, 75
+"c:\Users\21365\Desktop\op\gis\components\Inspection\TableInspection.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 135, 0, 0, 5, 140
+"c:\Users\21365\Desktop\op\gis\components\Inspection\UpdateAndTerminate.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 33, 0, 3, 2, 38
+"c:\Users\21365\Desktop\op\gis\components\Inspection\UpdateAndTerminateForm.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 33, 0, 0, 5, 38
+"c:\Users\21365\Desktop\op\gis\components\Inspection\UpdatePage.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 30, 0, 0, 4, 34
+"c:\Users\21365\Desktop\op\gis\components\JonctionForm.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 579, 0, 1, 6, 586
+"c:\Users\21365\Desktop\op\gis\components\Junction\TableDemo.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 53, 0, 6, 3, 62
+"c:\Users\21365\Desktop\op\gis\components\LeftBarDropDown.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 57, 0, 0, 4, 61
+"c:\Users\21365\Desktop\op\gis\components\LengthSegment.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 118, 0, 0, 8, 126
+"c:\Users\21365\Desktop\op\gis\components\ManifoldMap.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 97, 0, 6, 15, 118
+"c:\Users\21365\Desktop\op\gis\components\Map.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 450, 0, 36, 35, 521
+"c:\Users\21365\Desktop\op\gis\components\MapComponent.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 272, 0, 20, 18, 310
+"c:\Users\21365\Desktop\op\gis\components\Modal.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 46, 0, 0, 2, 48
+"c:\Users\21365\Desktop\op\gis\components\Nav.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 51, 0, 0, 1, 52
+"c:\Users\21365\Desktop\op\gis\components\NewLine.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 451, 0, 1, 7, 459
+"c:\Users\21365\Desktop\op\gis\components\NewSegment.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 213, 0, 1, 15, 229
+"c:\Users\21365\Desktop\op\gis\components\Pagination.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 31, 0, 0, 3, 34
+"c:\Users\21365\Desktop\op\gis\components\PipeForm.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 327, 0, 4, 13, 344
+"c:\Users\21365\Desktop\op\gis\components\PopUp.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 12, 0, 0, 3, 15
+"c:\Users\21365\Desktop\op\gis\components\Section.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 67, 0, 0, 2, 69
+"c:\Users\21365\Desktop\op\gis\components\SegmentModal.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 79, 0, 4, 5, 88
+"c:\Users\21365\Desktop\op\gis\components\SkeltonMain.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 23, 0, 0, 2, 25
+"c:\Users\21365\Desktop\op\gis\components\TimeLine.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 91, 0, 0, 2, 93
+"c:\Users\21365\Desktop\op\gis\components\Toast.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 23, 0, 0, 3, 26
+"c:\Users\21365\Desktop\op\gis\components\Tree.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 12, 0, 22, 1, 35
+"c:\Users\21365\Desktop\op\gis\components\manifold\Chart.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 110, 0, 1, 10, 121
+"c:\Users\21365\Desktop\op\gis\components\manifold\ManifoldForm.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 767, 0, 2, 10, 779
+"c:\Users\21365\Desktop\op\gis\components\manifold\PressureCard.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 25, 0, 3, 3, 31
+"c:\Users\21365\Desktop\op\gis\components\manifold\Table.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 84, 0, 6, 5, 95
+"c:\Users\21365\Desktop\op\gis\components\pipe\Card.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 23, 0, 3, 3, 29
+"c:\Users\21365\Desktop\op\gis\components\pipe\Chart.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 77, 0, 0, 3, 80
+"c:\Users\21365\Desktop\op\gis\components\pipe\FormSteps.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 39, 4, 43
+"c:\Users\21365\Desktop\op\gis\components\pipe\Table.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 94, 0, 6, 3, 103
+"c:\Users\21365\Desktop\op\gis\components\shared\Circle.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 30, 0, 0, 4, 34
+"c:\Users\21365\Desktop\op\gis\components\shared\LeftSideBar.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 48, 0, 1, 2, 51
+"c:\Users\21365\Desktop\op\gis\components\shared\RightSideBar.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 22, 0, 0, 2, 24
+"c:\Users\21365\Desktop\op\gis\components\ui\badge.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 34, 0, 0, 5, 39
+"c:\Users\21365\Desktop\op\gis\components\ui\button.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 43, 0, 0, 5, 48
+"c:\Users\21365\Desktop\op\gis\components\ui\calendar.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 59, 0, 0, 4, 63
+"c:\Users\21365\Desktop\op\gis\components\ui\checkbox.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 20, 0, 0, 5, 25
+"c:\Users\21365\Desktop\op\gis\components\ui\command.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 107, 0, 0, 17, 124
+"c:\Users\21365\Desktop\op\gis\components\ui\dialog.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 83, 0, 0, 14, 97
+"c:\Users\21365\Desktop\op\gis\components\ui\dropdown-menu.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 139, 0, 0, 19, 158
+"c:\Users\21365\Desktop\op\gis\components\ui\form.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 111, 0, 0, 23, 134
+"c:\Users\21365\Desktop\op\gis\components\ui\input.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 16, 0, 0, 4, 20
+"c:\Users\21365\Desktop\op\gis\components\ui\label.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 13, 0, 0, 6, 19
+"c:\Users\21365\Desktop\op\gis\components\ui\menubar.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 164, 0, 0, 20, 184
+"c:\Users\21365\Desktop\op\gis\components\ui\pagination.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 91, 0, 0, 10, 101
+"c:\Users\21365\Desktop\op\gis\components\ui\popover.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 21, 0, 0, 7, 28
+"c:\Users\21365\Desktop\op\gis\components\ui\select.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 108, 0, 0, 15, 123
+"c:\Users\21365\Desktop\op\gis\components\ui\skeleton.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 12, 0, 0, 3, 15
+"c:\Users\21365\Desktop\op\gis\components\ui\switch.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 20, 0, 0, 5, 25
+"c:\Users\21365\Desktop\op\gis\components\ui\table.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 76, 0, 0, 11, 87
+"c:\Users\21365\Desktop\op\gis\components\ui\tabs.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 36, 0, 0, 8, 44
+"c:\Users\21365\Desktop\op\gis\components\ui\textarea.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 15, 0, 0, 4, 19
+"c:\Users\21365\Desktop\op\gis\components\ui\toast.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 73, 0, 0, 11, 84
+"c:\Users\21365\Desktop\op\gis\components\ui\toaster.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 32, 0, 0, 4, 36
+"c:\Users\21365\Desktop\op\gis\components\ui\use-toast.js", "JavaScript", 0, 0, 128, 0, 0, 0, 0, 3, 25, 156
+"c:\Users\21365\Desktop\op\gis\components\well\AddressCard.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 24, 0, 2, 1, 27
+"c:\Users\21365\Desktop\op\gis\components\well\Table.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 54, 0, 6, 4, 64
+"c:\Users\21365\Desktop\op\gis\components\well\WellForm.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 512, 0, 1, 7, 520
+"c:\Users\21365\Desktop\op\gis\constants\achraf.js", "JavaScript", 0, 0, 519, 0, 0, 0, 0, 0, 0, 519
+"c:\Users\21365\Desktop\op\gis\constants\data.js", "JavaScript", 0, 0, 6808, 0, 0, 0, 0, 0, 1, 6809
+"c:\Users\21365\Desktop\op\gis\constants\polyline.geojson", "JSON", 0, 0, 0, 0, 31, 0, 0, 0, 0, 31
+"c:\Users\21365\Desktop\op\gis\context\CoordContext.js", "JavaScript", 0, 0, 3, 0, 0, 0, 0, 0, 2, 5
+"c:\Users\21365\Desktop\op\gis\context\CoordContextProvider.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 19, 0, 0, 4, 23
+"c:\Users\21365\Desktop\op\gis\context\CreatePipeFormContext.js", "JavaScript", 0, 0, 3, 0, 0, 0, 0, 0, 1, 4
+"c:\Users\21365\Desktop\op\gis\context\CreatePipeFormContextProvider.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 33, 0, 2, 6, 41
+"c:\Users\21365\Desktop\op\gis\context\DataContext.js", "JavaScript", 0, 0, 3, 0, 0, 0, 0, 0, 2, 5
+"c:\Users\21365\Desktop\op\gis\context\DataContextProvider.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 21, 0, 0, 3, 24
+"c:\Users\21365\Desktop\op\gis\context\DataMapContext.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Users\21365\Desktop\op\gis\context\WellContext.js", "JavaScript", 0, 0, 3, 0, 0, 0, 0, 0, 0, 3
+"c:\Users\21365\Desktop\op\gis\context\WellContextProvider.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 25, 0, 0, 2, 27
+"c:\Users\21365\Desktop\op\gis\jsconfig.json", "JSON with Comments", 0, 0, 0, 10, 0, 0, 0, 0, 0, 10
+"c:\Users\21365\Desktop\op\gis\lib\functions.js", "JavaScript", 0, 0, 60, 0, 0, 0, 0, 6, 16, 82
+"c:\Users\21365\Desktop\op\gis\lib\utils.js", "JavaScript", 0, 0, 5, 0, 0, 0, 0, 0, 2, 7
+"c:\Users\21365\Desktop\op\gis\next.config.mjs", "JavaScript", 0, 0, 2, 0, 0, 0, 0, 1, 2, 5
+"c:\Users\21365\Desktop\op\gis\package-lock.json", "JSON", 0, 0, 0, 0, 7941, 0, 0, 0, 1, 7942
+"c:\Users\21365\Desktop\op\gis\package.json", "JSON", 0, 0, 0, 0, 65, 0, 0, 0, 1, 66
+"c:\Users\21365\Desktop\op\gis\postcss.config.js", "JavaScript", 0, 0, 6, 0, 0, 0, 0, 0, 1, 7
+"c:\Users\21365\Desktop\op\gis\public\add.svg", "XML", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\21365\Desktop\op\gis\public\eye.svg", "XML", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\21365\Desktop\op\gis\public\fire.svg", "XML", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\21365\Desktop\op\gis\public\layer.svg", "XML", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\21365\Desktop\op\gis\public\manifold.svg", "XML", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\21365\Desktop\op\gis\public\moin.svg", "XML", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\21365\Desktop\op\gis\public\next.svg", "XML", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\21365\Desktop\op\gis\public\pipe.svg", "XML", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\21365\Desktop\op\gis\public\puit.svg", "XML", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\21365\Desktop\op\gis\public\ruler.svg", "XML", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\21365\Desktop\op\gis\public\station.svg", "XML", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\21365\Desktop\op\gis\public\vercel.svg", "XML", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\21365\Desktop\op\gis\tailwind.config.js", "JavaScript", 0, 0, 41, 0, 0, 0, 0, 1, 0, 42
+"c:\Users\21365\Desktop\op\gis\tsconfig.json", "JSON with Comments", 0, 0, 0, 40, 0, 0, 0, 0, 1, 41
+"Total", "-", 23, 12, 7670, 50, 8054, 10342, 60, 291, 732, 27234

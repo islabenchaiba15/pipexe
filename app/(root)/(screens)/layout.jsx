@@ -5,6 +5,7 @@ import Nav from "../../../components/Nav";
 import WellContextProvider from "../../../context/WellContextProvider";
 import CreatePipeFormContextProvider from "../../../context/CreatePipeFormContextProvider";
 import { Toaster } from "@/components/ui/toaster";
+import DataContextProvider from "@/context/DataContextProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -13,11 +14,10 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  
   return (
-    <div className="">
-      <Nav/>
+      <div className="">
+        <Nav />
         {children}
-    </div>
+      </div>
   );
 }

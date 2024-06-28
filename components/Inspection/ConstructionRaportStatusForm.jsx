@@ -5,13 +5,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { CalendarIcon } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -27,22 +23,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import { Input } from "@/components/ui/input";
-import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 import { axiosInstance } from "@/Api/Index";
-import { useAuth } from "@/context/AuthContext";
 
 const formSchema = z.object({
-  message: z
+    message: z
     .string()
     .min(10, {
       message: "message must be at least 10 characters.",
@@ -50,9 +35,8 @@ const formSchema = z.object({
     .max(160, {
       message: "message must not be longer than 30 characters.",
     }),
-    rapport_file: z.instanceof(FileList, {
-    message: "Please select a file for upload",
-  }),
+    date: z.date({ message: "date is required" }),
+
 });
 const languages = [
   { label: "English", value: "en" },
@@ -65,32 +49,29 @@ const languages = [
   { label: "Korean", value: "ko" },
   { label: "Chinese", value: "zh" },
 ];
-export function ConstructionRaportForm({inspectionID}) {
+export function ConstructionRaportStatusForm() {
   const [formData, setFormData] = useState({});
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       message: "",
-      rapport_file: "",
+      date: "",
     },
   });
-  const fileRefe = form.register("rapport_file");
   const [errors, setErrors] = useState({});
-  const { user } = useAuth();
   // 2. Define a submit handler.
   const onSubmit=async(values)=> {
-    const data = {
-      message: values.message,
-      report_file: values.rapport_file[0],
-      InspectionID: inspectionID,
-      user:user._id
+    const dataa = {
+      status: values.message,
+      date:values.date,
+      InspectionID: "667c707c8ae526b63a858960",
     };
-    setFormData(data);
-    console.log("submitted data", data);
+    setFormData(dataa);
+    console.log("submitted data", dataa);
     try {
-      const { data } = await axiosInstance.post("/construction/create", formData, {
+      const { data } = await axiosInstance.post("/constructionStatus/create", dataa, {
         headers: {
-          'Content-Type': 'multipart/form-data',// Change to application/json
+            "Content-Type": "application/json", // Change to application/json
         },
       });
       console.log("receeeeeeeeeeeive", data);
@@ -133,29 +114,50 @@ export function ConstructionRaportForm({inspectionID}) {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="rapport_file"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-md font-bold">construction final report file</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="shadcn"
-                  type="file"
-                  onChange={(event) => {
-                    field.onChange(event.target?.files?.[0] ?? undefined);
-                  }}
-                  {...fileRefe}
-                />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+         <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-start">
+                  <FormLabel className="text-md font-bold ">date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-full pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription className="text-xs">
+                    Your date of birth is used to calculate your age.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
         <div className="flex justify-end">
           <Button type="submit">Submit</Button>
         </div>

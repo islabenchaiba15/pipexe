@@ -38,34 +38,41 @@ import {
 import { Input } from "@/components/ui/input";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
+import { axiosInstance } from "@/Api/Index";
+import { useAuth } from "@/context/AuthContext";
 
-const formSchema = z.object({
-  message: z
-    .string()
-    .min(10, {
-      message: "message must be at least 10 characters.",
-    })
-    .max(160, {
-      message: "message must not be longer than 30 characters.",
-    })
-    .optional(),
-    evaluation: z.string({
+const formSchema = z
+  .object({
+    message: z
+      .string()
+      .min(10, {
+        message: "message must be at least 10 characters.",
+      })
+      .max(160, {
+        message: "message must not be longer than 30 characters.",
+      })
+      .optional(),
+    evaluation: z
+      .string({
         message: "evaluation must be at least 2 characters.",
-      }).min(1, {
+      })
+      .min(1, {
         message: "evaluation is required",
-      }), 
-      evaluation_file: z.instanceof(FileList, {
-        message: "Please select a file for upload",
-      }).optional(),
-    }).refine((data) => {
+      }),
+    evaluation_file: z.any().optional(),
+  })
+  .refine(
+    (data) => {
       if (data.evaluation === "passer") {
-        return data.evaluation_file && data.evaluation_file.length > 0;
-      }
+        return data.evaluation_file && data.evaluation_file.length > 0;      }
       return true;
-    }, {
-      message: "Evaluation file is required when passing to construction department",
-      path: ["evaluation_file"]
-});
+    },
+    {
+      message:
+        "Evaluation file is required when passing to construction department",
+      path: ["evaluation_file"],
+    }
+  );
 const languages = [
   { label: "English", value: "en" },
   { label: "French", value: "fr" },
@@ -77,8 +84,10 @@ const languages = [
   { label: "Korean", value: "ko" },
   { label: "Chinese", value: "zh" },
 ];
-export function EpEvaluationForm() {
+export function EpEvaluationForm({inspectionID}) {
   const [formData, setFormData] = useState({});
+  const { user } = useAuth();
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -89,17 +98,46 @@ export function EpEvaluationForm() {
   });
   const fileRefe = form.register("evaluation_file");
   const watchResult = form.watch("evaluation");
+  const [errors, setErrors] = useState({});
 
   // 2. Define a submit handler.
-  function onSubmit(values) {
-    const data = {
+  const onSubmit = async (values) => {
+    const dataa = {
       message: values.message,
       evaluation: values.evaluation,
       pv_evaluation: values.evaluation_file[0] || undefined,
+      InspectionID: inspectionID,
+      user:user._id
     };
-    setFormData(data);
-    console.log("submitted data", data);
-  }
+    await setFormData(dataa);
+    console.log("submitted data", dataa);
+    try {
+      const { data } = await axiosInstance.post(
+        "/evaluation/create",
+        dataa,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Change to application/json
+          },
+        }
+      );
+      console.log("receeeeeeeeeeeive", data);
+      form.reset(form.defaultValues);
+    } catch (error) {
+      if (error.response) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: error.response.data.message,
+        }));
+        console.log("Error Response:ssssssssssssss", errors);
+      } else if (error.request) {
+        console.log("Error Request:", error.request);
+        alert("No response from the server. Please try again later.");
+      } else {
+        console.log("Error", error.message);
+      }
+    }
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 ">
@@ -169,7 +207,7 @@ export function EpEvaluationForm() {
                     placeholder="shadcn"
                     type="file"
                     onChange={(event) => {
-                      field.onChange(event.target?.files?.[0] ?? undefined);
+                      field.onChange(event.target?.files?.[0] );
                     }}
                     {...fileRefe}
                   />

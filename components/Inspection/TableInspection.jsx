@@ -1,140 +1,174 @@
+"use client";
+import { useEffect, useState } from "react";
+import { axiosInstance } from "@/Api/Index";
 import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "../../components/ui/table";
-  import ActionDropdown from "../ActionDropdown";
-  import Paging from "../Pagination";
-  import { Badge } from "@/components/ui/badge"
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../../components/ui/table";
+import ActionDropdown from "../ActionDropdown";
+import Paging from "../Pagination";
+import { Badge } from "@/components/ui/badge";
 import ActionOfInspection from "./ActionsOfInspection";
 import { ShowEpNote } from "./ShowEpNote";
 import { ShowInspectionDepRapport } from "./ShowInspectionDepRapport";
 import { ShowEvaluation } from "./ShowEvaluation";
 import { ShowConstructionRapport } from "./ShowConstructionRapport";
-  const getBadgeVariant = (status) => {
-    switch (status.toLowerCase()) {
-      case 'demande':
-        return 'default'
-      case 'inspection':
-        return 'outline';
-      case 'decision':
-        return 'destructive';
-      case 'entretien':
-        return 'blue';
-      case 'finished':
-        return 'green';
-    }
+import { EpNoteTrigger } from "./NoteEpTrigger";
+import { InspectionTrigger } from "./triggers/InpectionTrigger";
+import { EvaluationTrigger } from "./triggers/EvaluationTrigger";
+import { ConstructionTrigger } from "./triggers/ConstructionTrigger";
+
+const getBadgeVariant = (status) => {
+  switch (status.toLowerCase()) {
+    case "inspection":
+      return "outline";
+    case "decision":
+      return "destructive";
+    case "construction":
+      return "default";
+    case "finished":
+      return "green";
+    case "finished":
+      return " blue";
+    case "closed":
+      return "destructive";
+    default:
+      return "default";
+  }
+};
+
+const TableInspection = ({selectedType,searchTerm}) => {
+  const [inspections, setInspections] = useState([]);
+  const [inspectionId, setInspectionId] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedInspection, setSelectedInspection] = useState(null);
+  const [selectedInspection1, setSelectedInspection1] = useState(null);
+  const [selectedInspection2, setSelectedInspection2] = useState(null);
+  const [selectedInspection4, setSelectedInspection4] = useState(null);
+
+  useEffect(() => {
+    const fetchInformation = async () => {
+      try {
+        const response = await axiosInstance.get("/inspection/getAll");
+        setInspections(response.data.inspections || []);
+        console.log(response.data.inspections,'popppppppppppp')
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching inspections:", error);
+        setError("Failed to fetch inspections");
+        setIsLoading(false);
+      }
+    };
+    fetchInformation();
+  }, []);
+
+  const filteredInspections = inspections.filter((inspection) => {
+    const isNameMatch =
+    inspection.ouvrage.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    inspection.inspection.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    inspection.inspection.ep_noteID?.ID.toString() === searchTerm ||
+    inspection.inspection.Ins_reportID?.IDtoString() === searchTerm ||
+    inspection.inspection.evaluationID?.IDtoString() === searchTerm ||
+    inspection.inspection.constructionID?.IDtoString() === searchTerm
+    return isNameMatch 
+  })
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0];
   };
 
-  const invoices = [
-    {
-      Number: "1",
-      date:"15/12/2015",
-      type: "IDS",
-      ouvrage: "md1",
-      note_ep: "1223",
-      inspection: "2345",
-      decision: "1111",
-      realisation: "/",
-      status: "demande",
-    },
-    {
-        Number: "2",
-        date:"5/2/2025",
-        type: "manifold",
-        ouvrage: "md1",
-        note_ep: "1223",
-        inspection: "2345",
-        decision: "1111",
-        realisation: "/",
-        status: "inspection",
-      },
-      {
-        Number: "3",
-        date:"5/2/2025",
-        type: "well",
-        ouvrage: "w11",
-        note_ep: "1223",
-        inspection: "2345",
-        decision: "1111",
-        realisation: "/",
-        status: "decision",
-      },
-      {
-        Number: "2",
-        date:"5/2/2025",
-        type: "manifold",
-        ouvrage: "md1",
-        note_ep: "1223",
-        inspection: "2345",
-        decision: "1111",
-        realisation: "/",
-        status: "entretien",
-      },
-      {
-        Number: "2",
-        date:"5/2/2025",
-        type: "manifold",
-        ouvrage: "md1",
-        note_ep: "1223",
-        inspection: "2345",
-        decision: "1111",
-        realisation: "/",
-        status: "finished",
-      },
-  ];
-  
-  const TableInspection = () => {
-    return (
-      <div className="pb-24 ">
-        <Table className="">
-          <TableHeader>
-            <TableRow>
-              <TableHead className="font-bold text-black">Number </TableHead>
-              <TableHead className="font-bold  text-black">Date</TableHead>
-              <TableHead className="font-bold  text-black">inspection type</TableHead>
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
-              <TableHead className="font-bold  text-black">
-                Type d'ouvrage
-              </TableHead>
-              <TableHead className="font-bold  text-black">ouvrage</TableHead>
-              <TableHead className="font-bold  text-black">Note E&P</TableHead>
-              <TableHead className="font-bold  text-black">rapport inspection </TableHead>
-              <TableHead className="font-bold  text-black">rapport decision </TableHead>
-              <TableHead className="font-bold  text-black">réalisation PV </TableHead>
-              <TableHead className="font-bold  text-black">status </TableHead>
-              <TableHead className="font-bold  text-black">actions </TableHead>
+  return (
+    <div className="pb-24">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="font-bold text-black">Number</TableHead>
+            <TableHead className="font-bold text-black">Date</TableHead>
+            <TableHead className="font-bold text-black">Inspection Type</TableHead>
+            <TableHead className="font-bold text-black">Type d'ouvrage</TableHead>
+            <TableHead className="font-bold text-black">Ouvrage</TableHead>
+            <TableHead className="font-bold text-black">Note E&P</TableHead>
+            <TableHead className="font-bold text-black">Rapport Inspection</TableHead>
+            <TableHead className="font-bold text-black">Rapport Decision</TableHead>
+            <TableHead className="font-bold text-black">Réalisation PV</TableHead>
+            <TableHead className="font-bold text-black">Status</TableHead>
+            <TableHead className="font-bold text-black">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {filteredInspections.map((inspection, index) => (
+            <TableRow key={inspection.inspection._id}>
+              <TableCell className="font-medium">{index + 1}</TableCell>
+              <TableCell className="font-semibold">{formatDate(inspection.inspection.inspection_date)}</TableCell>
+              <TableCell className="font-semibold">periodic</TableCell>
+              <TableCell className="font-semibold">{inspection.inspection.ouvrage_type}</TableCell>
+              <TableCell className="font-semibold">{inspection.ouvrage?.name || 'N/A'}</TableCell>
+              <TableCell className="font-semibold">
+                <EpNoteTrigger id={inspection.inspection.ep_noteID.ID} 
+                  onClick={() => setSelectedInspection(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <InspectionTrigger id={inspection.inspection.Ins_reportID?.ID} 
+                  onClick={() => setSelectedInspection1(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <EvaluationTrigger id={inspection.inspection.evaluationID?.ID} 
+                  onClick={() => setSelectedInspection2(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <ConstructionTrigger id={inspection.inspection.constructionID?.ID} 
+                  onClick={() => setSelectedInspection4(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <Badge variant={getBadgeVariant(inspection.inspection.status)}>
+                  {inspection.inspection.status}
+                </Badge>
+              </TableCell>
+              <TableCell className="flex items-center ml-4">
+                <ActionOfInspection inspection={inspection.inspection} inspectionID={inspection.inspection._id}/>
+              </TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {invoices.map((invoice, index) => (
-              <TableRow key={index}>
-                <TableCell className="font-medium">{invoice.Number}</TableCell>
-                <TableCell className="font-semibold	">{invoice.date}</TableCell>
-                <TableCell className="font-semibold	">periodic</TableCell>
-                <TableCell className="font-semibold	">{invoice.type}</TableCell>
-                <TableCell className="font-semibold	">{invoice.ouvrage}</TableCell>
-                <TableCell className="font-semibold	"><ShowEpNote/></TableCell>
-                <TableCell className="font-semibold	"><ShowInspectionDepRapport/></TableCell>
-                <TableCell className="font-semibold	"><ShowEvaluation/></TableCell>
-                <TableCell className="font-semibold	"><ShowConstructionRapport/></TableCell>
-                <TableCell className="font-semibold	"><Badge variant={getBadgeVariant(invoice.status)}>{invoice.status}</Badge></TableCell>
-                <TableCell className="flex items-center ml-4">
-                  <ActionOfInspection />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <Paging className="pb-10"/>
-      </div>
-    );
-  };
-  
-  export default TableInspection;
-  
+          ))}
+        </TableBody>
+      </Table>
+      <Paging className="pb-10" />
+      <ShowEpNote
+        isOpen={!!selectedInspection}
+        onClose={() => setSelectedInspection(null)}
+        InspectionID={selectedInspection}
+      />
+      <ShowInspectionDepRapport
+        isOpen={!!selectedInspection1}
+        onClose={() => setSelectedInspection1(null)}
+        InspectionID={selectedInspection1}
+      />
+      <ShowEvaluation
+        isOpen={!!selectedInspection2}
+        onClose={() => setSelectedInspection2(null)}
+        InspectionID={selectedInspection2}
+      />
+      <ShowConstructionRapport
+        isOpen={!!selectedInspection4}
+        onClose={() => setSelectedInspection4(null)}
+        InspectionID={selectedInspection4}
+      />
+    </div>
+  );
+};
+
+export default TableInspection;

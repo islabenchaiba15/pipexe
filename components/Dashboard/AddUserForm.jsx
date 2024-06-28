@@ -180,8 +180,8 @@ const AddUserForm = ({ onClose, closeButton }) => {
                         <SelectValue placeholder="position" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="position1">position1</SelectItem>
-                        <SelectItem value="position2">position2</SelectItem>
+                        <SelectItem value="ingenieur">ingenieur</SelectItem>
+                        <SelectItem value="technicien">technicien</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -204,8 +204,10 @@ const AddUserForm = ({ onClose, closeButton }) => {
                         <SelectValue placeholder="position" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="position1">admin</SelectItem>
-                        <SelectItem value="position2">position2</SelectItem>
+                        <SelectItem value="admin">admin</SelectItem>
+                        <SelectItem value="ep">E&P manager</SelectItem>
+                        <SelectItem value="Inspection">Inspection manager</SelectItem>
+                        <SelectItem value="construction">construction manager</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -279,11 +281,14 @@ const AddUserForm = ({ onClose, closeButton }) => {
                         <SelectValue placeholder="departement" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="departement1">
-                          departement1
+                        <SelectItem value="inspection">
+                        inspection
                         </SelectItem>
-                        <SelectItem value="departement2">
-                          departement2
+                        <SelectItem value="construction">
+                        construction
+                        </SelectItem>
+                        <SelectItem value="ep">
+                        ep
                         </SelectItem>
                       </SelectContent>
                     </Select>

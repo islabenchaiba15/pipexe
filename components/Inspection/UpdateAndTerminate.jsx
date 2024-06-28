@@ -12,7 +12,7 @@ import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { EpEvaluationForm } from "./EpEvaluationForm";
 import UpdatePage from "./UpdatePage";
 
-export function UpdateAndTerminate() {
+export function UpdateAndTerminate({inspectionID}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -30,7 +30,7 @@ export function UpdateAndTerminate() {
             Make changes to your profile here. Click save when you're done.
           </DialogDescription> */}
         </DialogHeader>
-        <UpdatePage />
+        <UpdatePage inspectionID={inspectionID}/>
       </DialogContent>
     </Dialog>
   );

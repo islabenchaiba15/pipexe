@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 import "../globals.css";
 import * as React from "react";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
+import { AuthProvider } from "@/context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,13 +12,20 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  
   return (
-      <html lang="en">
-          <body className={`${inter.className} mx-auto max-w-[24400px] hide-scrollbar overflow-x-hidden overflow-y-hidden` }>
-              {children}
-              <Toaster />
-          </body>
-      </html>
+    <html lang="en">
+      <head>
+        <script src="http://localhost:8097"></script>
+      </head>
+      <body
+        className={`${inter.className} mx-auto max-w-[24400px] hide-scrollbar overflow-x-hidden overflow-y-hidden`}
+      >
+        <AuthProvider>
+          {children}
+          <Toaster />
+          </AuthProvider>
+
+      </body>
+    </html>
   );
 }

@@ -168,17 +168,17 @@ const Map = ({ setTotalDistance }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const healthIcon = L.icon({
     iconUrl: "../puit.svg",
-    iconSize: [20, 20], // size of the icon
+    iconSize: [35, 35], // size of the icon
   });
 
   const manifoldIcon = L.icon({
     iconUrl: "../manifold.svg",
-    iconSize: [20, 20], // size of the icon
+    iconSize: [35, 35], // size of the icon
   });
 
   const junctionIcon = L.icon({
     iconUrl: "../islam.png",
-    iconSize: [20, 20], // size of the icon
+    iconSize: [35, 35], // size of the icon
   });
   const [selectedLayer, setSelectedLayer] = useState("OpenStreetMap");
   const mapboxAccessToken =
