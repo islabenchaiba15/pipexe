@@ -96,11 +96,11 @@ export function ShowInspectionDepRapport({ isOpen, onClose, InspectionID }) {
                 <div className="flex flex-col items-start gap-3">
                   <div className="flex flex-col items-start gap-3">
                     <h1 className="font-bold text-md">
-                      {inspectionReport.user.nom}
+                      {inspectionReport.Ins_reportID.user.nom}
                     </h1>
                     <h1 className="">
-                      {inspectionReport.user.position} --{" "}
-                      {inspectionReport.user.departement}
+                      {inspectionReport.Ins_reportID.user.position} --{" "}
+                      {inspectionReport.Ins_reportID.user.departement}
                     </h1>
                   </div>
                 </div>

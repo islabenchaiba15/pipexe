@@ -8,7 +8,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import { EditControl } from 'react-leaflet-draw';
 import WellContext from '../context/WellContext';
 import L from 'leaflet';
-const ManifoldMap = ({icon,data}) => {
+const ManifoldMap = ({icon,data,inspectionID}) => {
   const userIcon = L.icon({
     iconUrl: "",
     iconSize: [35, 35], // size of the icon

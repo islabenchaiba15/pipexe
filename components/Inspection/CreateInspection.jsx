@@ -17,9 +17,9 @@ export function CreateInspection({wells,pipes,manifolds}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex flex-row gap-4 items-center justify-start rounded-md cursor-pointer">
+        <div className="relative gap-4 flex justify-start  py-3 px-5 rounded-md cursor-pointer hover:bg-blue-900 hover:text-white mx-3">
           <AutoAwesomeIcon fontSize="small" />
-          <h1 className="text-md font-semibold">establish inspection</h1>
+          <h1 className="text-xl font-semibold">create</h1>
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[625px]">

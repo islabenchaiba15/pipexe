@@ -20,6 +20,15 @@ const CreatePipeFormContextProvider=({children})=>{
     // You can perform any additional actions with the completed form data here
     // e.g., send it to the server for processing
   };
+  const handleSegmentSubmit = (formData,inspectionID) => {
+    handleNextStep();
+    setFormData((prevData) => ({ ...prevData, ...formData }));
+    setFormData((prevData) => ({ ...prevData, ...inspectionID }));
+
+    // You can perform any additional actions with the completed form data here
+    // e.g., send it to the server for processing
+  };
+
 
   const value = {
 
@@ -29,6 +38,7 @@ const CreatePipeFormContextProvider=({children})=>{
     handleNextStep,
     handlePrevStep,
     handleFormSubmit,
+    handleSegmentSubmit
 
   };
 return(

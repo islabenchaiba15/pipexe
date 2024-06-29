@@ -8,7 +8,7 @@ import TableInspection from "./TableInspection";
 import { CreateInspection } from "./CreateInspection";
 import { Input } from "../ui/input";
 import { FromSelect } from "../FromSelect";
-const DemandeInspection = () => {
+const DemandeInspection = ({stats}) => {
   const cardData = [
     {
       label: "decision",
@@ -53,17 +53,27 @@ const DemandeInspection = () => {
     },
   ];
 
+  const transformedCardData = Object.keys(stats).map((key) => {
+    return {
+      label: key,
+      amount: stats[key].toString(),  // Convert the amount to a string
+      icon: "/fire.svg",
+      unit: "unitées",
+    };
+  });
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState([]);
   return (
     <div className="flex flex-col gap-5">
-      <section className="grid w-full grid-cols-1 gap-4  transition-all sm:grid-cols-2 xl:grid-cols-5 ">
-        {cardData.map((d, i) => (
+      <section className="grid w-full grid-cols-1 gap-4  transition-all sm:grid-cols-2 xl:grid-cols-4 ">
+        {transformedCardData.map((d, i) => (
           <InspectionCard
             key={i}
             amount={d.amount}
-            icon={d.icon}
+            icon={"/fire.svg"}
             label={d.label}
+            stats={stats}
           />
         ))}
       </section>

@@ -23,18 +23,21 @@ import { EpNoteTrigger } from "./NoteEpTrigger";
 import { InspectionTrigger } from "./triggers/InpectionTrigger";
 import { EvaluationTrigger } from "./triggers/EvaluationTrigger";
 import { ConstructionTrigger } from "./triggers/ConstructionTrigger";
+import { ResultTrigger } from "./triggers/ResultTrigger";
+import { UpdateOuvrage } from "./UpdateOuvrage";
+import { ShowUpdatedOuvrage } from "./ShowUpdatedOuvrage";
 
 const getBadgeVariant = (status) => {
   switch (status.toLowerCase()) {
     case "inspection":
       return "outline";
-    case "decision":
+    case "updated":
       return "destructive";
     case "construction":
       return "default";
     case "finished":
       return "green";
-    case "finished":
+    case "evaluation":
       return " blue";
     case "closed":
       return "destructive";
@@ -52,6 +55,7 @@ const TableInspection = ({selectedType,searchTerm}) => {
   const [selectedInspection1, setSelectedInspection1] = useState(null);
   const [selectedInspection2, setSelectedInspection2] = useState(null);
   const [selectedInspection4, setSelectedInspection4] = useState(null);
+  const [selectedInspection5, setSelectedInspection5] = useState(null);
 
   useEffect(() => {
     const fetchInformation = async () => {
@@ -102,6 +106,7 @@ const TableInspection = ({selectedType,searchTerm}) => {
             <TableHead className="font-bold text-black">Rapport Inspection</TableHead>
             <TableHead className="font-bold text-black">Rapport Decision</TableHead>
             <TableHead className="font-bold text-black">Réalisation PV</TableHead>
+            <TableHead className="font-bold text-black">Result</TableHead>
             <TableHead className="font-bold text-black">Status</TableHead>
             <TableHead className="font-bold text-black">Actions</TableHead>
           </TableRow>
@@ -135,10 +140,16 @@ const TableInspection = ({selectedType,searchTerm}) => {
                 />
               </TableCell>
               <TableCell className="font-semibold">
+                <ResultTrigger id={inspection.inspection.constructionID?.ID} 
+                  onClick={() => setSelectedInspection5(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
                 <Badge variant={getBadgeVariant(inspection.inspection.status)}>
                   {inspection.inspection.status}
                 </Badge>
               </TableCell>
+              
               <TableCell className="flex items-center ml-4">
                 <ActionOfInspection inspection={inspection.inspection} inspectionID={inspection.inspection._id}/>
               </TableCell>
@@ -166,6 +177,11 @@ const TableInspection = ({selectedType,searchTerm}) => {
         isOpen={!!selectedInspection4}
         onClose={() => setSelectedInspection4(null)}
         InspectionID={selectedInspection4}
+      />
+      <ShowUpdatedOuvrage
+        isOpen={!!selectedInspection5}
+        onClose={() => setSelectedInspection5(null)}
+        InspectionID={selectedInspection5}
       />
     </div>
   );

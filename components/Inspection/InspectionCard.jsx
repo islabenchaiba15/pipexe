@@ -15,13 +15,14 @@ export default function InspectionCard({
     icon,
     amount,
     unit,
+    stats
   }) {
   return (
     <div  className={" flex flex-row-reverse w-full justify-between gap-3 rounded-xl border p-5 shadow bg-white"}>
       <div className="flex justify-between w-1/2 gap-2 items-center">
         {/* label */}
         {/* icon */}
-        <Circle/>
+        <Circle stats={stats} label={label}/>
       </div>
       <section className="flex flex-col w-1/2 gap-2">
         <Image src={icon} alt="yy" width={20} height={20} />

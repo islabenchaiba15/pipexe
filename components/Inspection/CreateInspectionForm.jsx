@@ -44,7 +44,6 @@ import DataContextProvider from "@/context/DataContextProvider";
 import { useAuth } from "@/context/AuthContext";
 
 const formSchema = z.object({
-  email: z.string().email("Invalid email address"),
   message: z
     .string()
     .min(10, {
@@ -96,7 +95,6 @@ export function CreateInspectionForm({wells,pipes,manifolds}) {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
       message: "",
       type: "",
       ouvrage: "",
@@ -146,22 +144,6 @@ export function CreateInspectionForm({wells,pipes,manifolds}) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 ">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-bold">email</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="message"

@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { UpdateAndTerminate } from "./UpdateAndTerminate";
 import { useAuth } from "@/context/AuthContext";
 import { ConstructionRaportStatus } from "./ConstructionRaportStatus";
+import { UpdateOuvrage } from "./UpdateOuvrage";
 
 const ActionOfInspection = ({ inspection, inspectionID }) => {
   const [open, setOpen] = useState(false);
@@ -92,6 +93,8 @@ const ActionOfInspection = ({ inspection, inspectionID }) => {
                 </DropdownMenuItem>
               )}
 
+           
+            
             {inspection.constructionID &&
               inspection.evaluationID &&
               inspection.Ins_reportID &&
@@ -100,7 +103,7 @@ const ActionOfInspection = ({ inspection, inspectionID }) => {
                   onSelect={handleItemClick}
                   className="cursor-pointer"
                 >
-                  <UpdateAndTerminate inspectionID={inspectionID} />
+                  <UpdateOuvrage inspection={inspection} inspectionID={inspectionID} />
                 </DropdownMenuItem>
               )}
           </DropdownMenuGroup>
