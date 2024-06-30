@@ -98,7 +98,8 @@ const ActionOfInspection = ({ inspection, inspectionID }) => {
             {inspection.constructionID &&
               inspection.evaluationID &&
               inspection.Ins_reportID &&
-              userData.role === "ep" && (
+              inspection.status!== "updated" &&
+              userData.role === "ep" &&  (
                 <DropdownMenuItem
                   onSelect={handleItemClick}
                   className="cursor-pointer"

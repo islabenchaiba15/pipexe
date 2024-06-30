@@ -1,0 +1,260 @@
+Date : 2024-06-30 11:25:03
+Directory : c:\Users\21365\Desktop\op\gis
+Total : 174 files,  28193 codes, 340 comments, 863 blanks, all 29396 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JavaScript JSX     |        128 |     11,833 |        322 |        731 |     12,886 |
+| JSON               |          5 |      8,078 |          0 |          2 |      8,080 |
+| JavaScript         |         18 |      7,728 |         14 |         76 |      7,818 |
+| Markdown           |          5 |        276 |          0 |         40 |        316 |
+| CSV                |          2 |        156 |          0 |          0 |        156 |
+| CSS                |          2 |         60 |          4 |         13 |         77 |
+| JSON with Comments |          2 |         50 |          0 |          1 |         51 |
+| XML                |         12 |         12 |          0 |          0 |         12 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                 | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                    |        174 |     28,193 |        340 |        863 |     29,396 |
+| . (Files)                                                                            |          9 |      8,168 |          2 |         20 |      8,190 |
+| .VSCodeCounter                                                                       |          7 |        410 |          0 |         26 |        436 |
+| .VSCodeCounter\2024-06-25_18-55-54                                                   |          7 |        410 |          0 |         26 |        436 |
+| Api                                                                                  |          1 |          8 |          3 |          2 |         13 |
+| app                                                                                  |         28 |      1,357 |         51 |        120 |      1,528 |
+| app (Files)                                                                          |          2 |         60 |          4 |         13 |         77 |
+| app\(pages)                                                                          |          7 |        293 |          4 |         22 |        319 |
+| app\(pages) (Files)                                                                  |          1 |         18 |          0 |          3 |         21 |
+| app\(pages)\Sign                                                                     |          2 |         39 |          3 |          7 |         49 |
+| app\(pages)\login                                                                    |          2 |        162 |          1 |          8 |        171 |
+| app\(pages)\profile                                                                  |          2 |         74 |          0 |          4 |         78 |
+| app\(pages)\profile\[id]                                                             |          2 |         74 |          0 |          4 |         78 |
+| app\(pages)\profile\[id] (Files)                                                     |          1 |         57 |          0 |          2 |         59 |
+| app\(pages)\profile\[id]\edit                                                        |          1 |         17 |          0 |          2 |         19 |
+| app\(root)                                                                           |         16 |        937 |         43 |         72 |      1,052 |
+| app\(root) (Files)                                                                   |          2 |         67 |          0 |          7 |         74 |
+| app\(root)\(screens)                                                                 |         14 |        870 |         43 |         65 |        978 |
+| app\(root)\(screens) (Files)                                                         |          1 |         21 |          0 |          3 |         24 |
+| app\(root)\(screens)\Admin                                                           |          2 |        179 |         16 |         11 |        206 |
+| app\(root)\(screens)\Admin\dashboard                                                 |          1 |         46 |          0 |          3 |         49 |
+| app\(root)\(screens)\Admin\users                                                     |          1 |        133 |         16 |          8 |        157 |
+| app\(root)\(screens)\create-well                                                     |          2 |        143 |          6 |         10 |        159 |
+| app\(root)\(screens)\create-well (Files)                                             |          1 |         27 |          0 |          4 |         31 |
+| app\(root)\(screens)\create-well\[id]                                                |          1 |        116 |          6 |          6 |        128 |
+| app\(root)\(screens)\createpipe                                                      |          2 |         55 |          0 |          9 |         64 |
+| app\(root)\(screens)\createpipe (Files)                                              |          1 |         24 |          0 |          5 |         29 |
+| app\(root)\(screens)\createpipe\dessiner                                             |          1 |         31 |          0 |          4 |         35 |
+| app\(root)\(screens)\inspection                                                      |          1 |         59 |          3 |          6 |         68 |
+| app\(root)\(screens)\jonction                                                        |          2 |        129 |          6 |          9 |        144 |
+| app\(root)\(screens)\jonction\[id]                                                   |          1 |        105 |          6 |          4 |        115 |
+| app\(root)\(screens)\jonction\create                                                 |          1 |         24 |          0 |          5 |         29 |
+| app\(root)\(screens)\manifold                                                        |          2 |        143 |          6 |          9 |        158 |
+| app\(root)\(screens)\manifold\[id]                                                   |          1 |        118 |          6 |          5 |        129 |
+| app\(root)\(screens)\manifold\create-manifold                                        |          1 |         25 |          0 |          4 |         29 |
+| app\(root)\(screens)\pipe                                                            |          2 |        141 |          6 |          8 |        155 |
+| app\(root)\(screens)\pipe (Files)                                                    |          1 |         20 |          0 |          3 |         23 |
+| app\(root)\(screens)\pipe\[id]                                                       |          1 |        121 |          6 |          5 |        132 |
+| app\Fucntions                                                                        |          1 |         41 |          0 |          8 |         49 |
+| app\Landing                                                                          |          2 |         26 |          0 |          5 |         31 |
+| components                                                                           |        102 |     10,641 |        274 |        643 |     11,558 |
+| components (Files)                                                                   |         26 |      3,462 |        131 |        194 |      3,787 |
+| components\Dashboard                                                                 |          6 |        731 |         18 |         20 |        769 |
+| components\Inspection                                                                |         33 |      3,093 |         44 |        138 |      3,275 |
+| components\Inspection (Files)                                                        |         29 |      3,069 |         44 |        137 |      3,250 |
+| components\Inspection\triggers                                                       |          4 |         24 |          0 |          1 |         25 |
+| components\Junction                                                                  |          1 |         53 |          6 |          3 |         62 |
+| components\manifold                                                                  |          4 |        986 |         12 |         28 |      1,026 |
+| components\pipe                                                                      |          4 |        194 |         48 |         13 |        255 |
+| components\shared                                                                    |          3 |        131 |          3 |         10 |        144 |
+| components\ui                                                                        |         22 |      1,401 |          3 |        225 |      1,629 |
+| components\well                                                                      |          3 |        590 |          9 |         12 |        611 |
+| constants                                                                            |          3 |      7,358 |          0 |          1 |      7,359 |
+| context                                                                              |         10 |        174 |          4 |         33 |        211 |
+| lib                                                                                  |          2 |         65 |          6 |         18 |         89 |
+| public                                                                               |         12 |         12 |          0 |          0 |         12 |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                             | language           | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| c:\Users\21365\Desktop\op\gis\.VSCodeCounter\2024-06-25_18-55-54\details.md          | Markdown           |        161 |          0 |          6 |        167 |
+| c:\Users\21365\Desktop\op\gis\.VSCodeCounter\2024-06-25_18-55-54\diff-details.md     | Markdown           |          9 |          0 |          6 |         15 |
+| c:\Users\21365\Desktop\op\gis\.VSCodeCounter\2024-06-25_18-55-54\diff.csv            | CSV                |          2 |          0 |          0 |          2 |
+| c:\Users\21365\Desktop\op\gis\.VSCodeCounter\2024-06-25_18-55-54\diff.md             | Markdown           |         12 |          0 |          7 |         19 |
+| c:\Users\21365\Desktop\op\gis\.VSCodeCounter\2024-06-25_18-55-54\results.csv         | CSV                |        154 |          0 |          0 |        154 |
+| c:\Users\21365\Desktop\op\gis\.VSCodeCounter\2024-06-25_18-55-54\results.json        | JSON               |          1 |          0 |          0 |          1 |
+| c:\Users\21365\Desktop\op\gis\.VSCodeCounter\2024-06-25_18-55-54\results.md          | Markdown           |         71 |          0 |          7 |         78 |
+| c:\Users\21365\Desktop\op\gis\Api\Index.js                                           | JavaScript         |          8 |          3 |          2 |         13 |
+| c:\Users\21365\Desktop\op\gis\README.md                                              | Markdown           |         23 |          0 |         14 |         37 |
+| c:\Users\21365\Desktop\op\gis\app\(pages)\Sign\Layout.js                             | JavaScript         |          0 |          0 |          1 |          1 |
+| c:\Users\21365\Desktop\op\gis\app\(pages)\Sign\page.jsx                              | JavaScript JSX     |         39 |          3 |          6 |         48 |
+| c:\Users\21365\Desktop\op\gis\app\(pages)\layout.jsx                                 | JavaScript JSX     |         18 |          0 |          3 |         21 |
+| c:\Users\21365\Desktop\op\gis\app\(pages)\login\layout.jsx                           | JavaScript JSX     |         16 |          0 |          3 |         19 |
+| c:\Users\21365\Desktop\op\gis\app\(pages)\login\page.jsx                             | JavaScript JSX     |        146 |          1 |          5 |        152 |
+| c:\Users\21365\Desktop\op\gis\app\(pages)\profile\[id]\edit\page.jsx                 | JavaScript JSX     |         17 |          0 |          2 |         19 |
+| c:\Users\21365\Desktop\op\gis\app\(pages)\profile\[id]\page.jsx                      | JavaScript JSX     |         57 |          0 |          2 |         59 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\Admin\dashboard\page.jsx          | JavaScript JSX     |         46 |          0 |          3 |         49 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\Admin\users\page.jsx              | JavaScript JSX     |        133 |         16 |          8 |        157 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\create-well\[id]\page.jsx         | JavaScript JSX     |        116 |          6 |          6 |        128 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\create-well\page.jsx              | JavaScript JSX     |         27 |          0 |          4 |         31 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\createpipe\dessiner\page.jsx      | JavaScript JSX     |         31 |          0 |          4 |         35 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\createpipe\page.jsx               | JavaScript JSX     |         24 |          0 |          5 |         29 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\inspection\page.jsx               | JavaScript JSX     |         59 |          3 |          6 |         68 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\jonction\[id]\page.jsx            | JavaScript JSX     |        105 |          6 |          4 |        115 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\jonction\create\page.jsx          | JavaScript JSX     |         24 |          0 |          5 |         29 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\layout.jsx                        | JavaScript JSX     |         21 |          0 |          3 |         24 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\manifold\[id]\page.jsx            | JavaScript JSX     |        118 |          6 |          5 |        129 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\manifold\create-manifold\page.jsx | JavaScript JSX     |         25 |          0 |          4 |         29 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\pipe\[id]\page.jsx                | JavaScript JSX     |        121 |          6 |          5 |        132 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\(screens)\pipe\page.jsx                     | JavaScript JSX     |         20 |          0 |          3 |         23 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\layout.jsx                                  | JavaScript JSX     |         27 |          0 |          5 |         32 |
+| c:\Users\21365\Desktop\op\gis\app\(root)\page.js                                     | JavaScript         |         40 |          0 |          2 |         42 |
+| c:\Users\21365\Desktop\op\gis\app\Fucntions\function.js                              | JavaScript         |         41 |          0 |          8 |         49 |
+| c:\Users\21365\Desktop\op\gis\app\Landing\layout.jsx                                 | JavaScript JSX     |         16 |          0 |          3 |         19 |
+| c:\Users\21365\Desktop\op\gis\app\Landing\page.jsx                                   | JavaScript JSX     |         10 |          0 |          2 |         12 |
+| c:\Users\21365\Desktop\op\gis\app\globals.css                                        | CSS                |         30 |          3 |         11 |         44 |
+| c:\Users\21365\Desktop\op\gis\app\page.module.css                                    | CSS                |         30 |          1 |          2 |         33 |
+| c:\Users\21365\Desktop\op\gis\components.json                                        | JSON               |         17 |          0 |          0 |         17 |
+| c:\Users\21365\Desktop\op\gis\components\ActionDropdown.jsx                          | JavaScript JSX     |         41 |          0 |          2 |         43 |
+| c:\Users\21365\Desktop\op\gis\components\CreateForm.jsx                              | JavaScript JSX     |         89 |          3 |          6 |         98 |
+| c:\Users\21365\Desktop\op\gis\components\Dashboard\AddUserForm.jsx                   | JavaScript JSX     |        307 |          0 |          7 |        314 |
+| c:\Users\21365\Desktop\op\gis\components\Dashboard\DahboardCard.jsx                  | JavaScript JSX     |         28 |          4 |          3 |         35 |
+| c:\Users\21365\Desktop\op\gis\components\Dashboard\LignesDashboard.jsx               | JavaScript JSX     |         58 |          4 |          1 |         63 |
+| c:\Users\21365\Desktop\op\gis\components\Dashboard\Table.jsx                         | JavaScript JSX     |        106 |          6 |          3 |        115 |
+| c:\Users\21365\Desktop\op\gis\components\Dashboard\TableUsers.jsx                    | JavaScript JSX     |        174 |          0 |          5 |        179 |
+| c:\Users\21365\Desktop\op\gis\components\Dashboard\WellDashboard.jsx                 | JavaScript JSX     |         58 |          4 |          1 |         63 |
+| c:\Users\21365\Desktop\op\gis\components\DragModal.jsx                               | JavaScript JSX     |         48 |          0 |          4 |         52 |
+| c:\Users\21365\Desktop\op\gis\components\Drop.jsx                                    | JavaScript JSX     |         39 |          0 |          3 |         42 |
+| c:\Users\21365\Desktop\op\gis\components\Form.jsx                                    | JavaScript JSX     |        119 |          3 |          6 |        128 |
+| c:\Users\21365\Desktop\op\gis\components\FormComplete.jsx                            | JavaScript JSX     |         86 |          1 |         20 |        107 |
+| c:\Users\21365\Desktop\op\gis\components\FromSelect.jsx                              | JavaScript JSX     |         68 |          0 |          7 |         75 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\ActionsOfInspection.jsx          | JavaScript JSX     |        111 |          0 |          9 |        120 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\ConstructionRaportForm.jsx       | JavaScript JSX     |        162 |          1 |          3 |        166 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\ConstructionRaportStatus.jsx     | JavaScript JSX     |         33 |          3 |          2 |         38 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\ConstructionRaportStatusForm.jsx | JavaScript JSX     |        163 |          1 |          4 |        168 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\ConstructionReport.jsx           | JavaScript JSX     |         32 |          3 |          2 |         37 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\CreateInspection.jsx             | JavaScript JSX     |         32 |          3 |          2 |         37 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\CreateInspectionForm.jsx         | JavaScript JSX     |        287 |          0 |          4 |        291 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\CreatePeriodicInspection.jsx     | JavaScript JSX     |         33 |          3 |          2 |         38 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\Demande.jsx                      | JavaScript JSX     |        103 |          0 |          5 |        108 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\EpEvaluation.jsx                 | JavaScript JSX     |         32 |          3 |          2 |         37 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\EpEvaluationForm.jsx             | JavaScript JSX     |        224 |          1 |          5 |        230 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\FormCompleteUpdate.jsx           | JavaScript JSX     |         71 |          0 |         14 |         85 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\InspectionCard.jsx               | JavaScript JSX     |         28 |          4 |          3 |         35 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\InspectionDepForm.jsx            | JavaScript JSX     |        202 |          1 |          4 |        207 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\InspectionDepartementRapport.jsx | JavaScript JSX     |         33 |          3 |          2 |         38 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\InspectionPeriodicFile.jsx       | JavaScript JSX     |        122 |          0 |          5 |        127 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\NoteEpTrigger.jsx                | JavaScript JSX     |          5 |          0 |          0 |          5 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\ShowConstructionRapport.jsx      | JavaScript JSX     |        167 |          0 |          7 |        174 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\ShowEpNote.jsx                   | JavaScript JSX     |        111 |          3 |          5 |        119 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\ShowEvaluation.jsx               | JavaScript JSX     |        139 |          3 |          5 |        147 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\ShowInspectionDepRapport.jsx     | JavaScript JSX     |        145 |          3 |          5 |        153 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\ShowUpdatedOuvrage.jsx           | JavaScript JSX     |         91 |          3 |          6 |        100 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\TableInspection.jsx              | JavaScript JSX     |        185 |          0 |          9 |        194 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\UpdateAndTerminate.jsx           | JavaScript JSX     |         30 |          3 |          2 |         35 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\UpdateAndTerminateForm.jsx       | JavaScript JSX     |         36 |          0 |          5 |         41 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\UpdateManifoldForm.jsx           | JavaScript JSX     |        211 |          1 |          5 |        217 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\UpdateOuvrage.jsx                | JavaScript JSX     |         39 |          1 |          3 |         43 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\UpdatePage.jsx                   | JavaScript JSX     |         30 |          0 |          2 |         32 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\UpdateSegmentStep.jsx            | JavaScript JSX     |        212 |          1 |         15 |        228 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\triggers\ConstructionTrigger.jsx | JavaScript JSX     |          8 |          0 |          1 |          9 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\triggers\EvaluationTrigger.jsx   | JavaScript JSX     |          5 |          0 |          0 |          5 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\triggers\InpectionTrigger.jsx    | JavaScript JSX     |          5 |          0 |          0 |          5 |
+| c:\Users\21365\Desktop\op\gis\components\Inspection\triggers\ResultTrigger.jsx       | JavaScript JSX     |          6 |          0 |          0 |          6 |
+| c:\Users\21365\Desktop\op\gis\components\JonctionForm.jsx                            | JavaScript JSX     |        579 |          1 |          6 |        586 |
+| c:\Users\21365\Desktop\op\gis\components\Junction\TableDemo.jsx                      | JavaScript JSX     |         53 |          6 |          3 |         62 |
+| c:\Users\21365\Desktop\op\gis\components\LeftBarDropDown.jsx                         | JavaScript JSX     |         57 |          0 |          4 |         61 |
+| c:\Users\21365\Desktop\op\gis\components\LengthSegment.jsx                           | JavaScript JSX     |        118 |          0 |          8 |        126 |
+| c:\Users\21365\Desktop\op\gis\components\ManifoldMap.jsx                             | JavaScript JSX     |         97 |          6 |         15 |        118 |
+| c:\Users\21365\Desktop\op\gis\components\Map.jsx                                     | JavaScript JSX     |        450 |         36 |         35 |        521 |
+| c:\Users\21365\Desktop\op\gis\components\MapComponent.jsx                            | JavaScript JSX     |        272 |         20 |         18 |        310 |
+| c:\Users\21365\Desktop\op\gis\components\Modal.jsx                                   | JavaScript JSX     |         46 |          0 |          2 |         48 |
+| c:\Users\21365\Desktop\op\gis\components\Nav.jsx                                     | JavaScript JSX     |         24 |         29 |          2 |         55 |
+| c:\Users\21365\Desktop\op\gis\components\NewLine.jsx                                 | JavaScript JSX     |        451 |          1 |          7 |        459 |
+| c:\Users\21365\Desktop\op\gis\components\NewSegment.jsx                              | JavaScript JSX     |        213 |          1 |         15 |        229 |
+| c:\Users\21365\Desktop\op\gis\components\Pagination.jsx                              | JavaScript JSX     |         31 |          0 |          3 |         34 |
+| c:\Users\21365\Desktop\op\gis\components\PipeForm.jsx                                | JavaScript JSX     |        327 |          4 |         13 |        344 |
+| c:\Users\21365\Desktop\op\gis\components\PopUp.jsx                                   | JavaScript JSX     |         12 |          0 |          3 |         15 |
+| c:\Users\21365\Desktop\op\gis\components\Section.jsx                                 | JavaScript JSX     |         67 |          0 |          2 |         69 |
+| c:\Users\21365\Desktop\op\gis\components\SegmentModal.jsx                            | JavaScript JSX     |         79 |          4 |          5 |         88 |
+| c:\Users\21365\Desktop\op\gis\components\SkeltonMain.jsx                             | JavaScript JSX     |         23 |          0 |          2 |         25 |
+| c:\Users\21365\Desktop\op\gis\components\TimeLine.jsx                                | JavaScript JSX     |         91 |          0 |          2 |         93 |
+| c:\Users\21365\Desktop\op\gis\components\Toast.jsx                                   | JavaScript JSX     |         23 |          0 |          3 |         26 |
+| c:\Users\21365\Desktop\op\gis\components\Tree.jsx                                    | JavaScript JSX     |         12 |         22 |          1 |         35 |
+| c:\Users\21365\Desktop\op\gis\components\manifold\Chart.jsx                          | JavaScript JSX     |        110 |          1 |         10 |        121 |
+| c:\Users\21365\Desktop\op\gis\components\manifold\ManifoldForm.jsx                   | JavaScript JSX     |        767 |          2 |         10 |        779 |
+| c:\Users\21365\Desktop\op\gis\components\manifold\PressureCard.jsx                   | JavaScript JSX     |         25 |          3 |          3 |         31 |
+| c:\Users\21365\Desktop\op\gis\components\manifold\Table.jsx                          | JavaScript JSX     |         84 |          6 |          5 |         95 |
+| c:\Users\21365\Desktop\op\gis\components\pipe\Card.jsx                               | JavaScript JSX     |         23 |          3 |          3 |         29 |
+| c:\Users\21365\Desktop\op\gis\components\pipe\Chart.jsx                              | JavaScript JSX     |         77 |          0 |          3 |         80 |
+| c:\Users\21365\Desktop\op\gis\components\pipe\FormSteps.jsx                          | JavaScript JSX     |          0 |         39 |          4 |         43 |
+| c:\Users\21365\Desktop\op\gis\components\pipe\Table.jsx                              | JavaScript JSX     |         94 |          6 |          3 |        103 |
+| c:\Users\21365\Desktop\op\gis\components\shared\Circle.jsx                           | JavaScript JSX     |         61 |          2 |          6 |         69 |
+| c:\Users\21365\Desktop\op\gis\components\shared\LeftSideBar.jsx                      | JavaScript JSX     |         48 |          1 |          2 |         51 |
+| c:\Users\21365\Desktop\op\gis\components\shared\RightSideBar.jsx                     | JavaScript JSX     |         22 |          0 |          2 |         24 |
+| c:\Users\21365\Desktop\op\gis\components\ui\badge.jsx                                | JavaScript JSX     |         34 |          0 |          5 |         39 |
+| c:\Users\21365\Desktop\op\gis\components\ui\button.jsx                               | JavaScript JSX     |         43 |          0 |          5 |         48 |
+| c:\Users\21365\Desktop\op\gis\components\ui\calendar.jsx                             | JavaScript JSX     |         59 |          0 |          4 |         63 |
+| c:\Users\21365\Desktop\op\gis\components\ui\checkbox.jsx                             | JavaScript JSX     |         20 |          0 |          5 |         25 |
+| c:\Users\21365\Desktop\op\gis\components\ui\command.jsx                              | JavaScript JSX     |        107 |          0 |         17 |        124 |
+| c:\Users\21365\Desktop\op\gis\components\ui\dialog.jsx                               | JavaScript JSX     |         83 |          0 |         14 |         97 |
+| c:\Users\21365\Desktop\op\gis\components\ui\dropdown-menu.jsx                        | JavaScript JSX     |        139 |          0 |         19 |        158 |
+| c:\Users\21365\Desktop\op\gis\components\ui\form.jsx                                 | JavaScript JSX     |        111 |          0 |         23 |        134 |
+| c:\Users\21365\Desktop\op\gis\components\ui\input.jsx                                | JavaScript JSX     |         16 |          0 |          4 |         20 |
+| c:\Users\21365\Desktop\op\gis\components\ui\label.jsx                                | JavaScript JSX     |         13 |          0 |          6 |         19 |
+| c:\Users\21365\Desktop\op\gis\components\ui\menubar.jsx                              | JavaScript JSX     |        164 |          0 |         20 |        184 |
+| c:\Users\21365\Desktop\op\gis\components\ui\pagination.jsx                           | JavaScript JSX     |         91 |          0 |         10 |        101 |
+| c:\Users\21365\Desktop\op\gis\components\ui\popover.jsx                              | JavaScript JSX     |         21 |          0 |          7 |         28 |
+| c:\Users\21365\Desktop\op\gis\components\ui\select.jsx                               | JavaScript JSX     |        108 |          0 |         15 |        123 |
+| c:\Users\21365\Desktop\op\gis\components\ui\skeleton.jsx                             | JavaScript JSX     |         12 |          0 |          3 |         15 |
+| c:\Users\21365\Desktop\op\gis\components\ui\switch.jsx                               | JavaScript JSX     |         20 |          0 |          5 |         25 |
+| c:\Users\21365\Desktop\op\gis\components\ui\table.jsx                                | JavaScript JSX     |         76 |          0 |         11 |         87 |
+| c:\Users\21365\Desktop\op\gis\components\ui\tabs.jsx                                 | JavaScript JSX     |         36 |          0 |          8 |         44 |
+| c:\Users\21365\Desktop\op\gis\components\ui\textarea.jsx                             | JavaScript JSX     |         15 |          0 |          4 |         19 |
+| c:\Users\21365\Desktop\op\gis\components\ui\toast.jsx                                | JavaScript JSX     |         73 |          0 |         11 |         84 |
+| c:\Users\21365\Desktop\op\gis\components\ui\toaster.jsx                              | JavaScript JSX     |         32 |          0 |          4 |         36 |
+| c:\Users\21365\Desktop\op\gis\components\ui\use-toast.js                             | JavaScript         |        128 |          3 |         25 |        156 |
+| c:\Users\21365\Desktop\op\gis\components\well\AddressCard.jsx                        | JavaScript JSX     |         24 |          2 |          1 |         27 |
+| c:\Users\21365\Desktop\op\gis\components\well\Table.jsx                              | JavaScript JSX     |         54 |          6 |          4 |         64 |
+| c:\Users\21365\Desktop\op\gis\components\well\WellForm.jsx                           | JavaScript JSX     |        512 |          1 |          7 |        520 |
+| c:\Users\21365\Desktop\op\gis\constants\achraf.js                                    | JavaScript         |        519 |          0 |          0 |        519 |
+| c:\Users\21365\Desktop\op\gis\constants\data.js                                      | JavaScript         |      6,808 |          0 |          1 |      6,809 |
+| c:\Users\21365\Desktop\op\gis\constants\polyline.geojson                             | JSON               |         31 |          0 |          0 |         31 |
+| c:\Users\21365\Desktop\op\gis\context\AuthContext.js                                 | JavaScript         |         58 |          0 |         10 |         68 |
+| c:\Users\21365\Desktop\op\gis\context\CoordContext.js                                | JavaScript         |          3 |          0 |          2 |          5 |
+| c:\Users\21365\Desktop\op\gis\context\CoordContextProvider.jsx                       | JavaScript JSX     |         19 |          0 |          4 |         23 |
+| c:\Users\21365\Desktop\op\gis\context\CreatePipeFormContext.js                       | JavaScript         |          3 |          0 |          1 |          4 |
+| c:\Users\21365\Desktop\op\gis\context\CreatePipeFormContextProvider.jsx              | JavaScript JSX     |         39 |          4 |          8 |         51 |
+| c:\Users\21365\Desktop\op\gis\context\DataContext.js                                 | JavaScript         |          3 |          0 |          2 |          5 |
+| c:\Users\21365\Desktop\op\gis\context\DataContextProvider.jsx                        | JavaScript JSX     |         21 |          0 |          3 |         24 |
+| c:\Users\21365\Desktop\op\gis\context\DataMapContext.js                              | JavaScript         |          0 |          0 |          1 |          1 |
+| c:\Users\21365\Desktop\op\gis\context\WellContext.js                                 | JavaScript         |          3 |          0 |          0 |          3 |
+| c:\Users\21365\Desktop\op\gis\context\WellContextProvider.jsx                        | JavaScript JSX     |         25 |          0 |          2 |         27 |
+| c:\Users\21365\Desktop\op\gis\jsconfig.json                                          | JSON with Comments |         10 |          0 |          0 |         10 |
+| c:\Users\21365\Desktop\op\gis\lib\functions.js                                       | JavaScript         |         60 |          6 |         16 |         82 |
+| c:\Users\21365\Desktop\op\gis\lib\utils.js                                           | JavaScript         |          5 |          0 |          2 |          7 |
+| c:\Users\21365\Desktop\op\gis\next.config.mjs                                        | JavaScript         |          2 |          1 |          2 |          5 |
+| c:\Users\21365\Desktop\op\gis\package-lock.json                                      | JSON               |      7,963 |          0 |          1 |      7,964 |
+| c:\Users\21365\Desktop\op\gis\package.json                                           | JSON               |         66 |          0 |          1 |         67 |
+| c:\Users\21365\Desktop\op\gis\postcss.config.js                                      | JavaScript         |          6 |          0 |          1 |          7 |
+| c:\Users\21365\Desktop\op\gis\public\add.svg                                         | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\21365\Desktop\op\gis\public\eye.svg                                         | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\21365\Desktop\op\gis\public\fire.svg                                        | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\21365\Desktop\op\gis\public\layer.svg                                       | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\21365\Desktop\op\gis\public\manifold.svg                                    | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\21365\Desktop\op\gis\public\moin.svg                                        | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\21365\Desktop\op\gis\public\next.svg                                        | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\21365\Desktop\op\gis\public\pipe.svg                                        | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\21365\Desktop\op\gis\public\puit.svg                                        | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\21365\Desktop\op\gis\public\ruler.svg                                       | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\21365\Desktop\op\gis\public\station.svg                                     | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\21365\Desktop\op\gis\public\vercel.svg                                      | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\21365\Desktop\op\gis\tailwind.config.js                                     | JavaScript         |         41 |          1 |          0 |         42 |
+| c:\Users\21365\Desktop\op\gis\tsconfig.json                                          | JSON with Comments |         40 |          0 |          1 |         41 |
+| Total                                                                                |                    |     28,193 |        340 |        863 |     29,396 |
++--------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

@@ -26,6 +26,7 @@ import { ConstructionTrigger } from "./triggers/ConstructionTrigger";
 import { ResultTrigger } from "./triggers/ResultTrigger";
 import { UpdateOuvrage } from "./UpdateOuvrage";
 import { ShowUpdatedOuvrage } from "./ShowUpdatedOuvrage";
+import { useAuth } from "@/context/AuthContext";
 
 const getBadgeVariant = (status) => {
   switch (status.toLowerCase()) {
@@ -44,8 +45,12 @@ const getBadgeVariant = (status) => {
   }
 };
 
-const TableInspection = ({selectedType,searchTerm}) => {
+const TodoInspectionTable = () => {
   const [inspections, setInspections] = useState([]);
+  const [epInspections, setEpInspections] = useState([]);
+  const [qualityInspections, setQualityInspections] = useState([]);
+  const [conInspections, setConInspections] = useState([]);
+
   const [inspectionId, setInspectionId] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -54,13 +59,34 @@ const TableInspection = ({selectedType,searchTerm}) => {
   const [selectedInspection2, setSelectedInspection2] = useState(null);
   const [selectedInspection4, setSelectedInspection4] = useState(null);
   const [selectedInspection5, setSelectedInspection5] = useState(null);
-
+  const {user}=useAuth()
   useEffect(() => {
     const fetchInformation = async () => {
       try {
         const response = await axiosInstance.get("/inspection/getAll");
-        setInspections(response.data.inspections || []);
-        console.log(response.data.inspections,'popppppppppppp')
+        const allInspections = response.data.inspections || [];
+        setInspections(allInspections);
+  
+        // Filter inspections here
+        const epInspections = allInspections.filter(inspection => 
+          inspection.inspection.status === 'evaluation' || inspection.inspection.status === 'finished'
+        );
+        const qualityInspections = allInspections.filter(inspection => 
+          inspection.inspection.status === 'inspection'
+        );
+        const constructionInspections = allInspections.filter(inspection => 
+          inspection.inspection.status === 'construction'
+        );
+  
+        setEpInspections(epInspections);
+        setQualityInspections(qualityInspections);
+        setConInspections(constructionInspections);
+  
+        console.log('All inspections:', allInspections);
+        console.log('EP inspections:', epInspections);
+        console.log('Quality inspections:', qualityInspections);
+        console.log('Construction inspections:', constructionInspections);
+  
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching inspections:", error);
@@ -70,21 +96,9 @@ const TableInspection = ({selectedType,searchTerm}) => {
     };
     fetchInformation();
   }, []);
-
-  const filteredInspections = inspections.filter((inspection) => {
-    const isNameMatch =
-    inspection.ouvrage.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    inspection.inspection.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    inspection.inspection.ep_noteID?.ID.toString() === searchTerm ||
-    inspection.inspection.Ins_reportID?.ID.toString() === searchTerm ||
-    inspection.inspection.evaluationID?.ID.toString() === searchTerm ||
-    inspection.inspection.constructionID?.ID.toString() === searchTerm
-    
-    const isTypeMatch =
-    selectedType.length === 0 ||
-    selectedType.includes(inspection.inspection.type);
-    return isNameMatch && isTypeMatch
-  })
+useEffect(()=>{
+    console.log('islaaaaaaaaaaaaaaaaaaaaaam',epInspections)
+},[epInspections])
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
@@ -114,7 +128,7 @@ const TableInspection = ({selectedType,searchTerm}) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredInspections.map((inspection, index) => (
+         {user.role==="ep" ? (epInspections.map((inspection, index) => (
             <TableRow key={inspection.inspection._id}>
               <TableCell className="font-medium">{index + 1}</TableCell>
               <TableCell className="font-semibold">{formatDate(inspection.inspection.inspection_date)}</TableCell>
@@ -156,7 +170,93 @@ const TableInspection = ({selectedType,searchTerm}) => {
                 <ActionOfInspection inspection={inspection.inspection} inspectionID={inspection.inspection._id}/>
               </TableCell>
             </TableRow>
-          ))}
+          ))):user.role === "inspection" ? 
+          (qualityInspections.map((inspection, index) => (
+            <TableRow key={inspection.inspection._id}>
+              <TableCell className="font-medium">{index + 1}</TableCell>
+              <TableCell className="font-semibold">{formatDate(inspection.inspection.inspection_date)}</TableCell>
+              <TableCell className="font-semibold">{inspection.inspection.type ? inspection.inspection.type : 'non-periodic'}</TableCell>
+              <TableCell className="font-semibold">{inspection.inspection.ouvrage_type}</TableCell>
+              <TableCell className="font-semibold">{inspection.ouvrage?.name || 'N/A'}</TableCell>
+              <TableCell className="font-semibold">
+                <EpNoteTrigger id={inspection.inspection.ep_noteID?.ID} 
+                  onClick={() => setSelectedInspection(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <InspectionTrigger id={inspection.inspection.Ins_reportID?.ID} 
+                  onClick={() => setSelectedInspection1(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <EvaluationTrigger id={inspection.inspection.evaluationID?.ID} 
+                  onClick={() => setSelectedInspection2(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <ConstructionTrigger id={inspection.inspection.constructionID?.ID} 
+                  onClick={() => setSelectedInspection4(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <ResultTrigger id={inspection.inspection.constructionID?.ID} 
+                  onClick={() => setSelectedInspection5(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <Badge variant={getBadgeVariant(inspection.inspection.status)}>
+                  {inspection.inspection.status}
+                </Badge>
+              </TableCell>
+              
+              <TableCell className="flex items-center ml-4">
+                <ActionOfInspection inspection={inspection.inspection} inspectionID={inspection.inspection._id}/>
+              </TableCell>
+            </TableRow>
+          ))) : 
+          (conInspections.map((inspection, index) => (
+            <TableRow key={inspection.inspection._id}>
+              <TableCell className="font-medium">{index + 1}</TableCell>
+              <TableCell className="font-semibold">{formatDate(inspection.inspection.inspection_date)}</TableCell>
+              <TableCell className="font-semibold">{inspection.inspection.type ? inspection.inspection.type : 'non-periodic'}</TableCell>
+              <TableCell className="font-semibold">{inspection.inspection.ouvrage_type}</TableCell>
+              <TableCell className="font-semibold">{inspection.ouvrage?.name || 'N/A'}</TableCell>
+              <TableCell className="font-semibold">
+                <EpNoteTrigger id={inspection.inspection.ep_noteID?.ID} 
+                  onClick={() => setSelectedInspection(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <InspectionTrigger id={inspection.inspection.Ins_reportID?.ID} 
+                  onClick={() => setSelectedInspection1(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <EvaluationTrigger id={inspection.inspection.evaluationID?.ID} 
+                  onClick={() => setSelectedInspection2(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <ConstructionTrigger id={inspection.inspection.constructionID?.ID} 
+                  onClick={() => setSelectedInspection4(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <ResultTrigger id={inspection.inspection.constructionID?.ID} 
+                  onClick={() => setSelectedInspection5(inspection.inspection._id)}
+                />
+              </TableCell>
+              <TableCell className="font-semibold">
+                <Badge variant={getBadgeVariant(inspection.inspection.status)}>
+                  {inspection.inspection.status}
+                </Badge>
+              </TableCell>
+              
+              <TableCell className="flex items-center ml-4">
+                <ActionOfInspection inspection={inspection.inspection} inspectionID={inspection.inspection._id}/>
+              </TableCell>
+            </TableRow>
+          )))}
         </TableBody>
       </Table>
       <Paging className="pb-10" />
@@ -189,4 +289,4 @@ const TableInspection = ({selectedType,searchTerm}) => {
   );
 };
 
-export default TableInspection;
+export default TodoInspectionTable;
