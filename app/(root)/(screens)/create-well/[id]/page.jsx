@@ -2,18 +2,18 @@
 import React, { useEffect, useState } from "react";
 import Card from "../../../../../components/pipe/Card";
 import AddressCard from "../../../../../components/well/AddressCard";
-import Chart from "../../../../../components/pipe/Chart";
 import TableDemo from "../../../../../components/well/Table";
 
-import MapComponent from "../../../../../components/MapComponent";
 import CreatePipeFormContextProvider from "../../../../../context/CreatePipeFormContextProvider";
 import WellContextProvider from "../../../../../context/WellContextProvider";
 import { axiosInstance } from "@/Api/Index";
+import Chart from "@/components/well/Chart";
+import dynamic from "next/dynamic";
 const cardData = [
   {
     label: "Nom",
     amount: "md255",
-    icon: "/fire.svg",
+    icon: "/back.svg",
     discription: "drilled 15/12/2002",
   },
   {
@@ -36,6 +36,11 @@ const address = [
 ];
 
 function page({ params }) {
+  const MapComponent = dynamic(() => import("@/components/MapComponent"), {
+    loading: () => <p>A map is loading...</p>,
+    ssr: false,
+  });
+  
   console.log(params);
   const icon = "../puit.svg";
   const [well, setWell] = useState([]);
@@ -92,15 +97,33 @@ function page({ params }) {
                   " flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow"
                 }
               >
-                <p className="p-4 font-semibold">Overview</p>
-                <Chart />
+                <p className="p-4 font-semibold">Pression Tete & pipe</p>
+                <Chart indice2={'pressureArrive'} indice1={'pressureDepart'}/>
               </div>
               <div
                 className={
                   " flex flex-col w-full h-[400px] lg:h-full justify-between gap-3 rounded-xl border p-5 shadow "
                 }
               >
-                <MapComponent icon={icon} coords={well.coords} />
+                <MapComponent icon={icon} coords={well.coords} page={'well'}/>
+              </div>
+            </section>
+            <section className="grid grid-cols-1  gap-4 transition-all lg:grid-cols-2">
+              <div
+                className={
+                  " flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow"
+                }
+              >
+                <p className="p-4 font-semibold">Gl network and debit Gl </p>
+                <Chart indice2={'production'} indice1={'test'}/>
+              </div>
+              <div
+                className={
+                  " flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow"
+                }
+              >
+                <p className="p-4 font-semibold">Temperature</p>
+                <Chart indice2={'tempArrivé'} indice1={'tempDepart'}/>
               </div>
             </section>
             <div

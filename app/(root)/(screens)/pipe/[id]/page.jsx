@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import Card from "../../../../../components/pipe/Card";
 import TableDemo from "../../../../../components/pipe/Table";
 
-import MapComponent from "../../../../../components/MapComponent";
 import CreatePipeFormContextProvider from "../../../../../context/CreatePipeFormContextProvider";
 import WellContextProvider from "../../../../../context/WellContextProvider";
 import Chart from "../../../../../components/pipe/Chart";
 import { axiosInstance } from "@/Api/Index";
+import dynamic from "next/dynamic";
 const cardData = [
   {
     label: "depart",
@@ -36,6 +36,11 @@ const cardData = [
 ];
 
 function page({ params }) {
+
+  const MapComponent = dynamic(() => import("@/components/MapComponent"), {
+    loading: () => <p>A map is loading</p>,
+    ssr: false,
+  });
   const [pipe, setPipe] = useState([]);
   const [segments, setSegments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,6 +63,7 @@ function page({ params }) {
     console.log("detaiiiiiiiiilspiiiiiiiiiiiiiiiipe", pipe);
   }, [pipe, segments])
   const data={pipe,segments}
+
   return (
     ( !loading && <CreatePipeFormContextProvider>
       <WellContextProvider>
@@ -96,8 +102,8 @@ function page({ params }) {
                 " flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow"
               }
             >
-              <p className="p-4 font-semibold">Overview</p>
-              <Chart pipe={pipe}/>
+              <p className="p-4 font-semibold">elevation</p>
+              <Chart pipe={pipe} />
             </div>
             <div
               className={

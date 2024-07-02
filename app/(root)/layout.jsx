@@ -4,7 +4,6 @@ import * as React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/context/AuthContext";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -18,7 +17,7 @@ export default function RootLayout({ children }) {
         <script src="http://localhost:8097"></script>
       </head>
       <body
-        className={`${inter.className} mx-auto max-w-[24400px] hide-scrollbar overflow-x-hidden overflow-y-hidden`}
+        className={` mx-auto max-w-[24400px] hide-scrollbar overflow-x-hidden overflow-y-hidden`}
       >
         <AuthProvider>
           {children}

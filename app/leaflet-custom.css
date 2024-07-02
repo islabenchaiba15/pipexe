@@ -1,0 +1,5 @@
+@import 'leaflet/dist/leaflet.css';
+
+.leaflet-oldie .leaflet-popup-tip {
+  filter: none !important;
+}

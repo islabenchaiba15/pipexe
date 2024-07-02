@@ -8,6 +8,7 @@ import {
     TableHeader,
     TableRow,
   } from "../../components/ui/table"
+import ActionDropdown from "../ActionDropdown"
    
   const invoices = [
     {
@@ -44,11 +45,13 @@ const TableDemo=({wellDetails})=> {
               <TableCell className="font-medium">{wellDetails.name}</TableCell>
               <TableCell>{wellDetails.coords.latitude}</TableCell>
               <TableCell>{wellDetails.coords.longitude}</TableCell>
-              <TableCell className="">{wellDetails.elevation}</TableCell>
+              <TableCell className="">{wellDetails.elevation} m</TableCell>
               <TableCell>{wellDetails.formattedDate}</TableCell>
               <TableCell>{wellDetails.wellType.type}</TableCell>
               <TableCell>{wellDetails.formattedDate}</TableCell>
-              <TableCell>delete</TableCell>
+              <TableCell>
+                <ActionDropdown/>
+              </TableCell>
             </TableRow>
         </TableBody>
         {/* <TableFooter>

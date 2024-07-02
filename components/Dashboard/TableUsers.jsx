@@ -145,14 +145,14 @@ const TableUsers = ({ searchTerm, selectedDepartments, selectedPositions }) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="font-bold text-black">nom </TableHead>
-            <TableHead className="font-bold  text-black">prenom</TableHead>
+            <TableHead className="font-bold text-black">First name </TableHead>
+            <TableHead className="font-bold  text-black">Last name</TableHead>
             <TableHead className="font-bold  text-black">
-              addresse email
+              E-mail address
             </TableHead>
-            <TableHead className="font-bold  text-black">departement</TableHead>
-            <TableHead className="font-bold  text-black">position</TableHead>
-            <TableHead className="font-bold  text-black">actions</TableHead>
+            <TableHead className="font-bold  text-black">Departement</TableHead>
+            <TableHead className="font-bold  text-black">Position</TableHead>
+            <TableHead className="font-bold  text-black">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -170,7 +170,7 @@ const TableUsers = ({ searchTerm, selectedDepartments, selectedPositions }) => {
           ))}
         </TableBody>
       </Table>
-      <Paging className="pb-10"/>
+      <Paging className="pb-10" />
     </div>
   );
 };

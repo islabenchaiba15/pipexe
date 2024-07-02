@@ -38,6 +38,9 @@ const page = ()=> {
   //   console.log("Updated pipppes state:", pipes);
   //   console.log("Updated wells state:", wells);
   console.log('hate uuuuuuuuuuu');
+
+  console.log('hate uuuuuuuuuuu');
+  console.log('hate uuuuuuuuuuu');
   const router =useRouter()
   const handleDirection=()=>{
     router.push('http://localhost:3000/inspection');

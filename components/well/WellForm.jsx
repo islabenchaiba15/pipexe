@@ -230,9 +230,7 @@ const WellForm = () => {
                         value={ischecked ? marker?.lat : field.value}
                       />
                     </FormControl>
-                    <FormDescription>
-                      Your date of birth is used to calculate your age.
-                    </FormDescription>
+                    
                     <FormMessage />
                   </FormItem>
                 )}
@@ -257,9 +255,7 @@ const WellForm = () => {
                         value={ischecked ? marker?.lng : field.value}
                       />
                     </FormControl>
-                    <FormDescription>
-                      Your date of birth is used to calculate your age.
-                    </FormDescription>
+                    
                     <FormMessage />
                   </FormItem>
                 )}
@@ -279,9 +275,7 @@ const WellForm = () => {
                         className="w-full"
                       />
                     </FormControl>
-                    <FormDescription>
-                      Your date of birth is used to calculate your age.
-                    </FormDescription>
+                    
                     <FormMessage />
                   </FormItem>
                 )}
@@ -295,17 +289,15 @@ const WellForm = () => {
                     <FormControl>
                       <Select onValueChange={field.onChange}>
                         <SelectTrigger className="">
-                          <SelectValue placeholder="the type of puit" />
+                          <SelectValue placeholder="the type of well" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="Producteur">Producteur</SelectItem>
-                          <SelectItem value="Gaslift">Gaslift</SelectItem>
+                          <SelectItem value="Productor">Productor</SelectItem>
+                          <SelectItem value="Gaslift">GazLift</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
-                    <FormDescription>
-                      Your date of birth is used to calculate your age.
-                    </FormDescription>
+                    
                     <FormMessage />
                   </FormItem>
                 )}
@@ -349,9 +341,7 @@ const WellForm = () => {
                         />
                       </PopoverContent>
                     </Popover>
-                    <FormDescription>
-                      Your date of birth is used to calculate your age.
-                    </FormDescription>
+                    
                     <FormMessage />
                   </FormItem>
                 )}
@@ -377,9 +367,7 @@ const WellForm = () => {
                         </SelectContent>
                       </Select>
                     </FormControl>
-                    <FormDescription>
-                      Your date of birth is used to calculate your age.
-                    </FormDescription>{" "}
+                    
                     <FormMessage />
                   </FormItem>
                 )}
@@ -396,13 +384,11 @@ const WellForm = () => {
                           <SelectValue placeholder="enterer nom de region" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="hmd">hmd</SelectItem>
+                          <SelectItem value="HMD">HMD</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
-                    <FormDescription>
-                      Your date of birth is used to calculate your age.
-                    </FormDescription>{" "}
+                    
                     <FormMessage />
                   </FormItem>
                 )}
@@ -426,9 +412,7 @@ const WellForm = () => {
                         </SelectContent>
                       </Select>
                     </FormControl>
-                    <FormDescription>
-                      Your date of birth is used to calculate your age.
-                    </FormDescription>{" "}
+                    
                     <FormMessage />
                   </FormItem>
                 )}
@@ -451,9 +435,7 @@ const WellForm = () => {
                         className="w-full"
                       />
                     </FormControl>
-                    <FormDescription>
-                      Your date of birth is used to calculate your age.
-                    </FormDescription>{" "}
+                   
                     <FormMessage />
                   </FormItem>
                 )}
@@ -472,9 +454,7 @@ const WellForm = () => {
                         className="w-full"
                       />
                     </FormControl>
-                    <FormDescription>
-                      Your date of birth is used to calculate your age.
-                    </FormDescription>{" "}
+                    
                     <FormMessage />
                   </FormItem>
                 )}
@@ -495,9 +475,7 @@ const WellForm = () => {
                         className="w-full"
                       />
                     </FormControl>
-                    <FormDescription>
-                      Your date of birth is used to calculate your age.
-                    </FormDescription>{" "}
+                    
                     <FormMessage />
                   </FormItem>
                 )}

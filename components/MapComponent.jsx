@@ -82,7 +82,7 @@ const MapComponent = ({ icon, coords, page, pipe, segments }) => {
     [31.78888616378847, 5.684603354801907],
     [31.784216884487385, 5.7148171032406925],
   ];
-  const [selectedLayer, setSelectedLayer] = useState("OpenStreetMap");
+  const [selectedLayer, setSelectedLayer] = useState("islam");
   const mapboxAccessToken =
     "pk.eyJ1IjoiaXNsYW1iZW5jaGFpYmEiLCJhIjoiY2x0bDhlcjVlMGplMDJqbXl4ZzFvbGllYyJ9.PYMskRvnsmAOm7N97ndC4g";
 
@@ -221,7 +221,24 @@ const MapComponent = ({ icon, coords, page, pipe, segments }) => {
             <Popup>This is a marker</Popup>
           </Marker>
         )}
-        {/* <Polyline positions={islam} color={"black"} weight={5}>
+         {page === "well" && (
+          <Marker
+            position={[coords.latitude, coords.longitude]}
+            icon={WellIcon}
+          >
+            <Popup>This is a marker</Popup>
+          </Marker>
+        )}
+        {page === "junction" && (
+          <Marker
+            position={[coords.latitude, coords.longitude]}
+            icon={WellIcon}
+          >
+            <Popup>This is a marker</Popup>
+          </Marker>
+        )}
+
+        {/* <Polyline junction positions={islam} color={"black"} weight={5}>
         <Popup>{}</Popup>
       </Polyline>
       <Polyline positions={islam1} color={"red"} weight={5}>

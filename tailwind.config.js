@@ -19,6 +19,9 @@ module.exports = {
       },
     },
     extend: {
+      colors: {
+        blueNav: '#011F3D',
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

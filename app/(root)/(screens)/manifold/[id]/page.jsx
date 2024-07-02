@@ -1,20 +1,22 @@
 "use client";
-import React,{useState,useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Card from "../../../../../components/pipe/Card";
 import AddressCard from "../../../../../components/well/AddressCard";
 import TableDemo from "../../../../../components/manifold/Table";
 import PressureCard from "../../../../../components/manifold/PressureCard";
-import MapComponent from "../../../../../components/MapComponent";
 import CreatePipeFormContextProvider from "../../../../../context/CreatePipeFormContextProvider";
 import WellContextProvider from "../../../../../context/WellContextProvider";
 import { axiosInstance } from "@/Api/Index";
 import Chart from "@/components/manifold/Chart";
+
 import WellContext from "@/context/WellContext";
+import TempChart from "@/components/manifold/TempChart";
+import dynamic from "next/dynamic";
 const cardData = [
   {
     label: "Nom",
     amount: "md255",
-    icon: "/fire.svg",
+    icon: "/eye.svg",
     discription: "drilled 15/12/2002",
   },
 ];
@@ -39,14 +41,17 @@ const RealData = [
   },
 ];
 
-function page({params}) {
-  console.log('paraaaams',params);
+function page({ params }) {
+  console.log("paraaaams", params);
   const icon = "../manifold.svg";
   const [manifold, setManifold] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [pressure,setPressure]=useState(0)
-  const [temperature,setTemperature]=useState(0)
-
+  const [pressure, setPressure] = useState(0);
+  const [temperature, setTemperature] = useState(0);
+  const MapComponent = dynamic(() => import("@/components/MapComponent"), {
+    loading: () => <p>A map is loading</p>,
+    ssr: false,
+  });
   useEffect(() => {
     const fetchManifolds = async () => {
       try {
@@ -60,19 +65,19 @@ function page({params}) {
     };
     fetchManifolds();
   }, []);
-  useEffect(()=>{
-    console.log("opppppppppppppp",pressure)
-  },[pressure])
+  useEffect(() => {
+    console.log("opppppppppppppp", pressure);
+  }, [pressure]);
   return (
     !loading && (
-    <CreatePipeFormContextProvider>
-      <WellContextProvider>
-        <div className="flex flex-col gap-5 mx-10 my-4 overflow-x-auto overflow-y-auto no-scrollbar h-screen ">
-          <h1 className="text-3xl font-bold text black">Manifold details</h1>
-          <section className="grid w-full grid-cols-1 gap-4  transition-all sm:grid-cols-2 xl:grid-cols-3 ">
+      <CreatePipeFormContextProvider>
+        <WellContextProvider>
+          <div className="flex flex-col gap-5 mx-10 my-4 overflow-x-auto overflow-y-auto no-scrollbar h-screen ">
+            <h1 className="text-3xl font-bold text black">Manifold details</h1>
+            <section className="grid w-full grid-cols-1 gap-4  transition-all sm:grid-cols-2 xl:grid-cols-3 ">
               <Card
                 label={"Nom"}
-                icon={"/fire.svg"}
+                icon={"/Asset 13.png"}
                 discription={`drilled ${manifold.formattedDate}`}
                 amount={manifold.name}
               />
@@ -82,45 +87,63 @@ function page({params}) {
                 zone={manifold.address.zone}
                 region={manifold.address.region}
                 centre={manifold.address.centre}
-                icon={"/fire.svg"}
+                icon={"/Asset 10.png"}
               />
-            {RealData.map((add, index) => (
-              <PressureCard
-                key={index}
-                Temperature={add.Temperature}
-                amount={temperature}
-                pressure={add.pressure}
-                number={pressure}
-                icon={add.icon}
-              />
-            ))}
-          </section>
-          <section className="flex flex-col lg:flex-row lg:items-center gap-4 transition-all ">
-            <div className="lg:w-1/2 w-full gap-3 rounded-xl border p-5 shadow">
+              {RealData.map((add, index) => (
+                <PressureCard
+                  key={index}
+                  Temperature={add.Temperature}
+                  amount={temperature}
+                  pressure={add.pressure}
+                  number={pressure}
+                  icon={add.icon}
+                />
+              ))}
+            </section>
+            <section className="flex flex-col lg:flex-row lg:items-center gap-4 transition-all ">
+              <div className="lg:w-1/2 w-full gap-3 rounded-xl border p-5 shadow">
+                <p className="p-4 font-semibold">pression Arrivé & depart</p>
+                <Chart setPressure={setPressure} />
+              </div>
+              <div className="lg:w-1/2 w-full h-[400px] lg:h-full gap-3 rounded-xl border p-5 shadow ">
+                <MapComponent
+                  icon={icon}
+                  coords={manifold.coords}
+                  page={"manifold"}
+                />
+              </div>
+            </section>
+            <section className="flex flex-col lg:flex-row lg:items-center gap-4 transition-all ">
+              <div className="lg:w-1/2 w-full gap-3 rounded-xl border p-5 shadow">
+                <p className="p-4 font-semibold">Temerature chart</p>
+                <TempChart
+                  setTemperature={setTemperature}
+                  indice2={"tempArrivé"}
+                  indice1={"tempDepart"}
+                />
+              </div>
+              <div className="lg:w-1/2 w-full gap-3 rounded-xl border p-5 shadow">
+                <p className="p-4 font-semibold">Pression transverselle</p>
+                <TempChart indice2={"production"} indice1={"test"} />
+              </div>
+            </section>
+            <div
+              className={
+                " flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow pb-24"
+              }
+            >
               <p className="p-4 font-semibold">Overview</p>
-              <Chart setPressure={setPressure} setTemperature={setTemperature} />
+              <TableDemo manifoldDetails={manifold} />
             </div>
-            <div className="lg:w-1/2 w-full h-[400px] lg:h-full gap-3 rounded-xl border p-5 shadow ">
-              <MapComponent icon={icon} coords={manifold.coords} page={"manifold"}/>
-            </div>
-          </section>
-          <div
-            className={
-              " flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow pb-24"
-            }
-          >
-            <p className="p-4 font-semibold">Overview</p>
-            <TableDemo manifoldDetails={manifold}/>
-          </div>
-          {/* <div className={" flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow "}>
+            {/* <div className={" flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow "}>
               <TableDemo/>
             </div>
             <div className={" flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow "}>
               <TableDemo/>
             </div> */}
-        </div>
-      </WellContextProvider>
-    </CreatePipeFormContextProvider>
+          </div>
+        </WellContextProvider>
+      </CreatePipeFormContextProvider>
     )
   );
 }

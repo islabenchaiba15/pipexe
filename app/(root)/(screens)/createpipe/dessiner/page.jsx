@@ -1,15 +1,18 @@
 "use client"; // Add this line at the top
 
 import React, { useState } from "react";
-import Map from "../../../../../components/Map";
 import PipeForm from "../../../../../components/PipeForm";
 import CreatePipeFormContextProvider from "../../../../../context/CreatePipeFormContextProvider";
 import CoordContextProvider from "../../../../../context/CoordContextProvider";
 import DragModal from "../../../../../components/DragModal";
+import Map from "../../../../../components/Map";
+
 import WellContextProvider from "../../../../../context/WellContextProvider";
 import DataContextProvider from "@/context/DataContextProvider";
+import dynamic from "next/dynamic";
 
 const Page = () => {
+
   const [totalDistance, setTotalDistance] = useState(0);
   return (
     <DataContextProvider>

@@ -3,33 +3,41 @@ import React, { useMemo, useState } from "react";
 import "../globals.css";
 import PopUp from "../../components/PopUp";
 import Nav from "../../components/Nav";
-import LeftSideBar from "../../components/shared/LeftSideBar";
-import RightSideBar from "../../components/shared/RightSideBar";
 import CreatePipeFormContextProvider from "../../context/CreatePipeFormContextProvider";
 import CoordContextProvider from "../../context/CoordContextProvider";
 import dynamic from "next/dynamic";
 import DataContextProvider from "@/context/DataContextProvider";
+
+// Dynamic imports for components with SSR disabled
+const DynamicLeftSideBar = dynamic(() => import("@/components/shared/LeftSideBar"), {
+  loading: () => <p>Left sidebar is loading...</p>,
+  ssr: false,
+});
+const DynamicRightSideBar = dynamic(() => import("@/components/shared/RightSideBar"), {
+  loading: () => <p>Right sidebar is loading...</p>,
+  ssr: false,
+});
+const DynamicMap = dynamic(() => import("@/components/Map"), {
+  loading: () => <p>A map is loading...</p>,
+  ssr: false,
+});
+
 const Home = () => {
   const [color, setColor] = useState("black");
   const [totalDistance, setTotalDistance] = useState(0);
-  const Map = dynamic(() => import("@/components/Map"), {
-    loading: () => <p>A map is loading</p>,
-    ssr: false,
-  });
+
   return (
     <DataContextProvider>
       <CoordContextProvider>
         <CreatePipeFormContextProvider>
-          <div
-            className={`mx-auto max-w-[24400px] hide-scrollbar overflow-x-hidden overflow-y-hidden`}
-          >
+          <div className={`mx-auto max-w-[24400px] hide-scrollbar overflow-x-hidden overflow-y-hidden`}>
             <Nav />
             <div className="flex flex-row">
-              <LeftSideBar />
+              <DynamicLeftSideBar />
               <div className="w-full h-full">
-                <Map setTotalDistance={setTotalDistance} />
+                <DynamicMap setTotalDistance={setTotalDistance} />
               </div>
-              <RightSideBar totalDistance={totalDistance} />
+              <DynamicRightSideBar totalDistance={totalDistance} />
             </div>
           </div>
         </CreatePipeFormContextProvider>

@@ -22,19 +22,24 @@ function LeftBarDropDown({totalDistance,icon,affichage,title}) {
   };  
   return (
     <>
-        <Dropdown placement='left-start '>
+        <Dropdown placement='left-start' className='mr-0'>
             <DropdownTrigger className='bg-slate-400 border'>
                 <div className='bg-gradient-to-r from-gray-100 to-gray-300 border p-4 '>
                     <Image src={icon} alt='icon' width={50} height={50} />
                 </div>
             </DropdownTrigger>
             <DropdownMenu aria-label="Static Actions" className=''>
-                <DropdownSection title={title} showDivider className='ml-4'>  
-                  <DropdownItem>
-                    <button onClick={handleOpenPopup}>Open Popup</button> 
+                <DropdownSection title={title} showDivider className='ml-0 font-black'>  
+                  <DropdownItem className='ml-4'>
+                    <button onClick={handleOpenPopup} className='font-semibold'>Tracer sur la carte</button> 
+                    {/* //jouter manuellement  */}
+                     
+                  </DropdownItem>
+                  <DropdownItem className='ml-4 mr-4'>
+                  <button onClick={handleOpenPopup} className='font-semibold'>Ajouter manuellement</button>
                   </DropdownItem>
                 </DropdownSection>
-                <DropdownSection title="affichage" className='ml-4'>  
+                 <DropdownSection  className='ml-0'> {/* title="affichage" */}
                     <DropdownItem key="edit">
                         <div className="flex items-center -ml-2 -p-2">
                             <Checkbox

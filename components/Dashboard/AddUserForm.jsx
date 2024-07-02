@@ -80,8 +80,7 @@ const AddUserForm = ({ onClose, closeButton }) => {
     toast({
       variant: "destructive",
       title: "User already exist ",
-      description:
-        "the email you give is already used in the system",
+      description: "the email you give is already used in the system",
       action: <ToastAction altText="Try again">Try again</ToastAction>,
     });
   };
@@ -100,7 +99,7 @@ const AddUserForm = ({ onClose, closeButton }) => {
           ...prevErrors,
           email: error.response.data.message,
         }));
-        showfailedToast()
+        showfailedToast();
         console.log("Error Response:ssssssssssssss", errors);
       } else if (error.request) {
         console.log("Error Request:", error.request);
@@ -206,8 +205,12 @@ const AddUserForm = ({ onClose, closeButton }) => {
                       <SelectContent>
                         <SelectItem value="admin">admin</SelectItem>
                         <SelectItem value="ep">E&P manager</SelectItem>
-                        <SelectItem value="Inspection">Inspection manager</SelectItem>
-                        <SelectItem value="construction">construction manager</SelectItem>
+                        <SelectItem value="Inspection">
+                          Inspection manager
+                        </SelectItem>
+                        <SelectItem value="construction">
+                          construction manager
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -281,28 +284,33 @@ const AddUserForm = ({ onClose, closeButton }) => {
                         <SelectValue placeholder="departement" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="inspection">
-                        inspection
-                        </SelectItem>
-                        <SelectItem value="construction">
-                        construction
-                        </SelectItem>
-                        <SelectItem value="ep">
-                        ep
-                        </SelectItem>
+                        <SelectItem value="QAQC">QAQC</SelectItem>
+                        <SelectItem value="inspection">inspection</SelectItem>
+                        <SelectItem value="E&P">E&P</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
+                  <FormDescription>
+                    This is your public display name.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
         </div>
-        <div className="flex justify-end gap-4 mt-16">
-          {closeButton}
-          <Button type="submit" className="w-fit variant">
-            Submit
+        <div className="w-full flex justify-between gap-2">
+          <Button
+            type="submit"
+            className="w-full bg-secondary text-white hover:bg-primary rounded-lg  "
+          >
+            Add
+          </Button>
+          <Button
+            onClick={closeButton}
+            className="w-full bg-red-700 text-white hover:bg-red-500 rounded-lg "
+          >
+            Cancel
           </Button>
         </div>
       </form>

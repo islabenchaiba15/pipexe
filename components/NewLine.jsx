@@ -93,7 +93,7 @@ export function NewLine({ onNext, totalDistance }) {
     onNext(values);
     console.log(values);
   }
-  
+
   return (
     <div className="bg-white p-6 2xl:mx-5 mx-2">
       <Form {...form}>
@@ -113,13 +113,11 @@ export function NewLine({ onNext, totalDistance }) {
               name="name"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold ">name</FormLabel>
+                  <FormLabel className="text-md font-bold ">nameanes</FormLabel>
                   <FormControl>
                     <Input {...field} className="w-full" type="text" />
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    Your date of birth is used to calculate your age.
-                  </FormDescription>
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -129,13 +127,11 @@ export function NewLine({ onNext, totalDistance }) {
               name="largeur"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">eppiseur</FormLabel>
+                  <FormLabel className="text-md font-bold">thikness</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} className="w-full" />
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    Your date of birth is used to calculate your age.
-                  </FormDescription>
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -156,13 +152,11 @@ export function NewLine({ onNext, totalDistance }) {
                       <SelectContent>
                         <SelectItem value="gas">gas</SelectItem>
                         <SelectItem value="oil">oil</SelectItem>
-                        <SelectItem value="eau">eau</SelectItem>
+                        <SelectItem value="water">eau</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    Your date of birth is used to calculate your age.
-                  </FormDescription>
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -184,9 +178,7 @@ export function NewLine({ onNext, totalDistance }) {
                       </SelectContent>
                     </Select>
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    Your date of birth is used to calculate your age.
-                  </FormDescription>
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -198,7 +190,7 @@ export function NewLine({ onNext, totalDistance }) {
               name="from"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">depart</FormLabel>
+                  <FormLabel className="text-md font-bold">start </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -271,9 +263,7 @@ export function NewLine({ onNext, totalDistance }) {
                       </Command>
                     </PopoverContent>
                   </Popover>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -284,7 +274,7 @@ export function NewLine({ onNext, totalDistance }) {
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
                   <FormLabel className="text-md font-bold">
-                    connection
+                    connect to
                   </FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} className="w-full">
@@ -297,9 +287,7 @@ export function NewLine({ onNext, totalDistance }) {
                       </SelectContent>
                     </Select>
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    Your date of birth is used to calculate your age.
-                  </FormDescription>
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -311,7 +299,9 @@ export function NewLine({ onNext, totalDistance }) {
               name="to"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">destination</FormLabel>
+                  <FormLabel className="text-md font-bold">
+                    destination
+                  </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -384,9 +374,7 @@ export function NewLine({ onNext, totalDistance }) {
                       </Command>
                     </PopoverContent>
                   </Popover>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -428,9 +416,7 @@ export function NewLine({ onNext, totalDistance }) {
                       />
                     </PopoverContent>
                   </Popover>
-                  <FormDescription className="text-xs">
-                    Your date of birth is used to calculate your age.
-                  </FormDescription>
+
                   <FormMessage />
                 </FormItem>
               )}

@@ -59,7 +59,7 @@ const dataaa = [
   },
 ];
 
-function Chart({ setPressure }) {
+function Chart({ indice2,indice1 }) {
   const [data, setData] = useState([]);
   const [dataa, setDataa] = useState([]);
   useEffect(() => {
@@ -71,7 +71,6 @@ function Chart({ setPressure }) {
         if (response.data.length > 0) {
           const lastItem = response.data[response.data.length - 1];
 
-          setPressure(lastItem.pressure);
         }else(console.log('oooooooo'))
       } catch (error) {
         console.error("Error fetching manifolds", error);
@@ -109,8 +108,8 @@ function Chart({ setPressure }) {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="pressureDepart" stroke="#8884d8" />
-        <Line type="monotone" dataKey="pressureArrive" stroke="#82ca9d" />
+        <Line type="monotone" dataKey={indice1} stroke="#8884d8" />
+        <Line type="monotone" dataKey={indice2} stroke="#82ca9d" />
       </LineChart>
     </ResponsiveContainer>
   );

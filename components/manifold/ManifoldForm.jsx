@@ -71,11 +71,11 @@ const formSchema1 = z.object({
   }),
 });
 const formSchema = z.object({
-  latitude: z.string().min(1, { message: "Latitude is required" }),
-  longitude: z.string().min(1, { message: "Longitude is required" }),
+  latitude: z.string().optional(),
+  longitude: z.string().optional(),
   centre: z.string().min(1, { message: "Centre is required" }),
   region: z.string().min(1, { message: "Region is required" }),
-  wilaya: z.string().min(1, { message: "Wilaya is required" }),
+  wilaya: z.string().optional(),
   zone: z.string().min(1, { message: "Zone is required" }),
   name: z.string().min(1, { message: "Name is required" }),
   date: z.date({ message: "Name is required" }),
@@ -106,7 +106,7 @@ const ManifoldForm = () => {
       latitude: "",
       centre: "",
       region: "",
-      wilaya: "",
+      wilaya: "ouargla",
       zone: "",
       name: "",
       date: "",
@@ -147,7 +147,7 @@ const ManifoldForm = () => {
     const longitude = ischecked ? marker?.lng : values.longitude;
     const centre = values.centre;
     const region = values.region;
-    const wilaya = values.wilaya;
+    const wilaya = "ouargla";
     const zone = values.zone;
     const name = values.name;
     const date = values.date.toISOString();
@@ -210,17 +210,21 @@ const ManifoldForm = () => {
       }
     }
   };
-  const languages = [
-    { label: "English", value: "en" },
-    { label: "French", value: "fr" },
-    { label: "German", value: "de" },
-    { label: "Spanish", value: "es" },
-    { label: "Portuguese", value: "pt" },
-    { label: "Russian", value: "ru" },
-    { label: "Japanese", value: "ja" },
-    { label: "Korean", value: "ko" },
-    { label: "Chinese", value: "zh" },
+  const zones = [
+    { label: "E2A", value: "E2A" },
+    { label: "E2P", value: "E2P" },
+   
   ];
+
+  const regions = [
+    { label: "HMD", value: "HMD" },
+  ];
+
+  const centres = [
+    { label: "Nord", value: "Nord" },
+    { label: "Nord", value: "Sud" },
+  ];
+
   const handleCheck = () => {
     console.log("check");
 
@@ -236,11 +240,11 @@ const ManifoldForm = () => {
           className="flex flex-col gap-6 "
         >
           <h1 className="text-black text-2xl font-bold mt-6">
-            coordonées geograpique
+          geographic coordinates
           </h1>
           <div className="flex items-center gap-10 ">
             <h1 className="text-black text-xl font-medium">
-              marquer le manifold sur le map
+            mark the manifold on the map
             </h1>
             <Switch isChecked={ischecked} onCheckedChange={handleCheck} />
           </div>
@@ -263,9 +267,6 @@ const ManifoldForm = () => {
                       value={ischecked ? marker?.lat : field.value}
                     />
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -288,9 +289,7 @@ const ManifoldForm = () => {
                       value={ischecked ? marker?.lng : field.value}
                     />
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
+                  
                   <FormMessage />
                 </FormItem>
               )}
@@ -310,9 +309,7 @@ const ManifoldForm = () => {
                       className="w-full"
                     />
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
+                  
                   <FormMessage />
                 </FormItem>
               )}
@@ -354,9 +351,7 @@ const ManifoldForm = () => {
                       />
                     </PopoverContent>
                   </Popover>
-                  <FormDescription className="text-xs">
-                    Your date of birth is used to calculate your age.
-                  </FormDescription>
+                  
                   <FormMessage />
                 </FormItem>
               )}
@@ -382,8 +377,8 @@ const ManifoldForm = () => {
                           )}
                         >
                           {field.value
-                            ? languages.find(
-                                (language) => language.value === field.value
+                            ? centres.find(
+                                (centre) => centre.value === field.value
                               )?.label
                             : "Select language"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -393,34 +388,32 @@ const ManifoldForm = () => {
                     <PopoverContent className=" p-0">
                       <Command>
                         <CommandInput placeholder="Search language..." />
-                        <CommandEmpty>No language found.</CommandEmpty>
+                        <CommandEmpty>No centre found.</CommandEmpty>
                         <CommandGroup>
-                          {languages.map((language) => (
+                          {centres.map((centre) => (
                             <CommandItem
-                              value={language.label}
-                              key={language.value}
+                              value={centre.label}
+                              key={centre.value}
                               onSelect={() => {
-                                form.setValue("centre", language.value);
+                                form.setValue("centre", centre.value);
                               }}
                             >
                               <Check
                                 className={cn(
                                   "mr-2 h-4 w-4",
-                                  language.value === field.value
+                                  centre.value === field.value
                                     ? "opacity-100"
                                     : "opacity-0"
                                 )}
                               />
-                              {language.label}
+                              {centre.label}
                             </CommandItem>
                           ))}
                         </CommandGroup>
                       </Command>
                     </PopoverContent>
                   </Popover>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
+                  
                   <FormMessage />
                 </FormItem>
               )}
@@ -443,10 +436,10 @@ const ManifoldForm = () => {
                           )}
                         >
                           {field.value
-                            ? languages.find(
-                                (language) => language.value === field.value
+                            ? regions.find(
+                                (region) => region.value === field.value
                               )?.label
-                            : "Select language"}
+                            : "Select region"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -454,34 +447,32 @@ const ManifoldForm = () => {
                     <PopoverContent className=" p-0">
                       <Command>
                         <CommandInput placeholder="Search language..." />
-                        <CommandEmpty>No language found.</CommandEmpty>
+                        <CommandEmpty>No region found.</CommandEmpty>
                         <CommandGroup>
-                          {languages.map((language) => (
+                          {regions.map((region) => (
                             <CommandItem
-                              value={language.label}
-                              key={language.value}
+                              value={region.label}
+                              key={region.value}
                               onSelect={() => {
-                                form.setValue("region", language.value);
+                                form.setValue("region", region.value);
                               }}
                             >
                               <Check
                                 className={cn(
                                   "mr-2 h-4 w-4",
-                                  language.value === field.value
+                                  region.value === field.value
                                     ? "opacity-100"
                                     : "opacity-0"
                                 )}
                               />
-                              {language.label}
+                              {region.label}
                             </CommandItem>
                           ))}
                         </CommandGroup>
                       </Command>
                     </PopoverContent>
                   </Popover>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
+                 
                   <FormMessage />
                 </FormItem>
               )}
@@ -506,10 +497,10 @@ const ManifoldForm = () => {
                           )}
                         >
                           {field.value
-                            ? languages.find(
-                                (language) => language.value === field.value
+                            ? zones.find(
+                                (zone) => zone.value === field.value
                               )?.label
-                            : "Select language"}
+                            : "Select zone"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -517,25 +508,25 @@ const ManifoldForm = () => {
                     <PopoverContent className=" p-0">
                       <Command>
                         <CommandInput placeholder="Search language..." />
-                        <CommandEmpty>No language found.</CommandEmpty>
+                        <CommandEmpty>No zone found.</CommandEmpty>
                         <CommandGroup>
-                          {languages.map((language) => (
+                          {zones.map((zone) => (
                             <CommandItem
-                              value={language.label}
-                              key={language.value}
+                              value={zone.label}
+                              key={zone.value}
                               onSelect={() => {
-                                form.setValue("zone", language.value);
+                                form.setValue("zone", zone.value);
                               }}
                             >
                               <Check
                                 className={cn(
                                   "mr-2 h-4 w-4",
-                                  language.value === field.value
+                                  zone.value === field.value
                                     ? "opacity-100"
                                     : "opacity-0"
                                 )}
                               />
-                              {language.label}
+                              {zone.label}
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -549,67 +540,7 @@ const ManifoldForm = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="wilaya"
-              render={({ field }) => (
-                <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">wilaya</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "w-full justify-between mr-4",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? languages.find(
-                                (language) => language.value === field.value
-                              )?.label
-                            : "Select language"}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className=" p-0">
-                      <Command>
-                        <CommandInput placeholder="Search language..." />
-                        <CommandEmpty>No language found.</CommandEmpty>
-                        <CommandGroup>
-                          {languages.map((language) => (
-                            <CommandItem
-                              value={language.label}
-                              key={language.value}
-                              onSelect={() => {
-                                form.setValue("wilaya", language.value);
-                              }}
-                            >
-                              <Check
-                                className={cn(
-                                  "mr-2 h-4 w-4",
-                                  language.value === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                              {language.label}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
           </div>
           <h1 className="text-black text-2xl font-bold">Technique</h1>
           <div className="flex items-center mb-2 mt-2 gap-4">
@@ -618,7 +549,7 @@ const ManifoldForm = () => {
               name="n_elelements"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">N°element</FormLabel>
+                  <FormLabel className="text-md font-bold">N°elements</FormLabel>
                   <FormControl>
                     <Input
                       placeholder={"N°element"}
@@ -627,9 +558,7 @@ const ManifoldForm = () => {
                       type="number"
                     />
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
+                
                   <FormMessage />
                 </FormItem>
               )}
@@ -650,9 +579,7 @@ const ManifoldForm = () => {
                       className="w-full"
                     />
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
+                  
                   <FormMessage />
                 </FormItem>
               )}
@@ -674,9 +601,7 @@ const ManifoldForm = () => {
                       type="number"
                     />
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
+                 
                   <FormMessage />
                 </FormItem>
               )}
@@ -698,15 +623,13 @@ const ManifoldForm = () => {
                       </SelectContent>
                     </Select>
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
+                  
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <h1 className="text-black text-2xl font-bold">fichier</h1>
+          <h1 className="text-black text-2xl font-bold">files</h1>
           <div className="flex items-center mb-2 mt-2 gap-4">
             <FormField
               control={form.control}
@@ -714,7 +637,7 @@ const ManifoldForm = () => {
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
                   <FormLabel className="text-md font-bold">
-                    fiche technique
+                     technique plan
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -727,9 +650,7 @@ const ManifoldForm = () => {
                       type="file"
                     />
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
+                  
                   <FormMessage />
                 </FormItem>
               )}
@@ -740,7 +661,7 @@ const ManifoldForm = () => {
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
                   <FormLabel className="text-md font-bold">
-                    fiche technique
+                     technique file
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -753,9 +674,7 @@ const ManifoldForm = () => {
                       type="file"
                     />
                   </FormControl>
-                  <FormDescription className="text-xs">
-                    This is the language that will be used in the dashboard.
-                  </FormDescription>
+                  
                   <FormMessage />
                 </FormItem>
               )}

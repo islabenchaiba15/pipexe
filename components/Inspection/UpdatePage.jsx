@@ -11,22 +11,9 @@ import UpdateManifoldForm from "./UpdateManifoldForm";
  const UpdatePage = ({inspectionID}) => {
   const [totalDistance, setTotalDistance] = useState(0);
   return (
-    <DataContextProvider>
-      <CoordContextProvider>
-        <WellContextProvider>
-          <CreatePipeFormContextProvider>
-            <div className="flex w-full h-full"> {/* Added h-full */}
-              <div className="w-1/2 h-screen"> {/* Changed to h-full */}
-                <ManifoldMap inspectionID={inspectionID} setTotalDistance={setTotalDistance} />
-              </div>
-              <div className="w-1/2 h-full overflow-y-auto no-scrollbar"> {/* Changed to h-full */}
-                <UpdateManifoldForm inspectionID={inspectionID} totalDistance={totalDistance} />
-              </div>
-            </div>
-          </CreatePipeFormContextProvider>
-        </WellContextProvider>
-      </CoordContextProvider>
-    </DataContextProvider>
+    <div>
+      islam
+    </div>
   );
 };
 export default UpdatePage

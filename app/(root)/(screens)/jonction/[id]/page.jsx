@@ -4,11 +4,11 @@ import Card from "../../../../../components/pipe/Card";
 import AddressCard from "../../../../../components/well/AddressCard";
 import Chart from "../../../../../components/pipe/Chart";
 import PressureCard from "../../../../../components/manifold/PressureCard";
-import MapComponent from "../../../../../components/MapComponent";
 import CreatePipeFormContextProvider from "../../../../../context/CreatePipeFormContextProvider";
 import WellContextProvider from "../../../../../context/WellContextProvider";
 import { axiosInstance } from "@/Api/Index";
 import TableDemo from "@/components/Junction/TableDemo";
+import dynamic from "next/dynamic";
 const cardData = [
   {
     label: "Nom",
@@ -39,6 +39,10 @@ const RealData = [
 ];
 
 function page({params}) {
+  const MapComponent = dynamic(() => import("@/components/MapComponent"), {
+    loading: () => <p>A map is loading</p>,
+    ssr: false,
+  });
   console.log('paraaaams',params);
   const icon = "../manifold.svg";
   const [junction, setJunction] = useState([]);
@@ -59,6 +63,11 @@ function page({params}) {
   useEffect(() => {
     console.log("Updated wells state:", junction);
   }, [junction]);
+  const formatDate = (dateString) => {
+    if (!dateString) return ""; // Handle null or undefined
+    const parts = dateString.split("T");
+    return parts[0] || ""; // Return the date part or empty string if split fails
+  };
   return (
    !loading && (
     <CreatePipeFormContextProvider>
@@ -67,10 +76,10 @@ function page({params}) {
           <h1 className="text-3xl font-bold text black">Junction details</h1>
           <section className="grid w-full grid-cols-1 gap-4  transition-all sm:grid-cols-2 xl:grid-cols-2 ">
               <Card
-                amount={"Nom"}
+                label={"Nom"}
                 icon={"/fire.svg"}
-                discription={`created ${junction.date}`}
-                label={junction.name}
+                discription={formatDate(junction.date)}
+                amount={junction.name}
               />
               <AddressCard
                 address={"address"}
@@ -82,11 +91,7 @@ function page({params}) {
               />
           </section>
           <section className="flex flex-col lg:flex-row lg:items-center gap-4 transition-all ">
-            <div className="lg:w-1/2 w-full gap-3 rounded-xl border p-5 shadow">
-              <p className="p-4 font-semibold">Overview</p>
-              <Chart />
-            </div>
-            <div className="lg:w-1/2 w-full h-[400px] lg:h-full gap-3 rounded-xl border p-5 shadow ">
+            <div className=" w-full h-[400px] lg:h-[400px] gap-3 rounded-xl border p-5 shadow ">
               <MapComponent icon={icon} page={"junction"} coords={junction.coords}/>
             </div>
           </section>

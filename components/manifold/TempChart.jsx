@@ -59,7 +59,7 @@ const dataaa = [
   },
 ];
 
-function Chart({ setPressure }) {
+function TempChart({ setTemperature,indice2, indice1}) {
   const [data, setData] = useState([]);
   const [dataa, setDataa] = useState([]);
   useEffect(() => {
@@ -69,9 +69,8 @@ function Chart({ setPressure }) {
         console.log(response.data,'uuuuuuuuuuuiiiiiiiiiiiipppppppp')
         await setData(response.data.reverse());
         if (response.data.length > 0) {
-          const lastItem = response.data[response.data.length - 1];
-
-          setPressure(lastItem.pressure);
+            const lastItem = response.data[response.data.length - 1];
+            setTemperature(lastItem.tempDepart);
         }else(console.log('oooooooo'))
       } catch (error) {
         console.error("Error fetching manifolds", error);
@@ -109,11 +108,11 @@ function Chart({ setPressure }) {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="pressureDepart" stroke="#8884d8" />
-        <Line type="monotone" dataKey="pressureArrive" stroke="#82ca9d" />
+        <Line type="monotone" dataKey={indice1} stroke="#8884d8" />
+        <Line type="monotone" dataKey={indice2} stroke="#82ca9d" />
       </LineChart>
     </ResponsiveContainer>
   );
 }
 
-export default Chart;
+export default TempChart;
