@@ -41,6 +41,18 @@ import { axiosInstance } from "@/Api/Index";
 import { useRouter } from "next/navigation";
 import { data } from "@/constants/data";
 import DataContext from "@/context/DataContext";
+import { puitsHorsServices } from "@/constants/puitsHorsServices";
+import { gaspipes } from "@/constants/gaspipes";
+import { waterpipes } from "@/constants/waterpipes";
+import { manifoldes } from "@/constants/manifolds";
+import { colectorsanes } from "@/constants/collectors";
+import { collectsanes } from "@/constants/collects";
+import { eruptifsanes } from "@/constants/eruptifs";
+import { gasliftanes } from "@/constants/gasLift";
+import { injectiongasanes } from "@/constants/injectionGas";
+import { injectionwateranes } from "@/constants/injectionWater";
+import { jonctionsanes } from "@/constants/jonctions";
+import { manifoldshorsserviceanes } from "@/constants/manifoldsHorsService";
 
 export function splitCoordinatesByDistance(coordinates, distances) {
   const result = [];
@@ -125,7 +137,16 @@ function getDistanceBetweenCoordinates(coord1, coord2) {
   return R * c; // Distance in meters
 }
 
-const Map = ({ setTotalDistance }) => {
+const Map = ({
+  showOpenStreetMap,
+  activeLayer,
+  setTotalDistance,
+  activeButton,
+  selectedNetworks,
+  selectedWells,
+  selectedLines,
+  selectedLineSizes,
+}) => {
   const router = useRouter();
   const coordinates = [
     {
@@ -166,9 +187,78 @@ const Map = ({ setTotalDistance }) => {
   const center = [31.68121343655558, 6.141072936328754];
   const editRef = useRef(null);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const Erruptif = L.icon({
+    iconUrl: "../Erruptif.svg",
+    iconSize: [45, 45], // size of the icon
+  });
+  const erruptifInspection = L.icon({
+    iconUrl: "../erruptifInspection.svg",
+    iconSize: [45, 45], // size of the icon
+  });
+  const jonctionanes = L.icon({
+    iconUrl: "../jonctionanes.svg",
+    iconSize: [15, 15], // size of the icon
+  });
+  const gasLift = L.icon({
+    iconUrl: "../gasLift.svg",
+    iconSize: [45, 45], // size of the icon
+  });
+  const gasLiftInspect = L.icon({
+    iconUrl: "../gasLiftInspect.svg",
+    iconSize: [45, 45], // size of the icon
+  });
+  const injectorGas = L.icon({
+    iconUrl: "../injectorGas.svg",
+    iconSize: [30, 30], // size of the icon
+  });
+  const injectorGasInspection = L.icon({
+    iconUrl: "../injectorGasInspection.svg",
+    iconSize: [30, 30], // size of the icon
+  });
+  const injectorWater = L.icon({
+    iconUrl: "../puit.svg",
+    iconSize: [30, 30], // size of the icon
+  });
+
+  const injectorWaterInspection = L.icon({
+    iconUrl: "../puit.svg",
+    iconSize: [30, 30], // size of the icon
+  });
+  const manifold = L.icon({
+    iconUrl: "../puit.svg",
+    iconSize: [45, 45], // size of the icon
+  });
+  const manifoldHorsService = L.icon({
+    iconUrl: "../manifoldHorsService.svg",
+    iconSize: [45, 45], // size of the icon
+  });
+  const manifoldIOnspection = L.icon({
+    iconUrl: "../manifoldIOnspection.svg",
+    iconSize: [45, 45], // size of the icon
+  });
+  const puitHorsService = L.icon({
+    iconUrl: "../puitHorsService.svg",
+    iconSize: [30, 30], // size of the icon
+  });
+  const puitHorsServiceInsp = L.icon({
+    iconUrl: "../puitHorsServiceInsp.svg",
+    iconSize: [30, 30], // size of the icon
+  });
+  const station = L.icon({
+    iconUrl: "../station.svg",
+    iconSize: [45, 45], // size of the icon
+  });
+  const stationHorsService = L.icon({
+    iconUrl: "../stationHorsService.svg",
+    iconSize: [45, 45], // size of the icon
+  });
+  const stationInspection = L.icon({
+    iconUrl: "../stationInspection.svg",
+    iconSize: [45, 45], // size of the icon
+  });
   const healthIcon = L.icon({
     iconUrl: "../puit.svg",
-    iconSize: [35, 35], // size of the icon
+    iconSize: [45, 45], // size of the icon
   });
 
   const manifoldIcon = L.icon({
@@ -292,6 +382,21 @@ const Map = ({ setTotalDistance }) => {
     pipes,
     setPipes,
   } = useContext(DataContext);
+  const [oilPipes, setOilPipes] = useState({});
+  const [waterPipes, setWaterPipes] = useState({}); // Add loading state
+  const [gasPipes, setGasPipes] = useState({});
+  const [collectOilPipes, setCollectOilPipes] = useState([]);
+  const [collectorOilPipes, setCollectorOilPipes] = useState([]);
+
+  // Add loading state
+  // Add loading state
+  const categorizedPipes = {
+    water: [],
+    oil: [],
+    gas: [],
+    collectOil: [],
+    collectorOil: [],
+  };
   useEffect(() => {
     const fetchWells = async () => {
       try {
@@ -299,6 +404,37 @@ const Map = ({ setTotalDistance }) => {
         const dataa = await axiosInstance.get("/manifold/getAll");
         const junction = await axiosInstance.get("/junction/getAll");
         const pipes = await axiosInstance.get("/pipe/getAll");
+
+        pipes.data.map((pipe) => {
+          console.log("Processing pipe:", pipe);
+          switch (pipe.nature.toLowerCase()) {
+            case "water":
+              categorizedPipes.water.push(pipe);
+              break;
+            case "oil":
+              if (pipe.type.toLowerCase() === "collect") {
+                categorizedPipes.collectOil.push(pipe);
+              } else {
+                categorizedPipes.oil.push(pipe);
+              }
+              break;
+            case "gas":
+              categorizedPipes.gas.push(pipe);
+              break;
+            default:
+              console.warn(`Unknown pipe type: ${pipe.nature}`);
+          }
+          return null; // map requires a return value, but we don't use it here
+        });
+
+        // Set the categorized pipes to state
+        setWaterPipes(categorizedPipes.water);
+        setOilPipes(categorizedPipes.oil);
+        setGasPipes(categorizedPipes.gas);
+        setCollectOilPipes(categorizedPipes.collectOil);
+        setCollectorOilPipes(categorizedPipes.collectorOil);
+
+        // Set the categorized pipes to state
         setPipes(pipes.data);
         setWells(response.data);
         setManifolds(dataa.data);
@@ -317,8 +453,32 @@ const Map = ({ setTotalDistance }) => {
     console.log("Updated pipppes state:", pipes);
   }, [wells, junctions, pipes]);
 
+  const polylineOptionscollect = {
+    color: "black",
+    weight: 3,
+    // [dashLength, gapLength]
+  };
+
+  const polylineOptionsgas = {
+    color: "lime",
+    weight: 2,
+    // [dashLength, gapLength]
+  };
+
+  const polylineOptionswater = {
+    color: "blue",
+    weight: 2,
+    // [dashLength, gapLength]
+  };
+
+  const polylineOptionscollector = {
+    color: "black",
+    weight: 3,
+    dashArray: "5 5",
+    // [dashLength, gapLength]
+  };
   const polylineOptions = {
-    color: "white",
+    color: "red",
     weight: 3,
     dashArray: "10 5",
     // [dashLength, gapLength]
@@ -344,7 +504,7 @@ const Map = ({ setTotalDistance }) => {
         </FeatureGroup>
         <LayersControl position="topleft">
           <LayersControl.BaseLayer
-            checked={selectedLayer === "OpenStreetMap"}
+            checked={activeLayer === "OpenStreetMap"}
             name="OpenStreetMap"
           >
             <TileLayer
@@ -353,14 +513,14 @@ const Map = ({ setTotalDistance }) => {
             />
           </LayersControl.BaseLayer>
           <LayersControl.BaseLayer
-            checked={selectedLayer === "Stamen Terrain"}
+            checked={activeLayer === "Stamen Terrain"}
             name="Stamen Terrain"
           >
             <TileLayer url="https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg" />
           </LayersControl.BaseLayer>
           <LayersControl.BaseLayer
-            checked={selectedLayer === "islam"}
-            name="islam"
+            checked={activeLayer === "native"}
+            name="native"
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -381,28 +541,267 @@ const Map = ({ setTotalDistance }) => {
           ></Polyline>
         )}
         {!loading &&
-          pipes.map((pipe, index) => (
+          waterPipes.map((pipe, index) => (
             <Polyline
               key={index}
               eventHandlers={{
                 click: () => router.push(`pipe/${pipe._id}`),
               }}
               positions={pipe.coords}
-              pathOptions={polylineOptions}
+              pathOptions={polylineOptionswater}
+            ></Polyline>
+          ))}
+
+        {!loading &&
+          gasPipes.map((pipe, index) => (
+            <Polyline
+              key={index}
+              eventHandlers={{
+                click: () => router.push(`pipe/${pipe._id}`),
+              }}
+              positions={pipe.coords}
+              pathOptions={polylineOptionsgas}
+            ></Polyline>
+          ))}
+
+        {!loading &&
+          collectOilPipes.map((pipe, index) => (
+            <Polyline
+              key={index}
+              eventHandlers={{
+                click: () => router.push(`pipe/${pipe._id}`),
+              }}
+              positions={pipe.coords}
+              pathOptions={polylineOptionscollect}
+            ></Polyline>
+          ))}
+
+        {!loading &&
+          collectorOilPipes.map((pipe, index) => (
+            <Polyline
+              key={index}
+              eventHandlers={{
+                click: () => router.push(`pipe/${pipe._id}`),
+              }}
+              positions={pipe.coords}
+              pathOptions={polylineOptionscollector}
+            ></Polyline>
+          ))}
+
+        {manifoldes.features.map((feature, index) => (
+          <Marker
+            position={feature.geometry.coordinates}
+            icon={healthIcon}
+            key={index}
+          >
+            <Tooltip
+                offset={[0, 0]}
+                opacity={1}
+                permanent
+                direction="bottom"
+                className="my-labels"
+              >
+                {feature.properties.Name}
+              </Tooltip>
+            <Popup>{feature.properties.name}</Popup>
+          </Marker>
+        ))}
+        {/* aaaaaaaaaaaaaaaaaaaaaaaaaaanessssssssssssssssssssssssssssssssssssssssssss */}
+        {selectedLines.includes("Collector") &&
+          colectorsanes.features.map((feature, index) => (
+            <Polyline
+              key={index}
+              positions={feature.geometry.coordinates}
+              pathOptions={polylineOptionscollector}
             >
+              <Popup>{feature.properties.Name}</Popup>
+            </Polyline>
+          ))}
+        {selectedNetworks.includes("Gas") &&
+          gaspipes.features.map((feature, index) => (
+            <Polyline
+              key={index}
+              positions={feature.geometry.coordinates}
+              pathOptions={polylineOptionsgas}
+            >
+              <Popup>{feature.properties.Name}</Popup>
             </Polyline>
           ))}
 
-        {data.features.map((feature, index) => (
-          <Polyline
+        {selectedNetworks.includes("Water") &&
+          waterpipes.features.map((feature, index) => (
+            <Polyline
+              key={index}
+              positions={feature.geometry.coordinates}
+              pathOptions={polylineOptionswater}
+            >
+              <Popup>{feature.properties.Name}</Popup>
+            </Polyline>
+          ))}
+
+        {selectedLines.includes("Collect") &&
+          collectsanes.features.map((feature, index) => (
+            <Polyline
+              key={index}
+              positions={feature.geometry.coordinates}
+              pathOptions={polylineOptionscollect}
+            >
+              <Popup>{feature.properties.Name}</Popup>
+            </Polyline>
+          ))}
+
+        {selectedWells.includes("Eruptive") &&
+          eruptifsanes.features.map((feature, index) => (
+            <Marker
+              position={feature.geometry.coordinates}
+              icon={Erruptif}
+              key={index}
+            >
+              <Tooltip
+                offset={[0, 0]}
+                opacity={1}
+                permanent
+                direction="top"
+                className="my-labels"
+              >
+                {feature.properties.Name}
+              </Tooltip>
+              <Popup>{feature.properties.Name}</Popup>
+            </Marker>
+          ))}
+
+        {selectedWells.includes("Gas Lift") &&
+          gasliftanes.features.map((feature, index) => (
+            <Marker
+              position={feature.geometry.coordinates}
+              icon={gasLift}
+              key={index}
+            >
+              <Tooltip
+                offset={[0, 0]}
+                opacity={1}
+                permanent
+                direction="bottom"
+                className="my-labels"
+              >
+                {feature.properties.Name}
+              </Tooltip>
+              <Popup>{feature.properties.Name}</Popup>
+            </Marker>
+          ))}
+        {selectedWells.includes("Water Injector") &&
+          injectionwateranes.features.map((feature, index) => (
+            <Marker
+              position={feature.geometry.coordinates}
+              icon={injectorWater}
+              key={index}
+            >
+              <Tooltip
+                offset={[0, 0]}
+                opacity={1}
+                permanent
+                direction="bottom"
+                className="my-labels"
+              >
+                {feature.properties.Name}
+              </Tooltip>
+              <Popup>{feature.properties.Name}</Popup>
+            </Marker>
+          ))}
+        {selectedWells.includes("Gas Injector") &&
+          injectiongasanes.features.map((feature, index) => (
+            <Marker
+              position={feature.geometry.coordinates}
+              icon={injectorGas}
+              key={index}
+            >
+              <Tooltip
+                offset={[0, 0]}
+                opacity={1}
+                permanent
+                direction="bottom"
+                className="my-labels"
+              >
+                {feature.properties.Name}
+              </Tooltip>
+              <Popup>{feature.properties.Name}</Popup>
+            </Marker>
+          ))}
+        {jonctionsanes.features.map((feature, index) => (
+          <Marker
+            position={feature.geometry.coordinates}
+            icon={jonctionanes}
             key={index}
-            positions={feature.geometry.coordinates}
-            pathOptions={polylineOptions}
-            color={"white"}
           >
-            <Popup>{feature.properties.Name}</Popup>
-          </Polyline>
+            <Tooltip
+                offset={[0, 0]}
+                opacity={1}
+                permanent
+                direction="bottom"
+                className="my-labels"
+              >
+                {feature.properties.name}
+              </Tooltip>
+            <Popup>{feature.properties.name}</Popup>
+          </Marker>
         ))}
+        {manifoldshorsserviceanes.features.map((feature, index) => (
+          <Marker
+            position={feature.geometry.coordinates}
+            icon={manifoldHorsService}
+            key={index}
+          >
+            <Tooltip
+                offset={[0, 0]}
+                opacity={1}
+                permanent
+                direction="bottom"
+                className="my-labels"
+              >
+                {feature.properties.name}
+              </Tooltip>
+            <Popup>{feature.properties.Name}</Popup>
+          </Marker>
+        ))}
+
+        {puitsHorsServices.features.map((feature, index) => (
+          <Marker
+            position={feature.geometry.coordinates}
+            icon={puitHorsService}
+            key={index}
+          >
+            <Tooltip
+                offset={[0, 0]}
+                opacity={1}
+                permanent
+                direction="bottom"
+                className="my-labels"
+              >
+                {feature.properties.Name}
+              </Tooltip>
+            <Popup>{feature.properties.name}</Popup>
+          </Marker>
+        ))}
+
+        {puitsHorsServices.features.map((feature, index) => (
+          <Marker
+            position={feature.geometry.coordinates}
+            icon={puitHorsService}
+            key={index}
+          >
+            <Tooltip
+                offset={[0, 0]}
+                opacity={1}
+                permanent
+                direction="bottom"
+                className="my-labels"
+              >
+                {feature.properties.Name}
+              </Tooltip>
+            <Popup>{feature.properties.name}</Popup>
+          </Marker>
+        ))}
+        {/* aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanessssssssssssssssssssssssssssssssssssssss */}
 
         {/* {coordinates.map((feature, index) => (
           <Polyline
@@ -426,15 +825,15 @@ const Map = ({ setTotalDistance }) => {
               icon={healthIcon}
               key={index}
             >
-              {/* <Tooltip
-                direction="right"
+              <Tooltip
                 offset={[0, 0]}
                 opacity={1}
                 permanent
-                className="custom-tooltip"
+                direction="bottom"
+                className="my-labels"
               >
-                md1
-              </Tooltip> */}
+                {well.name}
+              </Tooltip>
             </Marker>
           ))}
         {!loading &&
@@ -446,7 +845,17 @@ const Map = ({ setTotalDistance }) => {
               position={[manifold.coords.latitude, manifold.coords.longitude]}
               icon={manifoldIcon}
               key={index}
-            ></Marker>
+            >
+              <Tooltip
+                offset={[0, 0]}
+                opacity={1}
+                permanent
+                direction="bottom"
+                className="my-labels"
+              >
+                {manifold.name}
+              </Tooltip>
+            </Marker>
           ))}
 
         {!loading &&
@@ -458,7 +867,17 @@ const Map = ({ setTotalDistance }) => {
               position={[junction.coords.latitude, junction.coords.longitude]}
               icon={junctionIcon}
               key={index}
-            ></Marker>
+            >
+              <Tooltip
+                offset={[0, 0]}
+                opacity={1}
+                permanent
+                direction="bottom"
+                className="my-labels"
+              >
+                {junction.name}
+              </Tooltip>
+            </Marker>
           ))}
 
         {/* {polys.map((segment, index) => (

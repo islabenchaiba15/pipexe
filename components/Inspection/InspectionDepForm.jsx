@@ -70,10 +70,9 @@ const languages = [
   { label: "Korean", value: "ko" },
   { label: "Chinese", value: "zh" },
 ];
-export function InspectionDepForm({inspectionID}) {
+ export function InspectionDepForm({inspectionID}) {
   const [formData, setFormData] = useState({});
-  const { user } = useAuth();
-
+  const {user}=useAuth()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -87,15 +86,14 @@ export function InspectionDepForm({inspectionID}) {
   // 2. Define a submit handler.
   const onSubmit=async(values)=> {
     console.log("onSubmit",values)
-    const data = {
-      message: values.message,
-      type: values.type,
-      pv_file: values.rapport_file[0],
-      InspectionID: inspectionID,
-      user:user._id
-    };
-    setFormData(data);
-    console.log("submitted data", data);
+   const formData = new FormData();
+  formData.append('message', values.message);
+  formData.append('type', values.type);
+  formData.append('pv_file', values.rapport_file[0]);
+  formData.append('InspectionID', inspectionID);
+  formData.append('user', user._id);
+
+  console.log("submitted data", formData);
     try {
       const { data } = await axiosInstance.post("/inpectionReport/create", formData, {
         headers: {

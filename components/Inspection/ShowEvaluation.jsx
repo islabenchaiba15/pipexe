@@ -94,9 +94,12 @@ export function ShowEvaluation({ isOpen, onClose, InspectionID }) {
               <div className="flex gap-4 items-center">
                 <Image src={"/user.png"} alt={"user"} width={80} height={80} />
                 <div className="flex flex-col items-start gap-3">
-                  <h1 className="font-bold text-md">{evaluation.evaluationID.user.nom}</h1>
+                  <h1 className="font-bold text-md">
+                    {evaluation.evaluationID.user.nom}
+                  </h1>
                   <h1 className="">
-                    {evaluation.evaluationID.user.position} -- {evaluation.evaluationID.user.departement}
+                    {evaluation.evaluationID.user.position} --{" "}
+                    {evaluation.evaluationID.user.departement}
                   </h1>
                 </div>
               </div>
@@ -110,7 +113,7 @@ export function ShowEvaluation({ isOpen, onClose, InspectionID }) {
                 </h1>
               </div>
               <div className="flex flex-col gap-2">
-                <h1 className="font-bold text-md">result</h1>
+                <h1 className="font-bold text-md">Result</h1>
                 <h1 className="text-md font-medium">
                   {evaluation.evaluationID.result === "passer"
                     ? "étape a passé a deparetment de construction"
@@ -118,7 +121,7 @@ export function ShowEvaluation({ isOpen, onClose, InspectionID }) {
                 </h1>
               </div>
               <div className="flex flex-col gap-2">
-                <h1 className="font-bold text-md">message</h1>
+                <h1 className="font-bold text-md">Message</h1>
                 <div className="border border-gray-500 p-4">
                   {evaluation.evaluationID.message}
                 </div>
@@ -126,7 +129,7 @@ export function ShowEvaluation({ isOpen, onClose, InspectionID }) {
               <div className="flex flex-col gap-2">
                 <h1 className="font-bold">E&P pv report </h1>
                 <div className="flex gap-6 ">
-                  <h1 className="font-medium">donwload</h1>
+                  <h1 className="font-medium">Donwload</h1>
                   <Image
                     onClick={() => donwloadFiles("ficher")}
                     src={"/download.png"}

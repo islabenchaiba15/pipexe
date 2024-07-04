@@ -27,7 +27,7 @@ import { useState } from "react";
 import { axiosInstance } from "@/Api/Index";
 
 const formSchema = z.object({
-    message: z
+  message: z
     .string()
     .min(10, {
       message: "message must be at least 10 characters.",
@@ -35,8 +35,7 @@ const formSchema = z.object({
     .max(160, {
       message: "message must not be longer than 30 characters.",
     }),
-    date: z.date({ message: "date is required" }),
-
+  date: z.date({ message: "date is required" }),
 });
 const languages = [
   { label: "English", value: "en" },
@@ -60,20 +59,24 @@ export function ConstructionRaportStatusForm() {
   });
   const [errors, setErrors] = useState({});
   // 2. Define a submit handler.
-  const onSubmit=async(values)=> {
+  const onSubmit = async (values) => {
     const dataa = {
       status: values.message,
-      date:values.date,
+      date: values.date,
       InspectionID: "667c707c8ae526b63a858960",
     };
     setFormData(dataa);
     console.log("submitted data", dataa);
     try {
-      const { data } = await axiosInstance.post("/constructionStatus/create", dataa, {
-        headers: {
+      const { data } = await axiosInstance.post(
+        "/constructionStatus/create",
+        dataa,
+        {
+          headers: {
             "Content-Type": "application/json", // Change to application/json
-        },
-      });
+          },
+        }
+      );
       console.log("receeeeeeeeeeeive", data);
       form.reset(form.defaultValues);
     } catch (error) {
@@ -90,7 +93,7 @@ export function ConstructionRaportStatusForm() {
         console.log("Error", error.message);
       }
     }
-  }
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 ">
@@ -99,7 +102,7 @@ export function ConstructionRaportStatusForm() {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-md font-bold">message</FormLabel>
+              <FormLabel className="text-md font-bold">Message</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Tell us a little bit about yourself"
@@ -114,50 +117,50 @@ export function ConstructionRaportStatusForm() {
             </FormItem>
           )}
         />
-         <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem className="flex flex-col items-start">
-                  <FormLabel className="text-md font-bold ">date</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-full pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormDescription className="text-xs">
-                    Your date of birth is used to calculate your age.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <FormField
+          control={form.control}
+          name="date"
+          render={({ field }) => (
+            <FormItem className="flex flex-col items-start">
+              <FormLabel className="text-md font-bold ">Date</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-full pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              <FormDescription className="text-xs">
+                Your date of birth is used to calculate your age.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className="flex justify-end">
           <Button type="submit">Submit</Button>
         </div>

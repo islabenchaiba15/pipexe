@@ -78,7 +78,8 @@ const languages = [
   { label: "Chinese", value: "zh" },
 ];
 
-export function CreateInspectionForm({wells,pipes,manifolds}) {
+export function CreateInspectionForm({ wells, pipes, manifolds }) {
+  const { user } = useAuth();
   const getInfrastructures = (type) => {
     switch (type) {
       case "Ids":
@@ -91,7 +92,6 @@ export function CreateInspectionForm({wells,pipes,manifolds}) {
         return [];
     }
   };
-  const [formData, setFormData] = useState({});
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -104,24 +104,24 @@ export function CreateInspectionForm({wells,pipes,manifolds}) {
   const fileRefe = form.register("pv_file");
   const [errors, setErrors] = useState({});
   const watchType = form.watch("type");
-  const infrastructures = useMemo(() => getInfrastructures(watchType), [watchType]);
-  const { user } = useAuth();
+  const infrastructures = useMemo(
+    () => getInfrastructures(watchType),
+    [watchType]
+  );
 
   const onSubmit = async (values) => {
-    const data = {
-      email: values.email,
-      message: values.message,
-      type: values.type,
-      ouvrage: values.ouvrage,
-      pv_file: values.pv_file[0],
-      user:user._id
-    };
-    setFormData(data);
-    console.log("submitted data", data);
+    const formData = new FormData();
+    formData.append("email", values.email);
+    formData.append("message", values.message);
+    formData.append("type", values.type);
+    formData.append("ouvrage", values.ouvrage);
+    formData.append("pv_file", values.pv_file[0]);
+    formData.append("user", user._id);
+    console.log("submitted data", formData);
     try {
       const { data } = await axiosInstance.post("/epnote/create", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',// Change to application/json
+          "Content-Type": "multipart/form-data", // Change to application/json
         },
       });
       console.log("receeeeeeeeeeeive", data);
@@ -149,7 +149,7 @@ export function CreateInspectionForm({wells,pipes,manifolds}) {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-bold">message</FormLabel>
+              <FormLabel className="font-bold">Message</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Tell us a little bit about yourself"
@@ -169,7 +169,7 @@ export function CreateInspectionForm({wells,pipes,manifolds}) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-md font-bold">
-                  type of inspection
+                  Type of inspection
                 </FormLabel>
                 <Select
                   onValueChange={field.onChange}
@@ -181,9 +181,9 @@ export function CreateInspectionForm({wells,pipes,manifolds}) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="manifold">manifold</SelectItem>
-                    <SelectItem value="Ids">Ids</SelectItem>
-                    <SelectItem value="pipeline">pipeline</SelectItem>
+                    <SelectItem value="manifold">Manifold</SelectItem>
+                    <SelectItem value="Ids">IDS</SelectItem>
+                    <SelectItem value="pipeline">Pipeline</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormDescription>
@@ -193,95 +193,96 @@ export function CreateInspectionForm({wells,pipes,manifolds}) {
               </FormItem>
             )}
           />
-         {watchType && ( <FormField
+          {watchType && (
+            <FormField
+              control={form.control}
+              name="ouvrage"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-start w-1/2">
+                  <FormLabel className="text-md font-bold">Equipment</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between mr-4",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? infrastructures.find(
+                                (infrastructure) =>
+                                  infrastructure._id === field.value
+                              )?.name
+                            : "Select infrastructure "}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className=" p-0">
+                      <Command>
+                        <CommandInput placeholder="Search infrastructure..." />
+                        <CommandEmpty>No infrastructure found.</CommandEmpty>
+                        <CommandGroup>
+                          {infrastructures.map((infrastructure) => (
+                            <CommandItem
+                              value={infrastructure.name}
+                              key={infrastructure._id}
+                              onSelect={() => {
+                                form.setValue("ouvrage", infrastructure._id);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  infrastructure._id === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {infrastructure.name}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription className="">
+                    Select the specific infrastructure for inspection.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+        </div>
+        {watchType && (
+          <FormField
             control={form.control}
-            name="ouvrage"
+            name="pv_file"
             render={({ field }) => (
-              <FormItem className="flex flex-col items-start w-1/2">
-                <FormLabel className="text-md font-bold">ouvrage</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        className={cn(
-                          "w-full justify-between mr-4",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value
-                          ? infrastructures.find(
-                              (infrastructure) =>
-                                infrastructure._id === field.value
-                            )?.name
-                          : "Select infrastructure "}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className=" p-0">
-                    <Command>
-                      <CommandInput placeholder="Search infrastructure..." />
-                      <CommandEmpty>No infrastructure found.</CommandEmpty>
-                      <CommandGroup>
-                        {infrastructures.map((infrastructure) => (
-                          <CommandItem
-                            value={infrastructure.name}
-                            key={infrastructure._id}
-                            onSelect={() => {
-                              form.setValue("ouvrage", infrastructure._id);
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                infrastructure._id === field.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {infrastructure.name}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-                <FormDescription className="">
-                  Select the specific infrastructure for inspection.
+              <FormItem>
+                <FormLabel className="font-bold">PV file</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="shadcn"
+                    type="file"
+                    onChange={(event) => {
+                      field.onChange(event.target?.files?.[0] ?? undefined);
+                    }}
+                    {...fileRefe}
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is your public display name.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
-          /> )}
-        </div>
-        {
-          watchType && (
-        <FormField
-          control={form.control}
-          name="pv_file"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-bold">pv file</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="shadcn"
-                  type="file"
-                  onChange={(event) => {
-                    field.onChange(event.target?.files?.[0] ?? undefined);
-                  }}
-                  {...fileRefe}
-                />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      )}
+          />
+        )}
         <div className="flex justify-end">
           <Button type="submit">Submit</Button>
         </div>

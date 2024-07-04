@@ -1,3 +1,6 @@
+"use client";
+import { useEffect, useState } from "react";
+import { revalidatePath } from "next/cache";
 import {
   Table,
   TableBody,
@@ -10,6 +13,7 @@ import {
 } from "../../components/ui/table";
 import ActionDropdown from "../ActionDropdown";
 import Paging from "../Pagination";
+import { axiosInstance } from "@/Api/Index";
 
 const invoices = [
   {
@@ -127,7 +131,26 @@ const invoices = [
 ];
 
 const TableUsers = ({ searchTerm, selectedDepartments, selectedPositions }) => {
-  const filteredInvoices = invoices.filter((invoice) => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get(`auth/user/getAll`);
+        console.log(response.data, "uuuuuuuuuuuiiiiiiiiiiiipppppppp");
+        await setUsers(response.data.users);
+        setLoading(false)
+      } catch (error) {
+        console.error("Error fetching users", error);
+      }
+    };
+    fetchData();
+    const interval = setInterval(fetchData, 10000); // 60000 milliseconds = 1 minute
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
+  const filteredInvoices = users.filter((invoice) => {
     const isNameMatch =
       invoice.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
       invoice.prenom.toLowerCase().includes(searchTerm.toLowerCase());
@@ -140,6 +163,7 @@ const TableUsers = ({ searchTerm, selectedDepartments, selectedPositions }) => {
 
     return isNameMatch && isDepartmentMatch && isPositionMatch;
   });
+
   return (
     <div className="pb-24">
       <Table>

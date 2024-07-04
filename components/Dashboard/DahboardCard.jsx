@@ -21,7 +21,7 @@ export default function DashboardCard({
       <div className="flex justify-between w-1/2 gap-2 items-center">
         {/* label */}
         {/* icon */}
-        <Circle/>
+        {/* <Circle/> */}
       </div>
       <section className="flex flex-col w-1/2 gap-2">
         <Image src={icon} alt="yy" width={20} height={20} />

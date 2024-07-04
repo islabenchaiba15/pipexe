@@ -64,7 +64,8 @@ const formSchema = z
   .refine(
     (data) => {
       if (data.evaluation === "passer") {
-        return data.evaluation_file && data.evaluation_file.length > 0;      }
+        return data.evaluation_file && data.evaluation_file.length > 0;
+      }
       return true;
     },
     {
@@ -84,10 +85,9 @@ const languages = [
   { label: "Korean", value: "ko" },
   { label: "Chinese", value: "zh" },
 ];
-export function EpEvaluationForm({inspectionID}) {
+export function EpEvaluationForm({ inspectionID }) {
   const [formData, setFormData] = useState({});
   const { user } = useAuth();
-
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -102,25 +102,18 @@ export function EpEvaluationForm({inspectionID}) {
 
   // 2. Define a submit handler.
   const onSubmit = async (values) => {
-    const dataa = {
-      message: values.message,
-      evaluation: values.evaluation,
-      pv_evaluation: values.evaluation_file[0] || undefined,
-      InspectionID: inspectionID,
-      user:user._id
-    };
-    await setFormData(dataa);
-    console.log("submitted data", dataa);
+    const formData = new FormData();
+    formData.append("message", values.message);
+    formData.append("evaluation", values.evaluation);
+    formData.append("pv_evaluation", values.evaluation_file[0] || undefined);
+    formData.append("InspectionID", inspectionID);
+    formData.append("user", user._id);
     try {
-      const { data } = await axiosInstance.post(
-        "/evaluation/create",
-        dataa,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data", // Change to application/json
-          },
-        }
-      );
+      const { data } = await axiosInstance.post("/evaluation/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Change to application/json
+        },
+      });
       console.log("receeeeeeeeeeeive", data);
       form.reset(form.defaultValues);
     } catch (error) {
@@ -147,7 +140,7 @@ export function EpEvaluationForm({inspectionID}) {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-md font-bold">
-                result of evaluation
+                Result of evaluation
               </FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -157,9 +150,9 @@ export function EpEvaluationForm({inspectionID}) {
                 </FormControl>
                 <SelectContent>
                   <SelectItem value="passer">
-                    passer l'étape a deparetment de construction
+                    Proceed to technical department
                   </SelectItem>
-                  <SelectItem value="close">close the inspection</SelectItem>
+                  <SelectItem value="close">Close inspection</SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription>
@@ -200,14 +193,14 @@ export function EpEvaluationForm({inspectionID}) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-md font-bold">
-                  evaluation report file
+                  Evaluation report file
                 </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="shadcn"
                     type="file"
                     onChange={(event) => {
-                      field.onChange(event.target?.files?.[0] );
+                      field.onChange(event.target?.files?.[0]);
                     }}
                     {...fileRefe}
                   />

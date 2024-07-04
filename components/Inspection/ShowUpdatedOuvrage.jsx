@@ -26,9 +26,7 @@ export function ShowUpdatedOuvrage({ isOpen, onClose, InspectionID }) {
     if (isOpen && InspectionID) {
       const fetchInformation = async () => {
         try {
-          const response = await axiosInstance.get(
-            `/result/${InspectionID}`
-          );
+          const response = await axiosInstance.get(`/result/${InspectionID}`);
           console.log("reeeeeeeeeee", response.data.inspectionResult);
           setResult(response.data.inspectionResult);
           setIsLoading(false);
@@ -57,17 +55,14 @@ export function ShowUpdatedOuvrage({ isOpen, onClose, InspectionID }) {
         {isOpen && (
           <DialogContent className="sm:max-w-[625px]">
             <DialogHeader>
-              <DialogTitle className="text-xl">
-                E&P final results 
-              </DialogTitle>
+              <DialogTitle className="text-xl">E&P final results</DialogTitle>
               {/* <DialogDescription>
             Make changes to your profile here. Click save when you're done.
           </DialogDescription> */}
             </DialogHeader>
             <div className="flex flex-col gap-4">
-              
               <div className="flex flex-col gap-2">
-                <h1 className="font-bold text-md">next Inspection date</h1>
+                <h1 className="font-bold text-md">Next inspection date</h1>
                 <h1 className="text-md font-medium">
                   <span className="">
                     {" "}
@@ -76,7 +71,7 @@ export function ShowUpdatedOuvrage({ isOpen, onClose, InspectionID }) {
                 </h1>
               </div>
               <div className="flex flex-col gap-2">
-                <h1 className="font-bold text-md">result</h1>
+                <h1 className="font-bold text-md">Result</h1>
                 <h1 className="text-md font-medium">
                   {result.status === "work"
                     ? "l'ouvrage still wrking"
@@ -89,7 +84,6 @@ export function ShowUpdatedOuvrage({ isOpen, onClose, InspectionID }) {
                   {result.observation}
                 </div>
               </div>
-              
             </div>
           </DialogContent>
         )}

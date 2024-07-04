@@ -113,7 +113,7 @@ export function NewLine({ onNext, totalDistance }) {
               name="name"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold ">nameanes</FormLabel>
+                  <FormLabel className="text-md font-bold ">Name</FormLabel>
                   <FormControl>
                     <Input {...field} className="w-full" type="text" />
                   </FormControl>
@@ -127,7 +127,7 @@ export function NewLine({ onNext, totalDistance }) {
               name="largeur"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">thikness</FormLabel>
+                  <FormLabel className="text-md font-bold">Thikness</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} className="w-full" />
                   </FormControl>
@@ -143,16 +143,16 @@ export function NewLine({ onNext, totalDistance }) {
               name="nature"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">nature</FormLabel>
+                  <FormLabel className="text-md font-bold">Nature</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange}>
                       <SelectTrigger className="">
                         <SelectValue placeholder="choose nature" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="gas">gas</SelectItem>
-                        <SelectItem value="oil">oil</SelectItem>
-                        <SelectItem value="water">eau</SelectItem>
+                        <SelectItem value="gas">Gas</SelectItem>
+                        <SelectItem value="oil">Oil</SelectItem>
+                        <SelectItem value="water">Water</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -166,15 +166,15 @@ export function NewLine({ onNext, totalDistance }) {
               name="type"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">type</FormLabel>
+                  <FormLabel className="text-md font-bold">Type</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange}>
                       <SelectTrigger className="">
                         <SelectValue placeholder="choose type " />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="collect">collect</SelectItem>
-                        <SelectItem value="collector">collector</SelectItem>
+                        <SelectItem value="collect">Collect</SelectItem>
+                        <SelectItem value="collector">Collector</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -190,7 +190,7 @@ export function NewLine({ onNext, totalDistance }) {
               name="from"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">start </FormLabel>
+                  <FormLabel className="text-md font-bold">Start </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -217,7 +217,7 @@ export function NewLine({ onNext, totalDistance }) {
                         <CommandInput placeholder="Search language..." />
                         <CommandEmpty>No language found.</CommandEmpty>
                         <CommandGroup>
-                          <h1 className="font-bold text-md mx-8 my-1">wells</h1>
+                          <h1 className="font-bold text-md mx-8 my-1">Wells</h1>
                           {wells.map((well) => (
                             <CommandItem
                               value={well.name}
@@ -238,7 +238,7 @@ export function NewLine({ onNext, totalDistance }) {
                             </CommandItem>
                           ))}
                           <h1 className="font-bold text-md mx-8 my-3">
-                            manifolds
+                            Manifolds
                           </h1>
                           {manifolds.map((manifold) => (
                             <CommandItem
@@ -274,7 +274,7 @@ export function NewLine({ onNext, totalDistance }) {
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
                   <FormLabel className="text-md font-bold">
-                    connect to
+                    Connect to
                   </FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} className="w-full">
@@ -282,8 +282,8 @@ export function NewLine({ onNext, totalDistance }) {
                         <SelectValue placeholder="the end of pipe" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="pipe">pipe</SelectItem>
-                        <SelectItem value="manifold">manifold</SelectItem>
+                        <SelectItem value="pipe">Pipe</SelectItem>
+                        <SelectItem value="manifold">Manifold</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -300,7 +300,7 @@ export function NewLine({ onNext, totalDistance }) {
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
                   <FormLabel className="text-md font-bold">
-                    destination
+                    Destination
                   </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -328,7 +328,9 @@ export function NewLine({ onNext, totalDistance }) {
                         <CommandInput placeholder="Search language..." />
                         <CommandEmpty>No language found.</CommandEmpty>
                         <CommandGroup>
-                          <h1 className="font-bold text-md mx-8 my-1">wells</h1>
+                          <h1 className="font-bold text-md mx-8 my-1">
+                            Junctions
+                          </h1>
                           {junctions.map((junction) => (
                             <CommandItem
                               value={junction.name}
@@ -349,7 +351,7 @@ export function NewLine({ onNext, totalDistance }) {
                             </CommandItem>
                           ))}
                           <h1 className="font-bold text-md mx-8 my-3">
-                            manifolds
+                            Manifolds
                           </h1>
                           {manifolds.map((manifold) => (
                             <CommandItem
@@ -384,7 +386,9 @@ export function NewLine({ onNext, totalDistance }) {
               name="date"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold ">date</FormLabel>
+                  <FormLabel className="text-md font-bold ">
+                    Creation date
+                  </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -426,7 +430,7 @@ export function NewLine({ onNext, totalDistance }) {
 
           <div className="flex justify-end mt-4">
             <Button variant="outline" className="">
-              annuler
+              Cancel
             </Button>
             <Button
               variant="default"
@@ -434,7 +438,7 @@ export function NewLine({ onNext, totalDistance }) {
               type="submit"
               disabled={totalDistance <= 0}
             >
-              continue
+              Continue
             </Button>
           </div>
         </form>

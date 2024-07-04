@@ -84,8 +84,7 @@ const formSchema = z.object({
   n_elelements: z.string().min(1, { message: "Latitude is required" }),
   n_transverselle: z.string().min(1, { message: "Latitude is required" }),
   n_depart: z.string().min(1, { message: "Latitude is required" }),
-  niance: z.string({message: "Latitude is required"})
-
+  niance: z.string({ message: "Latitude is required" }),
 });
 
 const ManifoldForm = () => {
@@ -115,7 +114,7 @@ const ManifoldForm = () => {
       n_transverselle: "",
       n_depart: "",
       niance: "",
-      planFile:""
+      planFile: "",
     },
   });
   const showSuccessToast = () => {
@@ -123,7 +122,7 @@ const ManifoldForm = () => {
       title: "manifold Created Successfully",
       description:
         "The manifold has been created and is now registered in the system.",
-      action: <ToastAction altText="Try again">continue</ToastAction>,
+      action: <ToastAction altText="Try again">Continue</ToastAction>,
     });
   };
   const showfailedToast = () => {
@@ -137,7 +136,7 @@ const ManifoldForm = () => {
   const [errors, setErrors] = useState({});
   const { toast } = useToast();
   const fileRef = form.register("file");
-  
+
   const fileRefe = form.register("planFile");
 
   // 2. Define a submit handler.
@@ -155,7 +154,7 @@ const ManifoldForm = () => {
     const n_transverselle = values.n_transverselle;
     const n_depart = values.n_depart;
     const niance = values.niance;
-    const file = values.file[0]; 
+    const file = values.file[0];
     const planFile = values.planFile[0]; // Access the first file in the FileList
     // Access the first file in the FileList
     const elevation = await fetchElevation(latitude, longitude);
@@ -177,16 +176,17 @@ const ManifoldForm = () => {
       n_transverselle: n_transverselle,
       n_depart: n_depart,
       niance: niance,
-      planFile:planFile
+      planFile: planFile,
     };
     setFormData(updatedData);
     try {
       const { data } = await axiosInstance.post(
         "/manifold/create-manifold",
-        updatedData,{
+        updatedData,
+        {
           headers: {
-             'Content-Type': 'multipart/form-data',
-           },
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
       console.log("receeeeeeeeeeeive", data);
@@ -213,16 +213,13 @@ const ManifoldForm = () => {
   const zones = [
     { label: "E2A", value: "E2A" },
     { label: "E2P", value: "E2P" },
-   
   ];
 
-  const regions = [
-    { label: "HMD", value: "HMD" },
-  ];
+  const regions = [{ label: "HMD", value: "HMD" }];
 
   const centres = [
     { label: "Nord", value: "Nord" },
-    { label: "Nord", value: "Sud" },
+    { label: "Sud", value: "Sud" },
   ];
 
   const handleCheck = () => {
@@ -233,18 +230,18 @@ const ManifoldForm = () => {
   };
   return (
     <div className="mx-10 my-6">
-      <h1 className="text-black text-3xl font-bold">Ajouter un manifold</h1>
+      <h1 className="text-black text-3xl font-bold">Add a manifold</h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-6 "
         >
           <h1 className="text-black text-2xl font-bold mt-6">
-          geographic coordinates
+            Geographic coordinates
           </h1>
           <div className="flex items-center gap-10 ">
             <h1 className="text-black text-xl font-medium">
-            mark the manifold on the map
+              Mark the manifold on the map
             </h1>
             <Switch isChecked={ischecked} onCheckedChange={handleCheck} />
           </div>
@@ -254,7 +251,7 @@ const ManifoldForm = () => {
               name="latitude"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">latitude</FormLabel>
+                  <FormLabel className="text-md font-bold">Latitude</FormLabel>
                   <FormControl>
                     <Input
                       readOnly={ischecked}
@@ -276,7 +273,7 @@ const ManifoldForm = () => {
               name="longitude"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">longitude</FormLabel>
+                  <FormLabel className="text-md font-bold">Longitude</FormLabel>
                   <FormControl>
                     <Input
                       placeholder={
@@ -289,7 +286,7 @@ const ManifoldForm = () => {
                       value={ischecked ? marker?.lng : field.value}
                     />
                   </FormControl>
-                  
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -301,7 +298,7 @@ const ManifoldForm = () => {
               name="name"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">name</FormLabel>
+                  <FormLabel className="text-md font-bold">Name</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="name of manifold"
@@ -309,7 +306,7 @@ const ManifoldForm = () => {
                       className="w-full"
                     />
                   </FormControl>
-                  
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -319,7 +316,9 @@ const ManifoldForm = () => {
               name="date"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold ">date</FormLabel>
+                  <FormLabel className="text-md font-bold ">
+                    Date of drill
+                  </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -351,20 +350,20 @@ const ManifoldForm = () => {
                       />
                     </PopoverContent>
                   </Popover>
-                  
+
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <h1 className="text-black text-2xl font-bold">addresse</h1>
+          <h1 className="text-black text-2xl font-bold">Address</h1>
           <div className="flex items-center gap-2">
             <FormField
               control={form.control}
               name="centre"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">centre</FormLabel>
+                  <FormLabel className="text-md font-bold">Centre</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -413,7 +412,7 @@ const ManifoldForm = () => {
                       </Command>
                     </PopoverContent>
                   </Popover>
-                  
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -423,7 +422,7 @@ const ManifoldForm = () => {
               name="region"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">region</FormLabel>
+                  <FormLabel className="text-md font-bold">Region</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -472,7 +471,7 @@ const ManifoldForm = () => {
                       </Command>
                     </PopoverContent>
                   </Popover>
-                 
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -484,7 +483,7 @@ const ManifoldForm = () => {
               name="zone"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">zone</FormLabel>
+                  <FormLabel className="text-md font-bold">Zone</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -497,9 +496,8 @@ const ManifoldForm = () => {
                           )}
                         >
                           {field.value
-                            ? zones.find(
-                                (zone) => zone.value === field.value
-                              )?.label
+                            ? zones.find((zone) => zone.value === field.value)
+                                ?.label
                             : "Select zone"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
@@ -540,7 +538,6 @@ const ManifoldForm = () => {
                 </FormItem>
               )}
             />
-
           </div>
           <h1 className="text-black text-2xl font-bold">Technique</h1>
           <div className="flex items-center mb-2 mt-2 gap-4">
@@ -549,7 +546,9 @@ const ManifoldForm = () => {
               name="n_elelements"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">N°elements</FormLabel>
+                  <FormLabel className="text-md font-bold">
+                    N°elements
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder={"N°element"}
@@ -558,7 +557,7 @@ const ManifoldForm = () => {
                       type="number"
                     />
                   </FormControl>
-                
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -569,7 +568,7 @@ const ManifoldForm = () => {
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
                   <FormLabel className="text-md font-bold">
-                    N°transverselle
+                    N°transversals
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -579,7 +578,7 @@ const ManifoldForm = () => {
                       className="w-full"
                     />
                   </FormControl>
-                  
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -601,7 +600,7 @@ const ManifoldForm = () => {
                       type="number"
                     />
                   </FormControl>
-                 
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -611,37 +610,35 @@ const ManifoldForm = () => {
               name="niance"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2 ">
-                  <FormLabel className="text-lg">Niance</FormLabel>
+                  <FormLabel className="text-md font-bold">Niance</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} className="">
                       <SelectTrigger>
                         <SelectValue placeholder="type of pipe" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="fue">fue</SelectItem>
-                        <SelectItem value="silver">silver</SelectItem>
+                        <SelectItem value="fue">Fue</SelectItem>
+                        <SelectItem value="silver">Silver</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
-                  
+
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <h1 className="text-black text-2xl font-bold">files</h1>
+          <h1 className="text-black text-2xl font-bold">Files</h1>
           <div className="flex items-center mb-2 mt-2 gap-4">
             <FormField
               control={form.control}
               name="planFile"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">
-                     technique plan
-                  </FormLabel>
+                  <FormLabel className="text-md font-bold">Plan</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={"fiche technique"}
+                      placeholder={"Plan"}
                       onChange={(event) => {
                         field.onChange(event.target?.files?.[0] ?? undefined);
                       }}
@@ -650,7 +647,7 @@ const ManifoldForm = () => {
                       type="file"
                     />
                   </FormControl>
-                  
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -661,7 +658,7 @@ const ManifoldForm = () => {
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
                   <FormLabel className="text-md font-bold">
-                     technique file
+                    Technical file
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -674,7 +671,7 @@ const ManifoldForm = () => {
                       type="file"
                     />
                   </FormControl>
-                  
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -683,10 +680,10 @@ const ManifoldForm = () => {
 
           <div className="flex justify-end mt-4">
             <Button variant="outline" className="">
-              annuler
+              Cancel
             </Button>
             <Button variant="default" className="" type="submit">
-              continue
+              Continue
             </Button>
           </div>
         </form>

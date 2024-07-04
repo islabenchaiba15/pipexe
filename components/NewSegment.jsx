@@ -110,16 +110,15 @@ export function NewSegment({ onSubmitForm, onPrev, totalDistance }) {
   };
 
   const submitSkip = () => {
-
-    const data={}
+    const data = {};
     onSubmitForm(data);
   };
   return (
     <div className="bg-white p-6 2xl:mx-6 mx-2">
       <div className="flex justify-between items-center gap-24">
-        <p className="font-bold text-lg ml-6">length</p>
-        <p className="font-bold text-lg mr-10">thikness</p>
-        <p className="font-bold text-lg ">annéé d'installation</p>
+        <p className="font-bold text-lg ml-6">Length</p>
+        <p className="font-bold text-lg mr-10">Thikness</p>
+        <p className="font-bold text-lg ">Installation Year</p>
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -196,7 +195,7 @@ export function NewSegment({ onSubmitForm, onPrev, totalDistance }) {
           </Button>
           <div className="mb-4 flex items-center gap-5">
             <h3 className="text-semibold text-xl">
-              il vous reste {calculateTotalLength()} m
+              You still have {calculateTotalLength()} m
             </h3>
           </div>
           <div className="flex justify-between items-center">
@@ -204,11 +203,11 @@ export function NewSegment({ onSubmitForm, onPrev, totalDistance }) {
               className="font-semibold text-blue-900 text-md my-5 cursor-pointer"
               onClick={submitSkip}
             >
-              ajouter les segment de pipeline
+              Add segments to pipeline
             </h1>
             <div className="flex justify-end">
               <Button variant="outline" onClick={onPrev}>
-                annuler
+                Cancel
               </Button>
               <Button
                 variant="default"
@@ -217,7 +216,7 @@ export function NewSegment({ onSubmitForm, onPrev, totalDistance }) {
                   calculateTotalLength() > 0 || calculateTotalLength() < 0
                 }
               >
-                continue
+                Continue
               </Button>
             </div>
           </div>

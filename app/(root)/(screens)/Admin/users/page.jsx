@@ -68,13 +68,13 @@ function Page() {
     <div className="ml-[10%]">
       <div className="w-[80%] mx-8 overflow-y-auto h-screen scrollbar-hide">
         <div className="flex items-center space-x-2">
-          <Image
+          {/* <Image
             src={"/pngarrow.png"}
             alt={"Add"}
             height={35}
             width={35}
             className="cursor-pointer"
-          />
+          /> */}
           <h1 className="text-3xl font-bold text-black my-4">Users</h1>
         </div>
 

@@ -15,7 +15,7 @@ export default function Card({ label, icon, amount, discription }) {
       <section className="flex justify-between gap-2">
         {/* label */}
         {/* icon */}
-        <Image src={icon} alt="yy" width={100} height={70} />
+        <Image src={icon} alt="yy" width={150} height={70} />
       </section>
       <section className="flex flex-col gap-2">
         <p className="text-md text-gray-500 font-bold">{label}</p>

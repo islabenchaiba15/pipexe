@@ -26,7 +26,7 @@ const cardData = [
 
 const address = [
   {
-    label: "address",
+    label: "Address",
     wilaya: "ouargla",
     centre: "centre 123",
     region: "Hassi messaoud",
@@ -40,7 +40,7 @@ function page({ params }) {
     loading: () => <p>A map is loading...</p>,
     ssr: false,
   });
-  
+
   console.log(params);
   const icon = "../puit.svg";
   const [well, setWell] = useState([]);
@@ -83,7 +83,7 @@ function page({ params }) {
               />
 
               <AddressCard
-                address={"address"}
+                address={"Address"}
                 wilaya={well.address.wilaya}
                 zone={well.address.zone}
                 region={well.address.region}
@@ -97,15 +97,15 @@ function page({ params }) {
                   " flex flex-col w-full justify-between gap-3 rounded-xl border p-5 shadow"
                 }
               >
-                <p className="p-4 font-semibold">Pression Tete & pipe</p>
-                <Chart indice2={'pressureArrive'} indice1={'pressureDepart'}/>
+                <p className="p-4 font-semibold">Head pressure & pipe</p>
+                <Chart indice2={"pressureArrive"} indice1={"pressureDepart"} />
               </div>
               <div
                 className={
                   " flex flex-col w-full h-[400px] lg:h-full justify-between gap-3 rounded-xl border p-5 shadow "
                 }
               >
-                <MapComponent icon={icon} coords={well.coords} page={'well'}/>
+                <MapComponent icon={icon} coords={well.coords} page={"well"} />
               </div>
             </section>
             <section className="grid grid-cols-1  gap-4 transition-all lg:grid-cols-2">
@@ -115,7 +115,7 @@ function page({ params }) {
                 }
               >
                 <p className="p-4 font-semibold">Gl network and debit Gl </p>
-                <Chart indice2={'production'} indice1={'test'}/>
+                <Chart indice2={"production"} indice1={"test"} />
               </div>
               <div
                 className={
@@ -123,7 +123,7 @@ function page({ params }) {
                 }
               >
                 <p className="p-4 font-semibold">Temperature</p>
-                <Chart indice2={'tempArrivé'} indice1={'tempDepart'}/>
+                <Chart indice2={"tempArrivé"} indice1={"tempDepart"} />
               </div>
             </section>
             <div

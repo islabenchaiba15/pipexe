@@ -32,7 +32,10 @@ export function ShowConstructionRapport({ isOpen, onClose, InspectionID }) {
           const response2 = await axiosInstance.get(
             `/constructionStatus/${InspectionID}`
           );
-          console.log("reeeeeeeeeee", response2.data.ConstructionStatusinstance);
+          console.log(
+            "reeeeeeeeeee",
+            response2.data.ConstructionStatusinstance
+          );
           setConstruction(response.data.construction);
           setActivity(response2.data.ConstructionStatusinstance);
 
@@ -77,7 +80,7 @@ export function ShowConstructionRapport({ isOpen, onClose, InspectionID }) {
     return parts[0] || ""; // Return the date part or empty string if split fails
   };
   if (!isOpen) return null;
-  
+
   return (
     !isLoading && (
       <Dialog open={isOpen} onOpenChange={onClose}>
@@ -92,18 +95,12 @@ export function ShowConstructionRapport({ isOpen, onClose, InspectionID }) {
               <DialogTitle className="text-xl">
                 Construction tracking & report
               </DialogTitle>
-              <DialogDescription className="bg-blue-800 w-fit  rounded-full">
-                <div className="">
-                  <h1 className="font-semibold text-white mx-3 my-1">
-                    in work
-                  </h1>
-                </div>
-              </DialogDescription>
+              <DialogDescription className="bg-blue-800 w-fit  rounded-full"></DialogDescription>
             </DialogHeader>
             <Tabs defaultValue="report" className="w-full">
               <TabsList className="">
-                <TabsTrigger value="report">report</TabsTrigger>
-                <TabsTrigger value="activity">activity</TabsTrigger>
+                <TabsTrigger value="report">Report</TabsTrigger>
+                <TabsTrigger value="activity">Activity</TabsTrigger>
               </TabsList>
               <TabsContent value="report">
                 <div className="flex flex-col gap-4 mx-2 my-8">
@@ -114,10 +111,15 @@ export function ShowConstructionRapport({ isOpen, onClose, InspectionID }) {
                       width={80}
                       height={80}
                     />
-                   <div className="flex flex-col items-start gap-3">
-            <h1 className="font-bold text-md">{construction.user.nom}</h1>
-            <h1 className="">{construction.user.position} -- {construction.user.departement}</h1>
-          </div>
+                    <div className="flex flex-col items-start gap-3">
+                      <h1 className="font-bold text-md">
+                        {construction.constructionID.user.nom}
+                      </h1>
+                      <h1 className="">
+                        {construction.constructionID.user.position} --{" "}
+                        {construction.constructionID.user.departement}
+                      </h1>
+                    </div>
                   </div>
                   <div className="flex flex-col gap-2">
                     <h1 className="font-bold text-md">Inspection date</h1>
@@ -129,15 +131,15 @@ export function ShowConstructionRapport({ isOpen, onClose, InspectionID }) {
                     </h1>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <h1 className="font-bold text-md">message</h1>
+                    <h1 className="font-bold text-md">Message</h1>
                     <div className="border border-gray-500 p-4">
                       {construction.constructionID.message}
                     </div>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <h1 className="font-bold">construction final report </h1>
+                    <h1 className="font-bold">Construction final report </h1>
                     <div className="flex gap-6 ">
-                      <h1 className="font-medium">donwload</h1>
+                      <h1 className="font-medium">Donwload</h1>
                       <Image
                         src={"/download.png"}
                         className="cursor-pointer"
@@ -150,18 +152,23 @@ export function ShowConstructionRapport({ isOpen, onClose, InspectionID }) {
                 </div>
               </TabsContent>
               <TabsContent value="activity" className="mx-4 my-3">
-                ddddd
                 <div className="flex flex-col gap-4">
-                  <h1>kkkk</h1>
-                    <div className="flex gap-4 items-start" >
-                      <CheckCircleIcon fontSize="small" className="mt-1" />
-                      <div className="flex flex-col gap-1">
-                        <h1 className="font-bold text-md">ddd</h1>
-                        <h1 className="font-medium text-sm text-gray-600">
-dddd                        </h1>
-                      </div>
-                    </div>;
-                  
+                  <div className="flex gap-4 items-start">
+                    <CheckCircleIcon fontSize="small" className="mt-1" />
+                    <div className="flex flex-col gap-1">
+                      <h1 className="font-bold text-md">15-12-2002</h1>
+                      <h1 className="font-medium text-sm text-gray-600">
+                        Start the work
+                      </h1>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <h1 className="font-bold text-md">15-12-2002</h1>
+                      <h1 className="font-medium text-sm text-gray-600">
+                        Almost finished the work
+                      </h1>
+                    </div>
+                  </div>
+                  ;
                 </div>
               </TabsContent>
             </Tabs>

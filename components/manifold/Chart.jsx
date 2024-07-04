@@ -71,7 +71,7 @@ function Chart({ setPressure }) {
         if (response.data.length > 0) {
           const lastItem = response.data[response.data.length - 1];
 
-          setPressure(lastItem.pressure);
+          setPressure(lastItem.pressureArrive);
         }else(console.log('oooooooo'))
       } catch (error) {
         console.error("Error fetching manifolds", error);

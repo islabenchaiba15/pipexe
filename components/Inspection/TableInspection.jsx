@@ -69,6 +69,10 @@ const TableInspection = ({selectedType,searchTerm}) => {
       }
     };
     fetchInformation();
+    const interval = setInterval(fetchInformation, 200000); // 60000 milliseconds = 1 minute
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(interval);
   }, []);
 
   const filteredInspections = inspections.filter((inspection) => {
@@ -136,13 +140,16 @@ const TableInspection = ({selectedType,searchTerm}) => {
                   onClick={() => setSelectedInspection2(inspection.inspection._id)}
                 />
               </TableCell>
-              <TableCell className="font-semibold">
-                <ConstructionTrigger id={inspection.inspection.constructionID?.ID} 
+              
+                <TableCell className="font-semibold">
+                  <ConstructionTrigger id={inspection.inspection.constructionID?.ID} 
                   onClick={() => setSelectedInspection4(inspection.inspection._id)}
                 />
-              </TableCell>
+                  </TableCell>
+              
+
               <TableCell className="font-semibold">
-                <ResultTrigger id={inspection.inspection.constructionID?.ID} 
+                <ResultTrigger id={inspection.inspection.constructionID?.ID} inspection={inspection}
                   onClick={() => setSelectedInspection5(inspection.inspection._id)}
                 />
               </TableCell>

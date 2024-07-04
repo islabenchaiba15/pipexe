@@ -71,7 +71,6 @@ const formSchema = z.object({
   zone: z.string().min(1, { message: "Zone is required" }),
   name: z.string().min(1, { message: "Name is required" }),
   date: z.date({ message: "Name is required" }),
-
 });
 
 const JonctionForm = () => {
@@ -95,7 +94,7 @@ const JonctionForm = () => {
       wilaya: "",
       zone: "",
       name: "",
-      date:""
+      date: "",
     },
   });
   const showSuccessToast = () => {
@@ -103,7 +102,7 @@ const JonctionForm = () => {
       title: "junction Created Successfully",
       description:
         "The manifold has been created and is now registered in the system.",
-      action: <ToastAction altText="Try again">continue</ToastAction>,
+      action: <ToastAction altText="Try again">Continue</ToastAction>,
     });
   };
   const showfailedToast = () => {
@@ -126,7 +125,7 @@ const JonctionForm = () => {
     const wilaya = values.wilaya;
     const zone = values.zone;
     const name = values.name;
-    const date=values.date
+    const date = values.date;
     const elevation = await fetchElevation(latitude, longitude);
     const updatedData = {
       ...formData,
@@ -139,7 +138,7 @@ const JonctionForm = () => {
       zone: zone,
       elevation: elevation,
       attributes: [],
-      date:date
+      date: date,
     };
     setFormData(updatedData);
     try {
@@ -187,18 +186,18 @@ const JonctionForm = () => {
   };
   return (
     <div className="mx-10 my-6">
-      <h1 className="text-black text-3xl font-bold">Ajouter une jonction</h1>
+      <h1 className="text-black text-3xl font-bold">Add a junction</h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-6 "
         >
           <h1 className="text-black text-2xl font-bold mt-6">
-            coordonées geograpique
+            Geograpic coordinates
           </h1>
           <div className="flex items-center gap-10 ">
             <h1 className="text-black text-xl font-medium">
-              marquer le manifold sur le map
+              mark manifold on the map
             </h1>
             <Switch isChecked={ischecked} onCheckedChange={handleCheck} />
           </div>
@@ -208,7 +207,7 @@ const JonctionForm = () => {
               name="latitude"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">latitude</FormLabel>
+                  <FormLabel className="text-md font-bold">Latitude</FormLabel>
                   <FormControl>
                     <Input
                       readOnly={ischecked}
@@ -233,7 +232,7 @@ const JonctionForm = () => {
               name="longitude"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">longitude</FormLabel>
+                  <FormLabel className="text-md font-bold">Longitude</FormLabel>
                   <FormControl>
                     <Input
                       placeholder={
@@ -260,7 +259,7 @@ const JonctionForm = () => {
               name="name"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">name</FormLabel>
+                  <FormLabel className="text-md font-bold">Name</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="name of manifold"
@@ -280,7 +279,7 @@ const JonctionForm = () => {
               name="date"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold ">date</FormLabel>
+                  <FormLabel className="text-md font-bold ">Date</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -320,14 +319,14 @@ const JonctionForm = () => {
               )}
             />
           </div>
-          <h1 className="text-black text-2xl font-bold">addresse</h1>
+          <h1 className="text-black text-2xl font-bold">Address</h1>
           <div className="flex items-center gap-2">
             <FormField
               control={form.control}
               name="centre"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">centre</FormLabel>
+                  <FormLabel className="text-md font-bold">Centre</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -388,7 +387,7 @@ const JonctionForm = () => {
               name="region"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">region</FormLabel>
+                  <FormLabel className="text-md font-bold">Region</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -451,7 +450,7 @@ const JonctionForm = () => {
               name="zone"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">zone</FormLabel>
+                  <FormLabel className="text-md font-bold">Zone</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -512,7 +511,7 @@ const JonctionForm = () => {
               name="wilaya"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start w-1/2">
-                  <FormLabel className="text-md font-bold">wilaya</FormLabel>
+                  <FormLabel className="text-md font-bold">Wilaya</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -571,10 +570,10 @@ const JonctionForm = () => {
           </div>
           <div className="flex justify-end mt-4">
             <Button variant="outline" className="">
-              annuler
+              Cancel
             </Button>
             <Button variant="default" className="" type="submit">
-              continue
+              Continue
             </Button>
           </div>
         </form>

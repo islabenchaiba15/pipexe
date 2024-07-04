@@ -115,16 +115,16 @@ export function ShowInspectionDepRapport({ isOpen, onClose, InspectionID }) {
                 </h1>
               </div>
               <div className="flex flex-col gap-2">
-                <h1 className="font-bold text-md">file version</h1>
+                <h1 className="font-bold text-md">File version</h1>
                 <h1 className="text-md font-medium">
                   <span className="">
-                    rapport validated and{" "}
+                    Rapport validated and{" "}
                     {inspectionReport.Ins_reportID.version}
                   </span>
                 </h1>
               </div>
               <div className="flex flex-col gap-2">
-                <h1 className="font-bold text-md">message</h1>
+                <h1 className="font-bold text-md">Message</h1>
                 <div className="border border-gray-500 p-4">
                   {inspectionReport.Ins_reportID.message}
                 </div>
@@ -132,7 +132,7 @@ export function ShowInspectionDepRapport({ isOpen, onClose, InspectionID }) {
               <div className="flex flex-col gap-2">
                 <h1 className="font-bold">Inpection departement report </h1>
                 <div className="flex gap-6 ">
-                  <h1 className="font-medium">donwload</h1>
+                  <h1 className="font-medium">Donwload</h1>
                   <Image
                     onClick={() => donwloadFiles("ficher")}
                     src={"/download.png"}

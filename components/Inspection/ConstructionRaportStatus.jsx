@@ -18,7 +18,7 @@ export function ConstructionRaportStatus() {
       <DialogTrigger asChild>
         <div className="flex flex-row gap-4 items-center justify-start rounded-md cursor-pointer">
           <AutoAwesomeIcon className="h-8 w-8" />
-          <h1 className="text-md font-semibold">status</h1>
+          <h1 className="text-md font-semibold">Status</h1>
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[625px]">

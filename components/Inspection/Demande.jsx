@@ -8,36 +8,36 @@ import TableInspection from "./TableInspection";
 import { CreateInspection } from "./CreateInspection";
 import { Input } from "../ui/input";
 import { FromSelect } from "../FromSelect";
-const DemandeInspection = ({stats}) => {
+const DemandeInspection = ({ stats }) => {
   const cardData = [
     {
       label: "decision",
       amount: "376",
-      icon: "/fire.svg",
+      // icon: "/fire.svg",
       unit: "unitées",
     },
     {
       label: "demander",
       amount: "97",
-      icon: "/fire.svg",
+      // icon: "/fire.svg",
       unit: "unitées",
     },
     {
       label: "inspection",
       amount: "113",
-      icon: "/fire.svg",
+      // icon: "/fire.svg",
       unit: "unitées",
     },
     {
       label: "construction",
       amount: "176",
-      icon: "/fire.svg",
+      // icon: "/fire.svg",
       unit: "unitées",
     },
     {
       label: "terminé",
       amount: "176",
-      icon: "/fire.svg",
+      // icon: "/fire.svg",
       unit: "unitées",
     },
   ];
@@ -56,8 +56,8 @@ const DemandeInspection = ({stats}) => {
   const transformedCardData = Object.keys(stats).map((key) => {
     return {
       label: key,
-      amount: stats[key].toString(),  // Convert the amount to a string
-      icon: "/fire.svg",
+      amount: stats[key].toString(), // Convert the amount to a string
+      // icon: "/fire.svg",
       unit: "unitées",
     };
   });
@@ -98,7 +98,7 @@ const DemandeInspection = ({stats}) => {
             onSelect={setSelectedType}
           />
         </div>
-        <TableInspection selectedType={selectedType} searchTerm={searchTerm}/>
+        <TableInspection selectedType={selectedType} searchTerm={searchTerm} />
       </div>
     </div>
   );

@@ -27,10 +27,10 @@ function page() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="puit">puit</SelectItem>
-                    <SelectItem value="well">manifold</SelectItem>
-                    <SelectItem value="ligne">ligne</SelectItem>
-                    <SelectItem value="tous">tous</SelectItem>
+                    <SelectItem value="puit">Well</SelectItem>
+                    <SelectItem value="well">Manifold</SelectItem>
+                    <SelectItem value="ligne">Pipe</SelectItem>
+                    <SelectItem value="tous">All</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>

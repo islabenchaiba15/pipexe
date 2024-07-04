@@ -2,6 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 import { Check, ChevronsUpDown } from "lucide-react";
 import {
   Select,
@@ -29,6 +30,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import React, { useState } from "react";
 import { ToastAction } from "../ui/toast";
 import { axiosInstance } from "@/Api/Index";
+import { addUser } from "@/lib/actions";
 
 const FormSchema = z.object({
   nom: z.string().min(2, {
@@ -73,7 +75,7 @@ const AddUserForm = ({ onClose, closeButton }) => {
       title: "User Created Successfully",
       description:
         "The user has been created and is now registered in the system.",
-      action: <ToastAction altText="Try again">continue</ToastAction>,
+      action: <ToastAction altText="Try again">Continue</ToastAction>,
     });
   };
   const showfailedToast = () => {
@@ -89,7 +91,7 @@ const AddUserForm = ({ onClose, closeButton }) => {
   const onSubmit = async (dataa) => {
     console.log("Form Data:", dataa);
     try {
-      const { data } = await axiosInstance.post("/auth/users/signup", dataa);
+      const data = await addUser(dataa);
       console.log("islaaaaaaaaaaam", data);
       showSuccessToast(); // S
       form.reset();
@@ -136,7 +138,7 @@ const AddUserForm = ({ onClose, closeButton }) => {
               name="nom"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-bold ">nom</FormLabel>
+                  <FormLabel className="font-bold ">Name</FormLabel>
                   <FormControl>
                     <Input placeholder="shadcn" {...field} />
                   </FormControl>
@@ -152,7 +154,7 @@ const AddUserForm = ({ onClose, closeButton }) => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-bold ">email</FormLabel>
+                  <FormLabel className="font-bold ">Email address</FormLabel>
                   <FormControl>
                     <Input placeholder="shadcn" {...field} />
                   </FormControl>
@@ -172,15 +174,18 @@ const AddUserForm = ({ onClose, closeButton }) => {
               name="position"
               render={({ field }) => (
                 <FormItem className="">
-                  <FormLabel className="font-bold ">position</FormLabel>
+                  <FormLabel className="font-bold ">Position</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger className="">
                         <SelectValue placeholder="position" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="ingenieur">ingenieur</SelectItem>
-                        <SelectItem value="technicien">technicien</SelectItem>
+                        <SelectItem value="ingenieur1">Ingenieur 1</SelectItem>
+                        <SelectItem value="ingenieur1">Ingenieur 2</SelectItem>
+                        <SelectItem value="headofdepartment">
+                          Head of department
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -196,20 +201,20 @@ const AddUserForm = ({ onClose, closeButton }) => {
               name="role"
               render={({ field }) => (
                 <FormItem className="">
-                  <FormLabel className="font-bold ">role</FormLabel>
+                  <FormLabel className="font-bold ">Role</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger className="">
                         <SelectValue placeholder="position" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="admin">admin</SelectItem>
+                        <SelectItem value="admin">Admin</SelectItem>
                         <SelectItem value="ep">E&P manager</SelectItem>
                         <SelectItem value="Inspection">
                           Inspection manager
                         </SelectItem>
                         <SelectItem value="construction">
-                          construction manager
+                          Construction manager
                         </SelectItem>
                       </SelectContent>
                     </Select>
@@ -228,7 +233,7 @@ const AddUserForm = ({ onClose, closeButton }) => {
               name="prenom"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-bold ">prenom</FormLabel>
+                  <FormLabel className="font-bold ">First name</FormLabel>
                   <FormControl>
                     <Input placeholder="shadcn" {...field} />
                   </FormControl>
@@ -244,7 +249,7 @@ const AddUserForm = ({ onClose, closeButton }) => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-bold ">password</FormLabel>
+                  <FormLabel className="font-bold ">Password</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input
@@ -277,15 +282,15 @@ const AddUserForm = ({ onClose, closeButton }) => {
               name="departement"
               render={({ field }) => (
                 <FormItem className="">
-                  <FormLabel className="font-bold ">departement</FormLabel>
+                  <FormLabel className="font-bold ">Departement</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger className="">
                         <SelectValue placeholder="departement" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="QAQC">QAQC</SelectItem>
-                        <SelectItem value="inspection">inspection</SelectItem>
+                        <SelectItem value="QAQC">Technical</SelectItem>
+                        <SelectItem value="inspection">Inspection</SelectItem>
                         <SelectItem value="E&P">E&P</SelectItem>
                       </SelectContent>
                     </Select>
@@ -302,15 +307,9 @@ const AddUserForm = ({ onClose, closeButton }) => {
         <div className="w-full flex justify-between gap-2">
           <Button
             type="submit"
-            className="w-full bg-secondary text-white hover:bg-primary rounded-lg  "
+            className="w-full text-white hover:bg-primary rounded-lg  "
           >
             Add
-          </Button>
-          <Button
-            onClick={closeButton}
-            className="w-full bg-red-700 text-white hover:bg-red-500 rounded-lg "
-          >
-            Cancel
           </Button>
         </div>
       </form>

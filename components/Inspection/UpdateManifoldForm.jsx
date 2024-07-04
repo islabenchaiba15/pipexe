@@ -6,10 +6,10 @@ import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-  } from "@/components/ui/popover";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -48,7 +48,6 @@ const formSchema = z.object({
     message: "type is requited",
   }),
   next_inspection: z.date({ message: "Name is required" }),
-
 });
 const languages = [
   { label: "English", value: "en" },
@@ -61,35 +60,33 @@ const languages = [
   { label: "Korean", value: "ko" },
   { label: "Chinese", value: "zh" },
 ];
-export function UpdateManifoldForm({inspection,inspectionID}) {
+export function UpdateManifoldForm({ inspection, inspectionID }) {
   const [formData, setFormData] = useState({});
   const { user } = useAuth();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-        observation: "",
-        status: "",
-        next_inspection:""
-        },
+      observation: "",
+      status: "",
+      next_inspection: "",
+    },
   });
   const [errors, setErrors] = useState({});
   // 2. Define a submit handler.
-  const onSubmit=async(values)=> {
-    console.log("onSubmit",values)
-    const data = {
-    observation: values.observation,
-    status: values.status,
-    next_inspection:values.next_inspection,
-    inspection_id:inspectionID,
-    ouvrage_id:inspection.ouvrage
-    };
-    setFormData(data);
+  const onSubmit = async (values) => {
+    console.log("onSubmit", values);
+    const data = new FormData();
+    data.append("observation", values.observation);
+    data.append("status", values.status);
+    data.append("next_inspection", values.next_inspection);
+    data.append("inspection_id", inspectionID);
+    data.append("ouvrage_id", inspection.ouvrage);
     console.log("submitted data", data);
     try {
-      const { data } = await axiosInstance.post("/result/create", formData, {
+      const { data } = await axiosInstance.post("/result/create", data, {
         headers: {
-            "Content-Type": "application/json", // Change to application/json
+          "Content-Type": "application/json", // Change to application/json
         },
       });
       console.log("receeeeeeeeeeeive", data);
@@ -108,17 +105,16 @@ export function UpdateManifoldForm({inspection,inspectionID}) {
         console.log("Error", error.message);
       }
     }
-  }
+  };
   return (
     <Form {...form}>
-        
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 ">
         <FormField
           control={form.control}
           name="observation"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-md font-bold">observation</FormLabel>
+              <FormLabel className="text-md font-bold">Observation</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Tell us a little bit about yourself"
@@ -138,9 +134,7 @@ export function UpdateManifoldForm({inspection,inspectionID}) {
           name="status"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-md font-bold">
-                status
-              </FormLabel>
+              <FormLabel className="text-md font-bold">Status</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -148,12 +142,8 @@ export function UpdateManifoldForm({inspection,inspectionID}) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="work">
-                    in work 
-                  </SelectItem>
-                  <SelectItem value="abondone">
-                    abondone
-                  </SelectItem>
+                  <SelectItem value="work">In work</SelectItem>
+                  <SelectItem value="abondone">Abondoned</SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription>
@@ -163,50 +153,50 @@ export function UpdateManifoldForm({inspection,inspectionID}) {
             </FormItem>
           )}
         />
-         <FormField
-              control={form.control}
-              name="next_inspection"
-              render={({ field }) => (
-                <FormItem className="flex flex-col items-start">
-                  <FormLabel className="text-md font-bold ">date</FormLabel>
-                  <Popover modal={true}>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-full pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormDescription className="text-xs">
-                    Your date of birth is used to calculate your age.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <FormField
+          control={form.control}
+          name="next_inspection"
+          render={({ field }) => (
+            <FormItem className="flex flex-col items-start">
+              <FormLabel className="text-md font-bold ">Date</FormLabel>
+              <Popover modal={true}>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-full pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              <FormDescription className="text-xs">
+                Your date of birth is used to calculate your age.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className="flex justify-end">
           <Button type="submit">Submit</Button>
         </div>

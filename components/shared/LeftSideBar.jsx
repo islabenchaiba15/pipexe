@@ -11,26 +11,17 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
-function LeftSideBar() {
-  const [activeButton, setActiveButton] = useState("Map");
-  const [selectedNetworks, setSelectedNetworks] = useState([
-    "Gas",
-    "Oil",
-    "Water",
-  ]);
-  const [selectedWells, setSelectedWells] = useState([
-    "Eruptive",
-    "Gas Injector",
-    "Gas Lift",
-    "Water Injector",
-  ]);
-  const [selectedLines, setSelectedLines] = useState(["Collect", "Collector"]);
-  const [selectedLineSizes, setSelectedLineSizes] = useState([
-    '2"',
-    '4"',
-    '6"',
-    '8"',
-  ]);
+function LeftSideBar({activeButton,
+  setActiveButton,
+  setSelectedNetworks,
+  setSelectedWells,
+  setSelectedLines,
+  setSelectedLineSizes,
+  selectedNetworks,
+  selectedWells,
+  selectedLines,
+  selectedLineSizes,
+}) {
 
   const toggleSelection = (selectedItems, setSelectedItems) => (item) => {
     if (selectedItems.includes(item)) {

@@ -37,7 +37,6 @@ const FormComplete = ({ formData }) => {
     fetchAllElevations();
   }, [maplayers]);
 
-
   if (distances === 0) {
     distancesWithoutLastValue = [];
     result = convertData(maplayers, formData);
@@ -47,18 +46,16 @@ const FormComplete = ({ formData }) => {
       maplayers,
       distancesWithoutLastValue
     );
-    segments = createSegments(polylines, formData,elevations);
+    segments = createSegments(polylines, formData, elevations);
     result = convertData(maplayers, formData);
   }
-  console.log('loooooooooooooooooooooooooooog',formData)
+  console.log("loooooooooooooooooooooooooooog", formData);
   console.log("isaaaaaaaaaaaaaaaaaaaaal", segments);
-
-  
 
   const dataa = {
     result,
     segments,
-    elevations
+    elevations,
   };
   const onsubmit = async () => {
     console.log("seeeeeeeeeeeeeeed");
@@ -74,31 +71,20 @@ const FormComplete = ({ formData }) => {
   };
 
   return (
-    <div className=" p-6">
-      <h2>Form Complete</h2>
-      <pre>{JSON.stringify(elevations, null, 2)}</pre>
-
-      <Divider className="my-4" />
-      <Divider className="my-4" />
-
-      <pre>{JSON.stringify(segments, null, 2)}</pre>
-      <Divider className="my-4" />
-      <pre>{JSON.stringify(formData, null, 2)}</pre>
-      <Divider className="my-4" />
-      <Divider className="my-4" />
-
-      <pre>{JSON.stringify(maplayers, 0, 2)}</pre>
-      <Divider className="my-4" />
-      <Divider className="my-4" />
-
-      <pre>{JSON.stringify(polylines, 0, 2)}</pre>
-
-      <Divider className="my-4" />
-      <Divider className="my-4" />
-
-      <Button variant="outline" onClick={onsubmit}>
-        Button
-      </Button>
+    <div className=" h-screen  mx-4">
+      <div className="flex justify-start ">
+      <h1 className="font-semi my-4 mx-5">
+        Are you sure to create the pipe ? if yes then click create
+      </h1>
+      </div>
+      <div className="flex justify-end items-center mt-[60%]">
+        <Button variant="outline">
+          cancel
+        </Button>
+        <Button variant="" onClick={onsubmit}>
+          create
+        </Button>
+      </div>
     </div>
   );
 };

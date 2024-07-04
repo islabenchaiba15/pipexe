@@ -156,7 +156,7 @@ useEffect(()=>{
                 />
               </TableCell>
               <TableCell className="font-semibold">
-                <ResultTrigger id={inspection.inspection.constructionID?.ID} 
+                <ResultTrigger id={inspection.inspection.constructionID?.ID} inspection={inspection}
                   onClick={() => setSelectedInspection5(inspection.inspection._id)}
                 />
               </TableCell>
@@ -199,7 +199,7 @@ useEffect(()=>{
                 />
               </TableCell>
               <TableCell className="font-semibold">
-                <ResultTrigger id={inspection.inspection.constructionID?.ID} 
+                <ResultTrigger id={inspection.inspection.constructionID?.ID} inspection={inspection}
                   onClick={() => setSelectedInspection5(inspection.inspection._id)}
                 />
               </TableCell>
@@ -242,7 +242,7 @@ useEffect(()=>{
                 />
               </TableCell>
               <TableCell className="font-semibold">
-                <ResultTrigger id={inspection.inspection.constructionID?.ID} 
+                <ResultTrigger id={inspection.inspection.constructionID?.ID} inspection={inspection}
                   onClick={() => setSelectedInspection5(inspection.inspection._id)}
                 />
               </TableCell>

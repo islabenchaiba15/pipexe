@@ -50,7 +50,7 @@ const formSchema = z.object({
     .max(160, {
       message: "message must not be longer than 30 characters.",
     }),
-    rapport_file: z.instanceof(FileList, {
+  rapport_file: z.instanceof(FileList, {
     message: "Please select a file for upload",
   }),
 });
@@ -65,7 +65,8 @@ const languages = [
   { label: "Korean", value: "ko" },
   { label: "Chinese", value: "zh" },
 ];
-export function ConstructionRaportForm({inspectionID}) {
+export function ConstructionRaportForm({ inspectionID }) {
+  const {user}=useAuth()
   const [formData, setFormData] = useState({});
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -76,23 +77,31 @@ export function ConstructionRaportForm({inspectionID}) {
   });
   const fileRefe = form.register("rapport_file");
   const [errors, setErrors] = useState({});
-  const { user } = useAuth();
   // 2. Define a submit handler.
-  const onSubmit=async(values)=> {
+  const onSubmit = async (values) => {
+    const formData=new FormData()
+    formData.append("message", values.message);
+    formData.append("report_file", values.rapport_file[0]);
+    formData.append("InspectionID", inspectionID);
+    formData.append("user",user._id);
     const data = {
       message: values.message,
       report_file: values.rapport_file[0],
       InspectionID: inspectionID,
-      user:user._id
+      user: user._id,
     };
     setFormData(data);
     console.log("submitted data", data);
     try {
-      const { data } = await axiosInstance.post("/construction/create", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',// Change to application/json
-        },
-      });
+      const { data } = await axiosInstance.post(
+        "/construction/create",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Change to application/json
+          },
+        }
+      );
       console.log("receeeeeeeeeeeive", data);
       form.reset(form.defaultValues);
     } catch (error) {
@@ -109,7 +118,7 @@ export function ConstructionRaportForm({inspectionID}) {
         console.log("Error", error.message);
       }
     }
-  }
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 ">
@@ -118,7 +127,7 @@ export function ConstructionRaportForm({inspectionID}) {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-md font-bold">message</FormLabel>
+              <FormLabel className="text-md font-bold">Message</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Tell us a little bit about yourself"
@@ -138,7 +147,9 @@ export function ConstructionRaportForm({inspectionID}) {
           name="rapport_file"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-md font-bold">construction final report file</FormLabel>
+              <FormLabel className="text-md font-bold">
+                Construction final report file
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder="shadcn"

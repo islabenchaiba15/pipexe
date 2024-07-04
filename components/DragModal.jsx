@@ -19,6 +19,7 @@ import { NewSegment } from "../components/NewSegment";
 import FormComplete from "./FormComplete";
 import CreatePipeFormContext from "../context/CreatePipeFormContext";
 import { Stepper, Step, StepLabel } from "@mui/material";
+import Link from "next/link";
 
 const DragModal = ({ totalDistance, onClose }) => {
   const {
@@ -54,13 +55,15 @@ const DragModal = ({ totalDistance, onClose }) => {
   return (
     <div className="">
       <div className="flex items-center space-x-2 mt-6 mb-8 ml-8">
-        <Image
-          src={"/pngarrow.png"}
-          alt={"Add"}
-          height={26}
-          width={26}
-          className="cursor-pointer"
-        />
+        <Link href={"/"}>
+          <Image
+            src={"/pngarrow.png"}
+            alt={"Add"}
+            height={26}
+            width={26}
+            className="cursor-pointer"
+          />
+        </Link>
         <h1 className="text-blueNav text-2xl font-bold">New pipe</h1>
       </div>
       <Stepper activeStep={step - 1} className="2xl:mx-8 mx-2">

@@ -43,15 +43,14 @@ const formSchema = z.object({
     message: "Please select a file for upload",
   }),
   date: z.date({ message: "date is required" }),
-  observation: z
-  .string()
-  .max(160, {
+  observation: z.string().max(160, {
     message: "message must not be longer than 30 characters.",
   }),
-
 });
 
 export function InspectionPeriodicFile() {
+  const {user}= useAuth()
+  if(!user) return null;
   const [formData, setFormData] = useState({});
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -62,23 +61,26 @@ export function InspectionPeriodicFile() {
   });
   const fileRefe = form.register("file");
   const [errors, setErrors] = useState({});
-  const { user } = useAuth();
 
   const onSubmit = async (values) => {
     const data = {
       file: values.file[0],
-      date:values.date,
-      observation:values.observation,
-      user:user._id
+      date: values.date,
+      observation: values.observation,
+      user: user._id,
     };
     setFormData(data);
     console.log("submitted data", data);
     try {
-      const { data } = await axiosInstance.post("/inspection/periodic", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',// Change to application/json
-        },
-      });
+      const { data } = await axiosInstance.post(
+        "/inspection/periodic",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Change to application/json
+          },
+        }
+      );
       console.log("receeeeeeeeeeeive", data);
       form.reset(form.defaultValues);
     } catch (error) {
@@ -99,56 +101,56 @@ export function InspectionPeriodicFile() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 ">
-      <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem className="flex flex-col items-start">
-                  <FormLabel className="text-md font-bold ">date</FormLabel>
-                  <Popover modal={true}>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-full pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormDescription className="text-xs">
-                    Your date of birth is used to calculate your age.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
+        <FormField
+          control={form.control}
+          name="date"
+          render={({ field }) => (
+            <FormItem className="flex flex-col items-start">
+              <FormLabel className="text-md font-bold ">Date</FormLabel>
+              <Popover modal={true}>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-full pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              <FormDescription className="text-xs">
+                Your date of birth is used to calculate your age.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
           control={form.control}
           name="observation"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-bold">message</FormLabel>
+              <FormLabel className="font-bold">Message</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Tell us a little bit about yourself"
@@ -166,7 +168,7 @@ export function InspectionPeriodicFile() {
           name="file"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-bold">pv file</FormLabel>
+              <FormLabel className="font-bold">PV file</FormLabel>
               <FormControl>
                 <Input
                   placeholder="shadcn"
